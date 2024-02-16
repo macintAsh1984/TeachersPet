@@ -1,4 +1,4 @@
-# Spring Planning #1
+# Sprint Planning #1
 
 **Trello Board**: https://trello.com/b/Do4WCnFy/teachers-pet-🐢
 
