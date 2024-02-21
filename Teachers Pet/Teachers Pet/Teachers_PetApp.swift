@@ -11,7 +11,7 @@ import SwiftUI
 struct Teachers_PetApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WelcomeScreen()
         }
     }
 }
