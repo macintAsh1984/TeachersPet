@@ -19,10 +19,10 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 - [Completed the hi-fi Figma design] (https://www.notion.so/ashleys-workspace/Milestone-1-f9ac176336c24f648876866ccb21ecd0) for Teacher's Pet.
 
 **Sai Chamarty**
-- Will talk to Shreyas about testing our app
+- Talk to Shreyas and other Teaching Assistants about using Teacher's Pet.
 
 **Sukhpreet Aulakh**
-- Finished thinking and finding frameworks to use for the visual Queue officehours
+- Finished thinking and finding frameworks to use for the visual Queue officehours.
 - [Contributed Frameworks] (https://www.notion.so/ashleys-workspace/Milestone-1-f9ac176336c24f648876866ccb21ecd0) that Teacher's Pet may require.
 
 
@@ -30,26 +30,26 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 
 ## Individual Tasks
 **Ashley Valdez**
-- Update the Trello Board
-- Edit Milestone 1
+- Update the Trello Board with new tasks.
+- Finalize Milestone 1. 
 
 **Roshini Pothapragada**
-- Create Office Hours questionnaire
-- Create Survey for 10 daily active users
+- Create Office Hours questionnaire.
+- Create Survey for 10 daily active users.
 
 ## Shared Tasks
 
 **Toniya Patil & Sai Chamarty**
-- Create Student View
+- Create a student view for Teacher's Pet.
 
 **Roshini Pothapragada & Toniya Patil**
-- Wrap up high-fi design
-- Create prototype
-- Finish writing feature ideas/ add any frameworks to the milestone 1 doc
+- Finalize the high-fi design.
+- Create prototype for to help promote Teacher's Pet.
+- Finish writing any features or ideas for Teacher.
 
 **Ashley Valdez & Sukhpreet Aulakh**
-- Create Instructor View
+- Create the Instructor view for Teacher's Pet.
 
 **Everyone**
-- Find 1-2 TAs and find 60 people each to use it
-- Finish up feature writing
+- Find 1-2 TAs and target 60 people to use Teacher's Pet.
+- Finish up writing any other features that may be needed in Teacher's Pet.
