@@ -10,8 +10,8 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 
 **Ashley Valdez**
 - Got 1 TA To Test Our App 
-    - Bhavye Jain, CS TA @ UCSB
-- Thinking of talking to Butner about having learning assistants test Teacher’s Pet
+    - Bhavye Jain, CS TA @ UCSB.
+- Thinking of talking to Butner about having learning assistants test Teacher’s Pet.
 - [Contributed Frameworks] (https://www.notion.so/ashleys-workspace/Milestone-1-f9ac176336c24f648876866ccb21ecd0) that Teacher's Pet may require.
 
 
@@ -19,10 +19,9 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 - [Completed the hi-fi Figma design] (https://www.notion.so/ashleys-workspace/Milestone-1-f9ac176336c24f648876866ccb21ecd0) for Teacher's Pet.
 
 **Sai Chamarty**
-- Talk to Shreyas and other Teaching Assistants about using Teacher's Pet.
+- Will talk to Shreyas and other Teaching Assistants about using Teacher's Pet.
 
 **Sukhpreet Aulakh**
-- Finished thinking and finding frameworks to use for the visual Queue officehours.
 - [Contributed Frameworks] (https://www.notion.so/ashleys-workspace/Milestone-1-f9ac176336c24f648876866ccb21ecd0) that Teacher's Pet may require.
 
 
