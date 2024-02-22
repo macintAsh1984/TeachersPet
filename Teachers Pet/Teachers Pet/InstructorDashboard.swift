@@ -9,7 +9,10 @@ import SwiftUI
 
 struct InstructorDashboard: View {
     var body: some View {
-        Text("Instructor Dashboard")
+        VStack {
+            Text("Instructor Dashboard")
+        }
+        .navigationBarBackButtonHidden()
     }
 }
 

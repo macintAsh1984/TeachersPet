@@ -11,6 +11,7 @@ import SwiftUI
 // TODO: Save Class Join Code To Disk (in case instructors need it later)
 
 struct ClassJoinCodeGeneration: View {
+    @State var courseName: String 
     @State var navigateToDashboard = false
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
@@ -19,7 +20,7 @@ struct ClassJoinCodeGeneration: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Text("Join Code")
+                Text("\(courseName) Join Code")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -58,6 +59,7 @@ struct ClassJoinCodeGeneration: View {
             .padding()
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
+            .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
                 InstructorDashboard()
             }
@@ -91,5 +93,5 @@ struct ClassJoinCodeGeneration: View {
 }
 
 #Preview {
-    ClassJoinCodeGeneration()
+    ClassJoinCodeGeneration(courseName: "Test Course")
 }
