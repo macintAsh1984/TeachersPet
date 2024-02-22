@@ -14,6 +14,7 @@ struct CreateAccount: View {
     @State var password = String()
     
     var body: some View {
+        //Save name or should we just go to next view
         VStack {
             Text("Create An Account")
                 .font(.largeTitle)
