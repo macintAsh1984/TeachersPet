@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct Teachers_PetApp: App {
+    @StateObject var dataController = DataController()
     var body: some Scene {
         WindowGroup {
-            WelcomeScreen()
+            WelcomeScreen().environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }

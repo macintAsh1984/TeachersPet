@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct CreateAccount: View {
+    
+    @Environment(\.managedObjectContext) var managedObjContext
+    @Environment(\.dismiss) var dismiss
+    
     @State var firstName = String()
     @State var lastName = String()
     @State var email = String()
     @State var password = String()
+    @State var showingInstructorView = false
+    @State var showingAlert = false
+    @State var alertMessage = ""
     
     var body: some View {
         //Save name or should we just go to next view
@@ -43,7 +50,14 @@ struct CreateAccount: View {
             Spacer()
             
             Button {
-                //Take the student to the Join Class page or the instructor to the Create Class page.
+                if !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !password.isEmpty {
+                    DataController().addinstructorinformation(firstname: firstName, lastname: lastName, email: email, password: password, context: managedObjContext)
+                    
+                    showingInstructorView = true
+                }else {
+                    alertMessage = "Please enter all information"
+                    showingAlert = true
+                }
             } label: {
                 Text("Sign Up")
                     .fontWeight(.semibold)
@@ -53,11 +67,21 @@ struct CreateAccount: View {
             .buttonStyle(.borderedProminent)
             .tint(.orange)
             .controlSize(.large)
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
+            
+            
+            
+            
             Spacer()
         }
         .padding()
         .preferredColorScheme(.light)
         .background(Color("AppBackgroundColor"))
+        .fullScreenCover(isPresented: $showingInstructorView) {
+            Instructorview()
+        }
     }
 }
 

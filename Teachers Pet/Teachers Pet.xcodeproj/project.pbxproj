@@ -13,6 +13,9 @@
 		ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */; };
 		ABC70E062B713DD100A4FFF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC70E052B713DD100A4FFF3 /* Assets.xcassets */; };
 		ABC70E0A2B713DD100A4FFF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC70E092B713DD100A4FFF3 /* Preview Assets.xcassets */; };
+		DBE6CEAC2B8736E000C38C6A /* InstructorM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DBE6CEAA2B8736E000C38C6A /* InstructorM.xcdatamodeld */; };
+		DBE6CEAE2B87375300C38C6A /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6CEAD2B87375300C38C6A /* DataController.swift */; };
+		DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */; };
 		DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF643E72B87149A00FD5C68 /* CreateClass.swift */; };
 		DBF643EA2B87162A00FD5C68 /* InstructorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF643E92B87162A00FD5C68 /* InstructorViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -26,6 +29,9 @@
 		ABC70E052B713DD100A4FFF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABC70E072B713DD100A4FFF3 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		ABC70E092B713DD100A4FFF3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DBE6CEAB2B8736E000C38C6A /* InstructorM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InstructorM.xcdatamodel; sourceTree = "<group>"; };
+		DBE6CEAD2B87375300C38C6A /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instructorview.swift; sourceTree = "<group>"; };
 		DBF643E72B87149A00FD5C68 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
 		DBF643E92B87162A00FD5C68 /* InstructorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +72,8 @@
 				DBF643E72B87149A00FD5C68 /* CreateClass.swift */,
 				AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */,
 				DBF643E92B87162A00FD5C68 /* InstructorViewModel.swift */,
+				DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */,
+				DBE6CEA92B8736A700C38C6A /* DataModel */,
 				ABC70E052B713DD100A4FFF3 /* Assets.xcassets */,
 				ABC70E072B713DD100A4FFF3 /* Teachers_Pet.entitlements */,
 				ABC70E082B713DD100A4FFF3 /* Preview Content */,
@@ -79,6 +87,15 @@
 				ABC70E092B713DD100A4FFF3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DBE6CEA92B8736A700C38C6A /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				DBE6CEAA2B8736E000C38C6A /* InstructorM.xcdatamodeld */,
+				DBE6CEAD2B87375300C38C6A /* DataController.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -111,7 +128,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					ABC70DFD2B713DD000A4FFF3 = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -160,6 +177,9 @@
 				ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */,
 				AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */,
 				DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */,
+				DBE6CEAE2B87375300C38C6A /* DataController.swift in Sources */,
+				DBE6CEAC2B8736E000C38C6A /* InstructorM.xcdatamodeld in Sources */,
+				DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */,
 				ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +221,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -262,6 +283,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -289,8 +311,9 @@
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Teachers Pet/Preview Content\"";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 3A7FZ95N5N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -327,8 +350,9 @@
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Teachers Pet/Preview Content\"";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 3A7FZ95N5N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -379,6 +403,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DBE6CEAA2B8736E000C38C6A /* InstructorM.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DBE6CEAB2B8736E000C38C6A /* InstructorM.xcdatamodel */,
+			);
+			currentVersion = DBE6CEAB2B8736E000C38C6A /* InstructorM.xcdatamodel */;
+			name = InstructorM.xcdatamodeld;
+			path = ../../../../InstructorM.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = ABC70DF62B713DD000A4FFF3 /* Project object */;
 }

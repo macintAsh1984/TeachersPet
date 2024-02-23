@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct WelcomeScreen: View {
+    @Environment(\.managedObjectContext) var managedObjContext
+    @Environment(\.managedObjectContext) var dismiss
+    
     @State var navigateToCreateAccount = false
     var body: some View {
         NavigationStack {
