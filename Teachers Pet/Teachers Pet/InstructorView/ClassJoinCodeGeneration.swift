@@ -11,7 +11,10 @@ import SwiftUI
 // TODO: Save Class Join Code To Disk (in case instructors need it later)
 
 struct ClassJoinCodeGeneration: View {
-    @State var courseName: String 
+    @Environment(\.managedObjectContext) var managedObjContext
+    @Environment(\.dismiss) var dismiss
+    @FetchRequest(entity: Course.entity(), sortDescriptors: []) var entities: FetchedResults<Course>
+    
     @State var navigateToDashboard = false
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
@@ -20,10 +23,12 @@ struct ClassJoinCodeGeneration: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Text("\(courseName) Join Code")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
+                ForEach(entities, id: \.self) { entity in
+                    Text("\(entity.coursename ?? String()) Join Code")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.center)
+                }
                 
                 let joinCode = generateJoinCode()
                 Text(joinCode)
@@ -76,6 +81,8 @@ struct ClassJoinCodeGeneration: View {
         //Then, remove the hyphens and shorten the code to 5 characters.
         let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
         
+        DataController().saveJoinCode(joinCode: String(joinCode), context: managedObjContext)
+        
         return String(joinCode)
     }
     
@@ -93,5 +100,5 @@ struct ClassJoinCodeGeneration: View {
 }
 
 #Preview {
-    ClassJoinCodeGeneration(courseName: "Test Course")
+    ClassJoinCodeGeneration()
 }

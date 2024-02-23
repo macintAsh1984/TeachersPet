@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class DataController: ObservableObject {
+@MainActor class DataController: ObservableObject {
     let container = NSPersistentContainer(name: "InstructorM") //make sure this is the same label as CoreData
     
     init() {
@@ -51,6 +51,22 @@ class DataController: ObservableObject {
         
     }
     
+    
+    func saveCourseName(courseName: String, context: NSManagedObjectContext) {
+        let course = Course(context: context)
+        course.coursename = courseName
+        
+        savedata(context: context)
+        
+    }
+    
+    func saveJoinCode(joinCode: String, context: NSManagedObjectContext) {
+        let course = Course(context: context)
+        course.joincode = joinCode
+        
+        savedata(context: context)
+        
+    }
     
     
 }
