@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */; };
+		AB5E873E2B873524003822C2 /* InstructorDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E873D2B873524003822C2 /* InstructorDashboard.swift */; };
 		ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */; };
 		ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
+		AB5E873D2B873524003822C2 /* InstructorDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorDashboard.swift; sourceTree = "<group>"; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABC70DFE2B713DD000A4FFF3 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teachers_PetApp.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
 				DBF643E72B87149A00FD5C68 /* CreateClass.swift */,
 				AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */,
+				AB5E873D2B873524003822C2 /* InstructorDashboard.swift */,
 				DBF643E92B87162A00FD5C68 /* InstructorViewModel.swift */,
 				DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */,
 				DBE6CEA92B8736A700C38C6A /* DataModel */,
@@ -174,6 +177,7 @@
 			files = (
 				DBF643EA2B87162A00FD5C68 /* InstructorViewModel.swift in Sources */,
 				ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */,
+				AB5E873E2B873524003822C2 /* InstructorDashboard.swift in Sources */,
 				ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */,
 				AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */,
 				DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */,
