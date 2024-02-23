@@ -14,6 +14,7 @@
 		ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */; };
 		ABC70E062B713DD100A4FFF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC70E052B713DD100A4FFF3 /* Assets.xcassets */; };
 		ABC70E0A2B713DD100A4FFF3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC70E092B713DD100A4FFF3 /* Preview Assets.xcassets */; };
+		ABE645E52B88732D0072AA66 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE645E42B88732D0072AA66 /* SignIn.swift */; };
 		ABED6DD02B8827230036419E /* InstructorM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ABED6DCE2B8827230036419E /* InstructorM.xcdatamodeld */; };
 		DBE6CEAE2B87375300C38C6A /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6CEAD2B87375300C38C6A /* DataController.swift */; };
 		DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */; };
@@ -30,6 +31,7 @@
 		ABC70E052B713DD100A4FFF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABC70E072B713DD100A4FFF3 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		ABC70E092B713DD100A4FFF3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ABE645E42B88732D0072AA66 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		ABED6DCF2B8827230036419E /* InstructorM.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InstructorM.xcdatamodel; sourceTree = "<group>"; };
 		DBE6CEAD2B87375300C38C6A /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		DBE6CEB12B873E7A00C38C6A /* Instructorview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instructorview.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
+				ABE645E42B88732D0072AA66 /* SignIn.swift */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				DBE6CEA92B8736A700C38C6A /* DataModel */,
 				ABC70E052B713DD100A4FFF3 /* Assets.xcassets */,
@@ -187,6 +190,7 @@
 				AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */,
 				DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */,
 				DBE6CEAE2B87375300C38C6A /* DataController.swift in Sources */,
+				ABE645E52B88732D0072AA66 /* SignIn.swift in Sources */,
 				DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */,
 				ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */,
 			);

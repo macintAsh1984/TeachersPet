@@ -19,7 +19,9 @@ struct CreateAccount: View {
     @State var showingInstructorView = false
     @State var showingAlert = false
     @State var alertMessage = ""
+    
     @State var navigateToCreateClass = false
+    @State var navigateToSignIn = false
     
     var body: some View {
         //Save name or should we just go to next view
@@ -73,11 +75,21 @@ struct CreateAccount: View {
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
-                
-                
-                
-                
                 Spacer()
+                    .frame(height: 20)
+                HStack(spacing: 5) {
+                    Text("Already have an account?")
+                    Button {
+                        navigateToSignIn = true
+                    } label: {
+                        Text("Sign In")
+                            .underline()
+                            .foregroundStyle(.orange)
+                    }
+    
+                }
+                Spacer()
+        
             }
             .padding()
             .preferredColorScheme(.light)
@@ -87,6 +99,9 @@ struct CreateAccount: View {
 //            }
             .navigationDestination(isPresented: $navigateToCreateClass) {
                 CreateClass()
+            }
+            .navigationDestination(isPresented: $navigateToSignIn) {
+                SignIn()
             }
         }
     }
