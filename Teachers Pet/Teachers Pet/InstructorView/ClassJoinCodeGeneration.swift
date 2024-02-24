@@ -16,9 +16,9 @@ struct ClassJoinCodeGeneration: View {
     @FetchRequest(entity: Course.entity(), sortDescriptors: []) var entities: FetchedResults<Course>
     
     @State var navigateToDashboard = false
-    let context = CIContext()
-    let filter = CIFilter.qrCodeGenerator()
-    
+    @State var qrCode: Image?
+    @State var joinCode: String = String()
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -30,22 +30,23 @@ struct ClassJoinCodeGeneration: View {
                         .multilineTextAlignment(.center)
                 }
                 
-                let joinCode = generateJoinCode()
                 Text(joinCode)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
                 Spacer()
                     .frame(height: 20)
                 Text("Or give your students this QR Code")
                     .font(.title3)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                Image(uiImage: generateQRCode(from: "\(joinCode)"))
-                    .interpolation(.none)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
+                
+                if let qrCode = qrCode {
+                    qrCode
+                        .interpolation(.none)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                } else {
+                    Text("Generating QR code..")
+                }
                 
                 Button {
                     navigateToDashboard = true
@@ -61,6 +62,13 @@ struct ClassJoinCodeGeneration: View {
                 Spacer()
                 
             }
+            .onAppear {
+                let generatedJoinCode = generateJoinCode()
+                joinCode = generatedJoinCode
+                DataController().saveJoinCode(joinCode: joinCode, context: managedObjContext)
+                
+                generateQRCode()
+            }
             .padding()
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
@@ -75,28 +83,33 @@ struct ClassJoinCodeGeneration: View {
        
     }
     
-    func generateJoinCode() -> String {
-        //Generate a random, alphanumeric string with hyphens.
-        let randomString = UUID().uuidString
-        //Then, remove the hyphens and shorten the code to 5 characters.
-        let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
+    func generateQRCode()  {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
         
-        DataController().saveJoinCode(joinCode: String(joinCode), context: managedObjContext)
-        
-        return String(joinCode)
-    }
-    
-    func generateQRCode(from joinCode: String) -> UIImage {
-        filter.message = Data(joinCode.utf8)
+        if let data = joinCode.data(using: .utf8) {
+            filter.message = data
+        }
 
         if let outputImage = filter.outputImage {
             if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                return UIImage(cgImage: cgImage)
+                #if os(macOS)
+                qrCode = Image(nsImage: NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height)))
+                #else
+                qrCode = Image(uiImage: UIImage(cgImage: cgImage))
+                #endif
             }
         }
-
-        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
+}
+
+func generateJoinCode() -> String {
+    //Generate a random, alphanumeric string with hyphens.
+    let randomString = UUID().uuidString
+    //Then, remove the hyphens and shorten the code to 5 characters.
+    let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
+    
+    return String(joinCode)
 }
 
 #Preview {
