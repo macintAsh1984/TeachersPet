@@ -13,8 +13,11 @@ import SwiftUI
 struct ClassJoinCodeGeneration: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @Environment(\.dismiss) var dismiss
-    @FetchRequest(entity: Course.entity(), sortDescriptors: []) var entities: FetchedResults<Course>
+    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
     
+    @State var email = String()
+    @State var password = String()
+
     @State var navigateToDashboard = false
     @State var qrCode: Image?
     @State var joinCode: String = String()
@@ -23,8 +26,8 @@ struct ClassJoinCodeGeneration: View {
         NavigationStack {
             VStack {
                 Spacer()
-                ForEach(entities, id: \.self) { entity in
-                    Text("\(entity.coursename ?? String()) Join Code")
+                if let thelatestcoursename = entities.last?.coursename {
+                    Text("\(thelatestcoursename) Join Code")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
@@ -49,7 +52,8 @@ struct ClassJoinCodeGeneration: View {
                 }
                 
                 Button {
-                    navigateToDashboard = true
+                    setlatestemailandpassword()
+                    //navigateToDashboard = true
                 } label: {
                     Text("Go To Dashboard")
                         .fontWeight(.semibold)
@@ -74,7 +78,11 @@ struct ClassJoinCodeGeneration: View {
             .background(Color("AppBackgroundColor"))
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
-                InstructorDashboard()
+                
+                    InstructorDashboard(email: $email, password: $password)
+    
+                
+                
             }
             
             
@@ -101,6 +109,19 @@ struct ClassJoinCodeGeneration: View {
             }
         }
     }
+    
+    
+    func setlatestemailandpassword() {
+        if let thecurremail = entities.last?.email, let currpassword = entities.last?.password{
+            email = thecurremail
+            password = currpassword
+        }
+        navigateToDashboard = true
+        
+    }
+    
+    
+    
 }
 
 func generateJoinCode() -> String {
