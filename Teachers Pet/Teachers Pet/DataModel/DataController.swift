@@ -53,7 +53,7 @@ import CoreData
     
     
     func saveCourseName(courseName: String, context: NSManagedObjectContext) {
-        let course = Course(context: context)
+        let course = Instructor(context: context)
         course.coursename = courseName
         
         savedata(context: context)
@@ -61,7 +61,7 @@ import CoreData
     }
     
     func saveJoinCode(joinCode: String, context: NSManagedObjectContext) {
-        let course = Course(context: context)
+        let course = Instructor(context: context)
         course.joincode = joinCode
         
         savedata(context: context)

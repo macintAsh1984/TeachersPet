@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="Course" representedClassName="Course" syncable="YES" codeGenerationType="class">
         <attribute name="coursename" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="joincode" optional="YES" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="Instructor" representedClassName="Instructor" syncable="YES" codeGenerationType="class">
+        <attribute name="coursename" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="email" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="firstname" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="joincode" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="lastname" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="password" optional="YES" attributeType="String" defaultValueString=""/>
     </entity>

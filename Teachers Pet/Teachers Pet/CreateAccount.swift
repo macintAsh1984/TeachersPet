@@ -24,7 +24,6 @@ struct CreateAccount: View {
     @State var navigateToSignIn = false
     
     var body: some View {
-        //Save name or should we just go to next view
         NavigationStack {
             VStack {
                 Text("Create An Account")
@@ -56,8 +55,6 @@ struct CreateAccount: View {
                 Button {
                     if !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !password.isEmpty {
                         DataController().addinstructorinformation(firstname: firstName, lastname: lastName, email: email, password: password, context: managedObjContext)
-                        
-                        //showingInstructorView = true
                         navigateToCreateClass = true
                     } else {
                         alertMessage = "Please enter all information"
@@ -94,9 +91,7 @@ struct CreateAccount: View {
             .padding()
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
-//            .fullScreenCover(isPresented: $showingInstructorView) {
-//                Instructorview()
-//            }
+
             .navigationDestination(isPresented: $navigateToCreateClass) {
                 CreateClass()
             }

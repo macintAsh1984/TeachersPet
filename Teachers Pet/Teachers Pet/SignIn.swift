@@ -12,6 +12,11 @@ struct SignIn: View {
     @State var password = String()
     @State var navigateToCreateAccount = false
     @State var navigateToInstructorDashboard = false
+    @State var showingAlert = false
+    @State var alertMessage = ""
+    @Environment(\.managedObjectContext) var managedObjContext
+    @Environment(\.dismiss) var dismiss
+    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
     
     var body: some View {
         NavigationStack {
@@ -40,7 +45,7 @@ struct SignIn: View {
                 Spacer()
                     .frame(height: 50)
                 Button {
-                    navigateToInstructorDashboard = true
+                    Checkifemailpasswordisvalid()
                 } label: {
                     Text("Sign In")
                         .fontWeight(.semibold)
@@ -50,6 +55,9 @@ struct SignIn: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
                 .controlSize(.large)
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
                 
                 Spacer()
                 
@@ -75,10 +83,24 @@ struct SignIn: View {
             .navigationDestination(isPresented: $navigateToCreateAccount) {
                 CreateAccount()
             }
-            .navigationDestination(isPresented: $navigateToInstructorDashboard) {
-                InstructorDashboard()
+            .navigationDestination(isPresented: $navigateToInstructorDashboard) { //pass in the email and password entered
+                InstructorDashboard(email: $email, password: $password)
             }
         }
+    }
+    func Checkifemailpasswordisvalid() {
+        for entity in entities { //need to fix bug where if no account has been created, alert must be presented still
+            if (entity.email == email && entity.password == password) {
+                showingAlert = false
+                navigateToInstructorDashboard = true
+            }
+            else {
+                alertMessage = "Not a valid account, please try again"
+                showingAlert = true
+            }
+            
+        }
+        
     }
 }
 
