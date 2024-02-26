@@ -26,7 +26,7 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 **Sai Chamarty**
 - Planned out how to group students together based on their questions…
 - Use CreateML to train a model based on similar questions or not, then just incorporate it into our app.
-- Working on student view dashboard.
+- Created UI for Student Dashboard.
 
 **Sukhpreet Aulakh**
 - Wrote out [Sprint Planning #2]([url](https://www.notion.so/ashleys-workspace/Crewmate-Meeting-2-dd86b827cede4cb5b3b679d0e446a701?pvs=4))
