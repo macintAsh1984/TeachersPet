@@ -1,6 +1,7 @@
-# Sprint Planning #1
+# Sprint Planning #3
 
 **Trello Board**: https://trello.com/b/Do4WCnFy/teachers-pet-🐢
+
 **Crewmate Meeting 3**: https://www.notion.so/ashleys-workspace/Crewmate-Meeting-3-4529af26070a493eb1d043406bb60612?pvs=4
 
 # Project Summary
