@@ -8,17 +8,17 @@
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 
-// TODO: Save Class Join Code To Disk (in case instructors need it later)
-
 struct ClassJoinCodeGeneration: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    @State var navigateToDashboard = false
-    @Binding var email:String
+    
+    @Binding var email: String
     @Binding var password: String
     @Binding var Name: String
     @Binding var coursename: String
-    let context = CIContext()
-    let filter = CIFilter.qrCodeGenerator()
+    
+    @State var navigateToDashboard = false
+    @State var qrCode: Image?
+    @State var joinCode: String = String()
     
     var body: some View {
         NavigationStack {
@@ -30,9 +30,6 @@ struct ClassJoinCodeGeneration: View {
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
             
-                
-                
-                let joinCode = generateJoinCode()
                 Text(joinCode)
                     .font(.title2)
                     .fontWeight(.semibold)
@@ -43,18 +40,19 @@ struct ClassJoinCodeGeneration: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                Image(uiImage: generateQRCode(from: "\(joinCode)"))
-                    .interpolation(.none)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
+                
+                    if let qrCode = qrCode {
+                        qrCode
+                            .interpolation(.none)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    } else {
+                        Text("Generating QR code..")
+                    }
                 
                 Button {
-                    Task {
-                        try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode) //only first name for now fix this to have both
-                    }
                     navigateToDashboard = true
-                    
                 } label: {
                     Text("Go To Dashboard")
                         .fontWeight(.semibold)
@@ -74,7 +72,15 @@ struct ClassJoinCodeGeneration: View {
             .navigationDestination(isPresented: $navigateToDashboard) {
                 Instructorview()
             }
-            .onAppear()
+            .onAppear {
+                let generatedJoinCode = generateJoinCode()
+                joinCode = generatedJoinCode
+                Task {
+                    try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode) //only first name for now fix this to have both
+                }
+                
+                generateQRCode()
+            }
             
             
         }
@@ -88,21 +94,26 @@ struct ClassJoinCodeGeneration: View {
         //Then, remove the hyphens and shorten the code to 5 characters.
         let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
         
-        //DataController().saveJoinCode(joinCode: String(joinCode), context: managedObjContext)
-        
         return String(joinCode)
     }
     
-    func generateQRCode(from joinCode: String) -> UIImage {
-        filter.message = Data(joinCode.utf8)
+    func generateQRCode()  {
+        let context = CIContext()
+        let filter = CIFilter.qrCodeGenerator()
+        
+        if let data = joinCode.data(using: .utf8) {
+            filter.message = data
+        }
 
         if let outputImage = filter.outputImage {
             if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                return UIImage(cgImage: cgImage)
+                #if os(macOS)
+                qrCode = Image(nsImage: NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height)))
+                #else
+                qrCode = Image(uiImage: UIImage(cgImage: cgImage))
+                #endif
             }
         }
-
-        return UIImage(systemName: "xmark.circle") ?? UIImage()
     }
     
     

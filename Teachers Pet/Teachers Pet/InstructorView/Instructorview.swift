@@ -12,6 +12,7 @@ struct Instructorview: View {
     @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
         if let user = viewModel.currentUser {
+            Text(user.fullname)
             List {
                 Section {
                     VStack {
@@ -48,4 +49,5 @@ struct Instructorview: View {
         }
     }
 }
+
 
