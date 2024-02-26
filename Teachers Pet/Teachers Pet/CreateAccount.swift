@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CreateAccount: View {
     
-    @Environment(\.managedObjectContext) var managedObjContext
-    @Environment(\.dismiss) var dismiss
+//    @Environment(\.managedObjectContext) var managedObjContext
+//    @Environment(\.dismiss) var dismiss
     
     @State var firstName = String()
     @State var lastName = String()
@@ -22,6 +22,7 @@ struct CreateAccount: View {
     
     @State var navigateToCreateClass = false
     @State var navigateToSignIn = false
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         NavigationStack {
@@ -53,13 +54,13 @@ struct CreateAccount: View {
                 Spacer()
                 
                 Button {
-                    if !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !password.isEmpty {
-                        DataController().addinstructorinformation(firstname: firstName, lastname: lastName, email: email, password: password, context: managedObjContext)
-                        navigateToCreateClass = true
-                    } else {
-                        alertMessage = "Please enter all information"
+                    if firstName.isEmpty || lastName.isEmpty || email.isEmpty || password.isEmpty {
                         showingAlert = true
                     }
+                    else {
+                        navigateToCreateClass = true
+                    }
+
                 } label: {
                     Text("Sign Up")
                         .fontWeight(.semibold)
@@ -70,7 +71,7 @@ struct CreateAccount: View {
                 .tint(.orange)
                 .controlSize(.large)
                 .alert(isPresented: $showingAlert) {
-                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    Alert(title: Text("Error, please fill in all the information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
                 Spacer()
                     .frame(height: 20)
@@ -93,7 +94,7 @@ struct CreateAccount: View {
             .background(Color("AppBackgroundColor"))
 
             .navigationDestination(isPresented: $navigateToCreateClass) {
-                CreateClass()
+                CreateClass(email: $email, password: $password, Name: $firstName)
             }
             .navigationDestination(isPresented: $navigateToSignIn) {
                 SignIn()

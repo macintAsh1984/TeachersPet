@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct CreateClass: View {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @Environment(\.dismiss) var dismiss
-    
+    @EnvironmentObject var viewModel: AuthViewModel
     @State var courseName = String()
     @State var navigateToCodeGeneration = false
+    @Binding var email: String
+    @Binding var password: String
+    @Binding var Name: String
+
     
     var body: some View {
         NavigationStack {
@@ -31,7 +33,6 @@ struct CreateClass: View {
                     .cornerRadius(10.0)
                 Spacer()
                 Button {
-                    DataController().saveCourseName(courseName: courseName, context: managedObjContext)
                     navigateToCodeGeneration = true
                 } label: {
                     Text("Create Class")
@@ -48,13 +49,13 @@ struct CreateClass: View {
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
             .navigationDestination(isPresented: $navigateToCodeGeneration) {
-                ClassJoinCodeGeneration()
+                ClassJoinCodeGeneration(email: $email, password: $password, Name: $Name, coursename: $courseName)
             }
         }
         
     }
 }
 
-#Preview {
-    CreateClass()
-}
+//#Preview {
+//    CreateClass()
+//}
