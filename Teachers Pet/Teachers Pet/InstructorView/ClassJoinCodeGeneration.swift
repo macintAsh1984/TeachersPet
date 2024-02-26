@@ -8,8 +8,6 @@
 import CoreImage.CIFilterBuiltins
 import SwiftUI
 
-// TODO: Save Class Join Code To Disk (in case instructors need it later)
-
 struct ClassJoinCodeGeneration: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @Environment(\.dismiss) var dismiss
@@ -78,10 +76,7 @@ struct ClassJoinCodeGeneration: View {
             .background(Color("AppBackgroundColor"))
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
-                
-                    InstructorDashboard(email: $email, password: $password)
-    
-                
+                InstructorDashboard(email: $email, password: $password)
                 
             }
             
@@ -109,7 +104,6 @@ struct ClassJoinCodeGeneration: View {
             }
         }
     }
-    
     
     func setlatestemailandpassword() {
         if let thecurremail = entities.last?.email, let currpassword = entities.last?.password{
