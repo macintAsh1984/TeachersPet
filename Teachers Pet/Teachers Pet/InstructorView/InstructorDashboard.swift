@@ -12,9 +12,9 @@ struct InstructorDashboard: View {
     @Binding var password: String
     @State var transitionbacktohome = false
     @State var deleteAccountAlert = false
-    @Environment(\.managedObjectContext) var managedObjContext
-    @Environment(\.dismiss) var dismiss
-    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
+//    @Environment(\.managedObjectContext) var managedObjContext
+//    @Environment(\.dismiss) var dismiss
+//    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
     
     var body: some View {
         NavigationStack {
@@ -39,7 +39,9 @@ struct InstructorDashboard: View {
                 WelcomeScreen()
             }
             .navigationTitle("Dashboard")
+            #if(ios)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem {
                     Menu() {
@@ -73,7 +75,7 @@ struct InstructorDashboard: View {
                     title: Text("Are you sure you want to delete your account?"),
                     message: Text("This action cannot be undone."),
                     primaryButton: .destructive(Text("Delete Account")) {
-                        deleteprofaccount()
+                        //deleteprofaccount()
                     },
                     secondaryButton: .cancel()
                 
@@ -83,15 +85,15 @@ struct InstructorDashboard: View {
     }
     
     
-    func deleteprofaccount() {
-        for entity in entities {
-            if (entity.email == email && entity.password == password) {
-                managedObjContext.delete(entity)
-                DataController().savedata(context: managedObjContext)
-                transitionbacktohome = true
-            }
-        }
-    }
+//    func deleteprofaccount() {
+//        for entity in entities {
+//            if (entity.email == email && entity.password == password) {
+//                managedObjContext.delete(entity)
+//                DataController().savedata(context: managedObjContext)
+//                transitionbacktohome = true
+//            }
+//        }
+//    }
     
 }
 

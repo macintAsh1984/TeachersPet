@@ -6,25 +6,46 @@
 //
 
 import SwiftUI
-import CoreData
 
+ //for now, inject the current user data into this view
 struct Instructorview: View {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
+    @EnvironmentObject var viewModel: AuthViewModel
     var body: some View {
-        List {
-                    ForEach(entities, id: \.self) { entity in
-                        VStack(alignment: .leading) {
-                            Text("Name: \(entity.firstname ?? "")")
-                            Text("Email: \(entity.email ?? "")")
-                            Text("Password: \(entity.password ?? "")")
-                            Text("Lastname: \(entity.lastname ?? "")")
+        if let user = viewModel.currentUser {
+            Text(user.fullname)
+            List {
+                Section {
+                    VStack {
+                        Text(user.fullname)
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .padding(.top, 4)
+                        
+                        Text(user.email)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                        
+                        Text(user.coursename)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                        
+                        Text(user.joincode)
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                            
+                    }
+                    Button {
+                        Task {
+                            viewModel.signout()
                         }
+                    } label: {
+                        Text("Sign out")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.red)
+                            .frame(maxWidth: .infinity)
                     }
                 }
+            }
+        }
     }
-}
-
-#Preview {
-    Instructorview()
 }

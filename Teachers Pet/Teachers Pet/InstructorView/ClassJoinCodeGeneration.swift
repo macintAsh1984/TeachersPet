@@ -9,29 +9,31 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct ClassJoinCodeGeneration: View {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @Environment(\.dismiss) var dismiss
-    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
+    @EnvironmentObject var viewModel: AuthViewModel
     
-    @State var email = String()
-    @State var password = String()
-
+    @Binding var email: String
+    @Binding var password: String
+    @Binding var Name: String
+    @Binding var coursename: String
+    
     @State var navigateToDashboard = false
     @State var qrCode: Image?
     @State var joinCode: String = String()
-
+    
     var body: some View {
         NavigationStack {
             VStack {
                 Spacer()
-                if let thelatestcoursename = entities.last?.coursename {
-                    Text("\(thelatestcoursename) Join Code")
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                }
-                
+              
+                Text("\(coursename) Join Code")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+            
                 Text(joinCode)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
                 Spacer()
                     .frame(height: 20)
                 Text("Or give your students this QR Code")
@@ -39,19 +41,18 @@ struct ClassJoinCodeGeneration: View {
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                 
-                if let qrCode = qrCode {
-                    qrCode
-                        .interpolation(.none)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                } else {
-                    Text("Generating QR code..")
-                }
+                    if let qrCode = qrCode {
+                        qrCode
+                            .interpolation(.none)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    } else {
+                        Text("Generating QR code..")
+                    }
                 
                 Button {
-                    setlatestemailandpassword()
-                    //navigateToDashboard = true
+                    navigateToDashboard = true
                 } label: {
                     Text("Go To Dashboard")
                         .fontWeight(.semibold)
@@ -64,26 +65,36 @@ struct ClassJoinCodeGeneration: View {
                 Spacer()
                 
             }
-            .onAppear {
-                let generatedJoinCode = generateJoinCode()
-                joinCode = generatedJoinCode
-                DataController().saveJoinCode(joinCode: joinCode, context: managedObjContext)
-                
-                generateQRCode()
-            }
             .padding()
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
-                InstructorDashboard(email: $email, password: $password)
+                Instructorview()
+            }
+            .onAppear {
+                let generatedJoinCode = generateJoinCode()
+                joinCode = generatedJoinCode
+                Task {
+                    try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode) //only first name for now fix this to have both
+                }
                 
+                generateQRCode()
             }
             
             
         }
         
        
+    }
+    
+    func generateJoinCode() -> String {
+        //Generate a random, alphanumeric string with hyphens.
+        let randomString = UUID().uuidString
+        //Then, remove the hyphens and shorten the code to 5 characters.
+        let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
+        
+        return String(joinCode)
     }
     
     func generateQRCode()  {
@@ -105,28 +116,13 @@ struct ClassJoinCodeGeneration: View {
         }
     }
     
-    func setlatestemailandpassword() {
-        if let thecurremail = entities.last?.email, let currpassword = entities.last?.password{
-            email = thecurremail
-            password = currpassword
-        }
-        navigateToDashboard = true
-        
-    }
+    
+   
     
     
     
 }
 
-func generateJoinCode() -> String {
-    //Generate a random, alphanumeric string with hyphens.
-    let randomString = UUID().uuidString
-    //Then, remove the hyphens and shorten the code to 5 characters.
-    let joinCode = randomString.replacingOccurrences(of: "-", with: "").prefix(5)
-    
-    return String(joinCode)
-}
-
-#Preview {
-    ClassJoinCodeGeneration()
-}
+//#Preview {
+//    ClassJoinCodeGeneration()
+//}

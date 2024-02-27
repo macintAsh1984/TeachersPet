@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct SignIn: View {
     @State var email = String()
     @State var password = String()
@@ -14,10 +16,8 @@ struct SignIn: View {
     @State var navigateToInstructorDashboard = false
     @State var showingAlert = false
     @State var alertMessage = ""
-    @Environment(\.managedObjectContext) var managedObjContext
-    @Environment(\.dismiss) var dismiss
-    @FetchRequest(entity: Instructor.entity(), sortDescriptors: []) var entities: FetchedResults<Instructor>
-    
+    @EnvironmentObject var viewModel:AuthViewModel
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -45,7 +45,19 @@ struct SignIn: View {
                 Spacer()
                     .frame(height: 50)
                 Button {
-                    Checkifemailpasswordisvalid()
+                    
+                    if email.isEmpty || password.isEmpty {
+                        showingAlert = true
+                    } else {
+                        Task {
+                            do {
+                                try await viewModel.signIn(withEmail: email, password: password)
+                                navigateToInstructorDashboard = true
+                            }catch {
+                                print("Error signing in")
+                            }
+                        }
+                    }
                 } label: {
                     Text("Sign In")
                         .fontWeight(.semibold)
@@ -84,24 +96,11 @@ struct SignIn: View {
                 CreateAccount()
             }
             .navigationDestination(isPresented: $navigateToInstructorDashboard) { //pass in the email and password entered
-                InstructorDashboard(email: $email, password: $password)
+                Instructorview()
             }
         }
     }
-    func Checkifemailpasswordisvalid() {
-        for entity in entities { //need to fix bug where if no account has been created, alert must be presented still
-            if (entity.email == email && entity.password == password) {
-                showingAlert = false
-                navigateToInstructorDashboard = true
-            }
-            else {
-                alertMessage = "Not a valid account, please try again"
-                showingAlert = true
-            }
-            
-        }
-        
-    }
+
 }
 
 #Preview {
