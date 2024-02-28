@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AB57BFAD2B8DBB58005ECF30 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB57BFAC2B8DBB58005ECF30 /* RootView.swift */; };
 		AB57BFB02B8DBC03005ECF30 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AB57BFAF2B8DBC03005ECF30 /* FirebaseAnalytics */; };
 		AB57BFB22B8DBC03005ECF30 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = AB57BFB12B8DBC03005ECF30 /* FirebaseAnalyticsOnDeviceConversion */; };
 		AB57BFB42B8DBC03005ECF30 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AB57BFB32B8DBC03005ECF30 /* FirebaseAnalyticsSwift */; };
@@ -29,6 +28,7 @@
 		AB5E873E2B873524003822C2 /* InstructorDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E873D2B873524003822C2 /* InstructorDashboard.swift */; };
 		AB73422F2B8DD401006C949F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB73422E2B8DD401006C949F /* GoogleService-Info.plist */; };
 		ABA082012B8EC0B500A55A98 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA082002B8EC0B500A55A98 /* AuthViewModel.swift */; };
+		ABA082032B8EC4CB00A55A98 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA082022B8EC4CB00A55A98 /* RootView.swift */; };
 		ABAC219A2B8EC020005CF27E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAC21992B8EC020005CF27E /* User.swift */; };
 		ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */; };
@@ -41,11 +41,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AB57BFAC2B8DBB58005ECF30 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RootView.swift; path = "../../../../../.Trash/TeachersPet/Teachers Pet/Teachers Pet/RootView.swift"; sourceTree = "<group>"; };
 		AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		AB5E873D2B873524003822C2 /* InstructorDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorDashboard.swift; sourceTree = "<group>"; };
 		AB73422E2B8DD401006C949F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABA082002B8EC0B500A55A98 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		ABA082022B8EC4CB00A55A98 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABAC21992B8EC020005CF27E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABC70DFE2B713DD000A4FFF3 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,8 +128,8 @@
 			children = (
 				ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
+				ABA082022B8EC4CB00A55A98 /* RootView.swift */,
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
-				AB57BFAC2B8DBB58005ECF30 /* RootView.swift */,
 				ABE645E42B88732D0072AA66 /* SignIn.swift */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
@@ -247,12 +247,12 @@
 				ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */,
 				AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */,
 				DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */,
-				AB57BFAD2B8DBB58005ECF30 /* RootView.swift in Sources */,
 				ABE645E52B88732D0072AA66 /* SignIn.swift in Sources */,
 				ABA082012B8EC0B500A55A98 /* AuthViewModel.swift in Sources */,
 				DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */,
 				ABAC219A2B8EC020005CF27E /* User.swift in Sources */,
 				ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */,
+				ABA082032B8EC4CB00A55A98 /* RootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
