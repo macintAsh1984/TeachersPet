@@ -28,8 +28,8 @@
 		AB5E87392B8723A9003822C2 /* ClassJoinCodeGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */; };
 		AB5E873E2B873524003822C2 /* InstructorDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5E873D2B873524003822C2 /* InstructorDashboard.swift */; };
 		AB73422F2B8DD401006C949F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB73422E2B8DD401006C949F /* GoogleService-Info.plist */; };
-		AB8A81A42B8DBF640096601F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A81A32B8DBF640096601F /* AuthViewModel.swift */; };
-		AB8A81A62B8DC0880096601F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A81A52B8DC0880096601F /* User.swift */; };
+		ABA082012B8EC0B500A55A98 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA082002B8EC0B500A55A98 /* AuthViewModel.swift */; };
+		ABAC219A2B8EC020005CF27E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAC21992B8EC020005CF27E /* User.swift */; };
 		ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */; };
 		ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */; };
@@ -45,8 +45,8 @@
 		AB5E87382B8723A9003822C2 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		AB5E873D2B873524003822C2 /* InstructorDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorDashboard.swift; sourceTree = "<group>"; };
 		AB73422E2B8DD401006C949F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		AB8A81A32B8DBF640096601F /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthViewModel.swift; path = ../../../../../../Downloads/AuthViewModel.swift; sourceTree = "<group>"; };
-		AB8A81A52B8DC0880096601F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		ABA082002B8EC0B500A55A98 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		ABAC21992B8EC020005CF27E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABC70DFE2B713DD000A4FFF3 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC70E012B713DD000A4FFF3 /* Teachers_PetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teachers_PetApp.swift; sourceTree = "<group>"; };
@@ -98,11 +98,11 @@
 			path = InstructorView;
 			sourceTree = "<group>";
 		};
-		AB57BFD22B8DBC78005ECF30 /* FirebaseAuth */ = {
+		ABAC21972B8EBFC2005CF27E /* FirebaseAuth */ = {
 			isa = PBXGroup;
 			children = (
-				AB8A81A32B8DBF640096601F /* AuthViewModel.swift */,
-				AB8A81A52B8DC0880096601F /* User.swift */,
+				ABAC21992B8EC020005CF27E /* User.swift */,
+				ABA082002B8EC0B500A55A98 /* AuthViewModel.swift */,
 			);
 			path = FirebaseAuth;
 			sourceTree = "<group>";
@@ -132,7 +132,7 @@
 				AB57BFAC2B8DBB58005ECF30 /* RootView.swift */,
 				ABE645E42B88732D0072AA66 /* SignIn.swift */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
-				AB57BFD22B8DBC78005ECF30 /* FirebaseAuth */,
+				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				ABC70E052B713DD100A4FFF3 /* Assets.xcassets */,
 				AB73422E2B8DD401006C949F /* GoogleService-Info.plist */,
 				ABC70E072B713DD100A4FFF3 /* Teachers_Pet.entitlements */,
@@ -242,7 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB8A81A42B8DBF640096601F /* AuthViewModel.swift in Sources */,
 				ABC70E042B713DD000A4FFF3 /* WelcomeScreen.swift in Sources */,
 				AB5E873E2B873524003822C2 /* InstructorDashboard.swift in Sources */,
 				ABADDFE62B85D3C300614BB2 /* CreateAccount.swift in Sources */,
@@ -250,9 +249,10 @@
 				DBF643E82B87149A00FD5C68 /* CreateClass.swift in Sources */,
 				AB57BFAD2B8DBB58005ECF30 /* RootView.swift in Sources */,
 				ABE645E52B88732D0072AA66 /* SignIn.swift in Sources */,
+				ABA082012B8EC0B500A55A98 /* AuthViewModel.swift in Sources */,
 				DBE6CEB22B873E7A00C38C6A /* Instructorview.swift in Sources */,
+				ABAC219A2B8EC020005CF27E /* User.swift in Sources */,
 				ABC70E022B713DD000A4FFF3 /* Teachers_PetApp.swift in Sources */,
-				AB8A81A62B8DC0880096601F /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
