@@ -33,6 +33,7 @@
 		AB7F0C932B90280100317EDF /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7F0C922B90280100317EDF /* AuthViewModel.swift */; };
 		AB7F0C972B90285A00317EDF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7F0C962B90285A00317EDF /* User.swift */; };
 		AB90C1B22B91C911007A6DA7 /* CreateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB90C1B12B91C911007A6DA7 /* CreateClass.swift */; };
+		AB90C1B42B92531A007A6DA7 /* OHLineManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */; };
 		ABB465032B90290F007B3AA1 /* ClassJoinCodeGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */; };
 		ABB465052B9029D0007B3AA1 /* InstructorJoinClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */; };
 		ABB465082B902A00007B3AA1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = ABB465072B902A00007B3AA1 /* CodeScanner */; };
@@ -55,6 +56,7 @@
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB90C1B02B91A9FD007A6DA7 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Teachers_Pet.entitlements; path = "../../../../Library/Messages/Attachments/45/05/DC381838-2DC4-48F7-844D-6C4B1781C334/Teachers_Pet.entitlements"; sourceTree = "<group>"; };
 		AB90C1B12B91C911007A6DA7 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
+		AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineManagement.swift; sourceTree = "<group>"; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorJoinClass.swift; sourceTree = "<group>"; };
@@ -111,10 +113,10 @@
 			isa = PBXGroup;
 			children = (
 				AB90C1B12B91C911007A6DA7 /* CreateClass.swift */,
-				ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */,
 				ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */,
+				ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */,
 				ABB465092B902BA5007B3AA1 /* InstructorDashboard.swift */,
-				ABB465182B91A2BB007B3AA1 /* OHLineView.swift */,
+				AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */,
 			);
 			path = InstructorView;
 			sourceTree = "<group>";
@@ -134,6 +136,7 @@
 				ABB4651C2B91A760007B3AA1 /* StudentJoinClass.swift */,
 				ABB465122B919FA5007B3AA1 /* StudentDashboard.swift */,
 				ABB465162B91A227007B3AA1 /* OHQuestionaire.swift */,
+				ABB465182B91A2BB007B3AA1 /* OHLineView.swift */,
 			);
 			path = StudentView;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				ABF4079C2B9023FE00444A48 /* SignIn.swift in Sources */,
 				AB90C1B22B91C911007A6DA7 /* CreateClass.swift in Sources */,
 				ABB4650E2B919D9E007B3AA1 /* OfficeHoursViewModel.swift in Sources */,
+				AB90C1B42B92531A007A6DA7 /* OHLineManagement.swift in Sources */,
 				ABB4651D2B91A760007B3AA1 /* StudentJoinClass.swift in Sources */,
 				ABB465172B91A227007B3AA1 /* OHQuestionaire.swift in Sources */,
 			);

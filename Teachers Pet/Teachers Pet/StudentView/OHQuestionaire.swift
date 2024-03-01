@@ -10,6 +10,7 @@ import SwiftUI
 struct OHQuestionaire: View {
     @State private var selectedOption: Int? = nil
     @State private var otherOptionText: String = ""
+    @State var navigateToOfficeHoursLine = false
     
     var options = [
         "Need help getting started",
@@ -19,51 +20,58 @@ struct OHQuestionaire: View {
     ]
     
     var body: some View {
-        VStack {
-            Text("Please answer the survey:")
-                .font(.title)
-                .padding()
-            
-            ForEach(0..<4, id: \.self) { index in
-                Button(action: {
-                    // Toggle selection
-                    if self.selectedOption == index {
-                        self.selectedOption = nil // Deselect if already selected
-                    } else {
-                        self.selectedOption = index
-                    }
-                }) {
-                    HStack {
-                        Text(options[index])
-                        Spacer()
+        NavigationStack {
+            VStack {
+                Text("Please answer the survey:")
+                    .font(.title)
+                    .padding()
+                
+                ForEach(0..<4, id: \.self) { index in
+                    Button(action: {
+                        // Toggle selection
                         if self.selectedOption == index {
-                            Image(systemName: "checkmark")
+                            self.selectedOption = nil // Deselect if already selected
+                        } else {
+                            self.selectedOption = index
                         }
+                    }) {
+                        HStack {
+                            Text(options[index])
+                            Spacer()
+                            if self.selectedOption == index {
+                                Image(systemName: "checkmark")
+                            }
+                        }
+                        .padding()
+                        .background(self.selectedOption == index ? Color.blue : Color.orange)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
-                    .padding()
-                    .background(self.selectedOption == index ? Color.blue : Color.orange)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
-            }
-            
-            // Textfield for other option
-            TextField("If other, please specify here", text: $otherOptionText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            Button(action: {
-                // Handle the submission here, including the selected option or the text from the TextField
-                submitSurvey()
-            }) {
-                Text("Join Queue")
-                    .foregroundColor(Color.white)
+                
+                // Textfield for other option
+                TextField("If other, please specify here", text: $otherOptionText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-                    .background(Color.orange)
-                    .cornerRadius(10)
+                
+                Button(action: {
+                    // Handle the submission here, including the selected option or the text from the TextField
+                    submitSurvey()
+                    navigateToOfficeHoursLine = true
+                    
+                }) {
+                    Text("Join Queue")
+                        .foregroundColor(Color.white)
+                        .padding()
+                        .background(Color.orange)
+                        .cornerRadius(10)
+                }
+                
             }
-            
+            .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
+                OHLineView()
+            }
         }
     }
     

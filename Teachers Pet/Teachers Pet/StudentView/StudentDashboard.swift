@@ -16,6 +16,9 @@ struct StudentDashboard: View {
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
     @State var showClassInfo = false
+    
+    @State var signOut = false
+    
     var body: some View {
         NavigationStack{
             let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
@@ -27,7 +30,7 @@ struct StudentDashboard: View {
             
             VStack {
                 HStack {
-                    Text("Dashboard")
+                    Text("Your Dashboard")
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
@@ -35,29 +38,28 @@ struct StudentDashboard: View {
                             currentOfficeHours = [currentOH1, currentOH2]
                         }
                     Spacer()
-                    Button(action: {
-                        // Action to perform when the button is tapped
-                        print("Button tapped!")
-                    }) {
+                    
+                    Menu() {
+                        
+                        Button(role: .destructive) {
+                            signOut = true
+                            print("Button tapped!")
+                        } label: {
+                            Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                                .padding(5)
+                        }
+                        
+                    } label: {
                         Image(systemName: "person.crop.circle")
                             .font(.title)
                             .foregroundColor(.orange)
                             .padding(5)
-                    }
-                    Button(action: {
-                        // Action to perform when the button is tapped
-                        print("Button tapped!")
-                    }) {
-                        Image(systemName: "bell")
-                            .resizable()
-                            .foregroundColor(.orange)
-                            .frame(width: 25, height: 26)
-                            .rotationEffect(.degrees(-20))
-                            .font(.title)
-                            .padding(5)
-                    }
+                    } //end of menu options
+                    
                 }
-                .padding()
+                .padding(2)
                 Spacer(minLength: 40)
                 HStack {
                     Text("Upcoming Office Hours")
@@ -155,9 +157,22 @@ struct StudentDashboard: View {
             }
             .padding()
             .preferredColorScheme(.light)
+            .navigationBarBackButtonHidden()
             .background(Color("AppBackgroundColor"))
             .navigationDestination (isPresented: $showClassInfo){
                 OHQuestionaire()
+            }
+            .alert(isPresented: $signOut) {
+                Alert(
+                    title: Text("Are you sure you want to sign out"),
+                    message: Text("This cannot be undone."),
+                    primaryButton: .destructive(Text("Sign Out")) {
+                        //leave line
+                        
+                    },
+                    secondaryButton: .cancel()
+                    
+                )
             }
             Spacer()
             
