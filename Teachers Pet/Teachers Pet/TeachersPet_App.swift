@@ -20,7 +20,7 @@ struct Teachers_PetApp: App {
     
     var body: some Scene {
         WindowGroup {
-           RootView().environmentObject(viewModel)
+            WelcomeScreen().environmentObject(viewModel)
         }
     }
 }

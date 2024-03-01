@@ -93,10 +93,10 @@ struct SignIn: View {
             .navigationBarBackButtonHidden()
             .background(Color("AppBackgroundColor"))
             .navigationDestination(isPresented: $navigateToCreateAccount) {
-                CreateAccount()
+                //CreateAccount(studentview: <#Binding<Bool>#>)
             }
             .navigationDestination(isPresented: $navigateToInstructorDashboard) { //pass in the email and password entered
-                Instructorview()
+                InstructorDashboard()
             }
         }
     }

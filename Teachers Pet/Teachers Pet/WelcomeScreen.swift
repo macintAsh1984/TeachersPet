@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WelcomeScreen: View {
     
-    @State var navigateToCreateAccount = false
+    @State var navigateToStudentCreateAccount = false
+    @State var navigateToInstructorCreateAccount = false
     var body: some View {
         NavigationStack {
             VStack {
@@ -24,7 +25,7 @@ struct WelcomeScreen: View {
                     .frame(height: 20)
                 
                 Button {
-                    navigateToCreateAccount = true
+                    navigateToStudentCreateAccount = true
                 } label: {
                     Text("Student")
                         .fontWeight(.semibold)
@@ -35,7 +36,7 @@ struct WelcomeScreen: View {
                 .controlSize(.large)
                 
                 Button {
-                    navigateToCreateAccount = true
+                    navigateToInstructorCreateAccount = true
                 } label: {
                     Text("Instructor")
                         .fontWeight(.semibold)
@@ -48,8 +49,11 @@ struct WelcomeScreen: View {
             .padding()
             .background(Color("AppBackgroundColor"))
             .preferredColorScheme(.light)
-            .navigationDestination(isPresented: $navigateToCreateAccount) {
-                CreateAccount()
+            .navigationDestination(isPresented: $navigateToStudentCreateAccount) {
+                CreateAccount(studentview: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
+            }
+            .navigationDestination(isPresented: $navigateToInstructorCreateAccount) {
+                CreateAccount(studentview: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
             }
         }
     }

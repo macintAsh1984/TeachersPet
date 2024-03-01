@@ -1,13 +1,13 @@
 //
-//  InstructorDashboard.swift
+//  StudentDashboard.swift
 //  Teachers Pet
 //
-//  Created by Ashley Valdez on 2/21/24.
+//  Created by Sai Ganesh Chamarty on 2/28/24.
 //
 
 import SwiftUI
 
-struct InstructorDashboard: View {
+struct StudentDashboard: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
@@ -15,9 +15,9 @@ struct InstructorDashboard: View {
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
-    
+    @State var showClassInfo = false
     var body: some View {
-        NavigationView{
+        NavigationStack{
             let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
             let officeHour2 = OfficeHoursViewModel(className: "ECS 189E", month: "February", day: 28, startHour: 9, endHour: 10, buildingName: "Kemper Hall", roomNumber: 1553, profName: "Sam King")
             
@@ -67,28 +67,18 @@ struct InstructorDashboard: View {
                         // Action to perform when the button is tapped
                         print("Button tapped!")
                     }) {
-                        //                        Image(systemName: "calender")
-                        //                            .foregroundColor(.orange)
-                        //                            .font(.title)
-                        //                            .padding(5)
                         Image(systemName: "calendar")
                             .resizable()
                             .frame(width: 25, height: 25)
                             .foregroundColor(.orange)
                     }
-                    //                    DatePicker(
-                    //                            "Start Date",
-                    //                            selection: $date,
-                    //                            displayedComponents: [.date]
-                    //                        )
-                    //                        .datePickerStyle(.graphical)
                 }
                 .padding(5)
                 .padding(.bottom)
                 
                 ForEach(upcomingClasses.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
@@ -131,7 +121,7 @@ struct InstructorDashboard: View {
                 .padding()
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
@@ -157,31 +147,25 @@ struct InstructorDashboard: View {
                                         .padding(.trailing)
                                         .foregroundStyle(.black)
                                 }
-                                
                             }
                         }
-                        
                     })
                     .padding(.bottom)
                 }
             }
             .padding()
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(Color("AppBackgroundColor"))
+            .navigationDestination (isPresented: $showClassInfo){
+                OHQuestionaire()
+            }
             Spacer()
             
         }
-//        .background(Color("AppBackgroundColor"))
 
     }
 }
 
 #Preview {
-    InstructorDashboard()
+    StudentDashboard()
 }
-
-
-//#Preview {
-//    InstructorDashboard(email: .constant(""), password: .constant(""))
-//}

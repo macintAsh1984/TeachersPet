@@ -10,6 +10,7 @@
 
 import Foundation
 import Firebase
+import FirebaseDatabase
 import FirebaseFirestoreSwift
 
 
@@ -50,6 +51,20 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    func createStudentUser(withEmail email: String, password: String, fullname: String) async throws {
+        do {
+            let result = try await Auth.auth().createUser(withEmail: email, password: password) //create user using firebase code that we installed
+            self.userSession = result.user //if we get successful result back
+            let user = StudentUser(id: result.user.uid, fullname: fullname, email: email) //create our user object, from Model itself
+            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
+            try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser) //upload data to firestore
+            await fetchUser()
+        } catch {
+            print("Failed to create user \(error.localizedDescription)")
+        }
+    }
+    
+    
     func signout() {
         do {
             try Auth.auth().signOut()
@@ -69,4 +84,107 @@ class AuthViewModel: ObservableObject {
         print("Current user is \(self.currentUser)")
         
     }
+    
+    func joinClassAsStudent(joinCode: String, Name: String, email: String) async throws {
+        guard let currentUser = self.userSession?.uid else {
+            print("user does not exist")
+            return
+        }
+        do {
+            let professorsQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+            
+            //Check if a professor with the given join code exists
+            guard let professorDocument = professorsQuerySnapshot.documents.first else {
+                print("error")
+                return
+            }
+            
+            
+            guard let coursename = professorDocument.data()["coursename"] as? String else { //pull that professors coursename
+                return
+            }
+            
+            //Associate the student with the professor in the database
+            let professorID = professorDocument.documentID
+            let professorStudentsReference = Firestore.firestore().collection("users").document(professorID).collection("students")
+            
+            //Check if the student has already joined the class
+            let existingStudentDocument = try await professorStudentsReference.document(currentUser).getDocument()
+            if existingStudentDocument.exists {
+                print("you already joined this class")
+                return
+            }
+            
+    
+            //Associate the student with the prof by adding their name to the document
+            let user = User(id: currentUser, fullname: Name, email: email, coursename: coursename, joincode: joinCode) //create our user object, from Model itself
+            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
+            try await professorStudentsReference.document(currentUser).setData(encodedUser) //upload data to fi
+            
+            await fetchUser()
+            
+            
+        } catch {
+            print("error")
+        }
+    }
+    
+    
+    func joinClassAsTA(joinCode: String, Name: String, email: String) async throws {
+        guard let currentUser = self.userSession?.uid else {
+            print("user does not exist")
+            return
+        }
+        do {
+            let professorsQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+            
+            //Check if a professor with the given join code exists
+            guard let professorDocument = professorsQuerySnapshot.documents.first else {
+                print("Professor not found")
+                return
+            }
+            
+            
+            guard let coursename = professorDocument.data()["coursename"] as? String else { //pull that professors coursename
+                return
+            }
+            
+            //Associate the student with the professor in the database
+            let professorID = professorDocument.documentID
+            let professorStudentsReference = Firestore.firestore().collection("users").document(professorID).collection("TAs")
+            
+            //Check if the student has already joined the class
+            let existingStudentDocument = try await professorStudentsReference.document(currentUser).getDocument()
+            if existingStudentDocument.exists {
+                print("you already joined this class")
+                return
+            }
+            
+    
+            //Associate the student with the prof by adding their name to the document
+//            let taData: [String: Any] = [
+//                            "id": currentUser,
+//                            "fullname": Name,
+//                            "email": email,
+//                            "coursename": coursename,
+//
+//                        ]
+//            
+//            try await professorStudentsReference.document(currentUser).setData(taData)
+            
+            
+            let user = User(id: currentUser, fullname: Name, email: email, coursename: coursename, joincode: joinCode) //create our user object, from Model itself
+            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
+            try await professorStudentsReference.document(currentUser).setData(encodedUser) //upload data to firebase
+            
+            await fetchUser()
+            
+            
+        } catch {
+            print("error")
+        }
+    }
+
+    
 }
+

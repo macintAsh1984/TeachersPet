@@ -11,6 +11,7 @@ struct CreateClass: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @State var courseName = String()
     @State var navigateToCodeGeneration = false
+    @State var navgiateToJoinClass = false
     @Binding var email: String
     @Binding var password: String
     @Binding var Name: String
@@ -44,6 +45,18 @@ struct CreateClass: View {
                 .tint(.orange)
                 .controlSize(.large)
                 Spacer()
+                
+                HStack(spacing: 5) {
+                    Text("Have a class join code?")
+                    Button {
+                        navgiateToJoinClass = true
+                    } label: {
+                        Text("Join Your Class")
+                            .underline()
+                            .foregroundStyle(.orange)
+                    }
+    
+                }
             }
             .padding()
             .preferredColorScheme(.light)
@@ -51,10 +64,14 @@ struct CreateClass: View {
             .navigationDestination(isPresented: $navigateToCodeGeneration) {
                 ClassJoinCodeGeneration(email: $email, password: $password, Name: $Name, coursename: $courseName)
             }
+            .navigationDestination(isPresented: $navgiateToJoinClass) {
+                InstructorJoinClass(email: $email, password: $password, name: $Name)
+            }
         }
         
     }
 }
+
 
 //#Preview {
 //    CreateClass()
