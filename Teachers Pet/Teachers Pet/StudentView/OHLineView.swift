@@ -10,6 +10,8 @@ import SwiftUI
 struct OHLineView: View {
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
+    @Binding var email: String
+    @Binding var joinCode: String
     
     var body: some View {
         NavigationStack {
@@ -51,12 +53,12 @@ struct OHLineView: View {
                 )
             }
             .navigationDestination(isPresented: $returnToStudentDashboard) {
-                StudentDashboard()
+                StudentDashboard(email: $email, joinCode: $joinCode)
             }
         }
     }
 }
 
-#Preview {
-    OHLineView()
-}
+//#Preview {
+//    OHLineView()
+//}

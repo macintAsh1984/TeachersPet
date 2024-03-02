@@ -25,9 +25,9 @@ struct OHLineManagement: View {
                     .onDelete { indexSet in
                         students.remove(atOffsets: indexSet)
                     }
-                    .onMove { indices, newOffset in
-                        students.move(fromOffsets: indices, toOffset: newOffset)
-                    }
+//                    .onMove { indices, newOffset in
+//                        students.move(fromOffsets: indices, toOffset: newOffset)
+//                    }
                 }
                 .navigationTitle("My Office Hours")
                 .navigationBarItems(trailing: EditButton())

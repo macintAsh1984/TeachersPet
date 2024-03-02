@@ -12,6 +12,10 @@ struct OHQuestionaire: View {
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
     
+    @Binding var email: String
+    @Binding var joinCode: String
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     var options = [
         "Need help getting started",
         "Stuck on a certain part",
@@ -58,7 +62,15 @@ struct OHQuestionaire: View {
                 Button(action: {
                     // Handle the submission here, including the selected option or the text from the TextField
                     submitSurvey()
-                    navigateToOfficeHoursLine = true
+                    Task {
+                        do {
+                            try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
+                            navigateToOfficeHoursLine = true
+                        } catch {
+                            print("Couldn't add you to the line :(.")
+                        }
+                    }
+                    
                     
                 }) {
                     Text("Join Queue")
@@ -70,7 +82,7 @@ struct OHQuestionaire: View {
                 
             }
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
-                OHLineView()
+                OHLineView(email: $email, joinCode: $joinCode)
             }
         }
     }
@@ -88,6 +100,6 @@ struct OHQuestionaire: View {
 
 
 
-#Preview {
-    OHQuestionaire()
-}
+//#Preview {
+//    OHQuestionaire()
+//}

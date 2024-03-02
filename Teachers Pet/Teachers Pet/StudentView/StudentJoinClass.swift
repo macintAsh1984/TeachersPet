@@ -10,7 +10,7 @@ struct StudentJoinClass: View {
     @State var joinCode = String()
   //  @State private var navigateToDashBoard = false
     @State var showScanner = false
-    let email: String
+    @State var email: String
     let Name: String
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -77,7 +77,7 @@ struct StudentJoinClass: View {
         }
         #endif
         .navigationDestination(isPresented: $navigatetoStudentDashboard) {
-           StudentDashboard()
+            StudentDashboard(email: $email, joinCode: $joinCode)
         }
          Spacer()
     }// end of view

@@ -15,8 +15,11 @@ struct StudentDashboard: View {
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
     @State var showClassInfo = false
     
+    @Binding var email: String
+    @Binding var joinCode: String
     @State var signOut = false
     
     var body: some View {
@@ -160,7 +163,7 @@ struct StudentDashboard: View {
             .navigationBarBackButtonHidden()
             .background(Color("AppBackgroundColor"))
             .navigationDestination (isPresented: $showClassInfo){
-                OHQuestionaire()
+                OHQuestionaire(email: $email, joinCode: $joinCode)
             }
             .alert(isPresented: $signOut) {
                 Alert(
@@ -181,6 +184,6 @@ struct StudentDashboard: View {
     }
 }
 
-#Preview {
-    StudentDashboard()
-}
+//#Preview {
+//    StudentDashboard()
+//}
