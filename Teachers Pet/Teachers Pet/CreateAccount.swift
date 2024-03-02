@@ -20,6 +20,7 @@ struct CreateAccount: View {
     @State var navigatetoStudentplace = false
     
     @State var navigateToCreateClass = false
+    @State var navigateToStudentSignIn = false
     @State var navigateToSignIn = false
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -84,6 +85,9 @@ struct CreateAccount: View {
                 HStack(spacing: 5) {
                     Text("Already have an account?")
                     Button {
+                        if studentview {
+                            navigateToStudentSignIn = true
+                        }
                         navigateToSignIn = true
                     } label: {
                         Text("Sign In")
@@ -103,7 +107,7 @@ struct CreateAccount: View {
                 CreateClass(email: $email, password: $password, Name: $firstName)
             }
             .navigationDestination(isPresented: $navigateToSignIn) {
-                SignIn()
+                SignIn(isStudent: $navigateToStudentSignIn)
             }
             
             .navigationDestination(isPresented: $navigatetoStudentplace) {

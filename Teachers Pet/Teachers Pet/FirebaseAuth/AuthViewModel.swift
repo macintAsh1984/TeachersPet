@@ -28,16 +28,6 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func signIn(withEmail email: String, password: String) async throws {
-        do {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            self.userSession = result.user
-            await fetchUser()
-        } catch {
-            print("Failed to log in \(error.localizedDescription)")
-        }
-    }
-    
     func createUser(withEmail email: String, password: String, fullname: String, coursename: String, joincode: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password) //create user using firebase code that we installed
@@ -61,6 +51,17 @@ class AuthViewModel: ObservableObject {
             await fetchUser()
         } catch {
             print("Failed to create user \(error.localizedDescription)")
+        }
+    }
+    
+    
+    func signIn(withEmail email: String, password: String) async throws {
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            self.userSession = result.user
+            await fetchUser()
+        } catch {
+            print("Failed to log in \(error.localizedDescription)")
         }
     }
     

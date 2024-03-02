@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct SignIn: View {
     @State var email = String()
     @State var password = String()
+    @State var joinCode = String()
     @State var navigateToCreateAccount = false
+    
+    @Binding var isStudent: Bool
+    @State var navigateToStudentDashboard = false
     @State var navigateToInstructorDashboard = false
     @State var showingAlert = false
     @State var alertMessage = ""
@@ -52,7 +54,13 @@ struct SignIn: View {
                         Task {
                             do {
                                 try await viewModel.signIn(withEmail: email, password: password)
-                                navigateToInstructorDashboard = true
+                                joinCode = viewModel.currentUser?.joincode ?? ""
+                                
+                                if isStudent {
+                                    navigateToStudentDashboard = true
+                                } else {
+                                    navigateToInstructorDashboard = true
+                                }
                             }catch {
                                 print("Error signing in")
                             }
@@ -95,14 +103,17 @@ struct SignIn: View {
             .navigationDestination(isPresented: $navigateToCreateAccount) {
                 //CreateAccount(studentview: <#Binding<Bool>#>)
             }
-            .navigationDestination(isPresented: $navigateToInstructorDashboard) { //pass in the email and password entered
+            .navigationDestination(isPresented: $navigateToInstructorDashboard) {
                 InstructorDashboard()
+            }
+            .navigationDestination(isPresented: $navigateToStudentDashboard) { //pass in the email and password entered
+                StudentDashboard(email: $email, joinCode: $joinCode)
             }
         }
     }
 
 }
 
-#Preview {
-    SignIn()
-}
+//#Preview {
+//    SignIn()
+//}
