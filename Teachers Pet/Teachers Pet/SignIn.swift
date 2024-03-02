@@ -107,7 +107,7 @@ struct SignIn: View {
                 InstructorDashboard()
             }
             .navigationDestination(isPresented: $navigateToStudentDashboard) { //pass in the email and password entered
-                StudentDashboard(email: $email, joinCode: $joinCode)
+                StudentDashboard(email: $email)
             }
         }
     }

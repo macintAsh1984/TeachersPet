@@ -8,7 +8,6 @@ import CodeScanner
 
 struct StudentJoinClass: View {
     @State var joinCode = String()
-  //  @State private var navigateToDashBoard = false
     @State var showScanner = false
     @State var email: String
     let Name: String
@@ -77,7 +76,7 @@ struct StudentJoinClass: View {
         }
         #endif
         .navigationDestination(isPresented: $navigatetoStudentDashboard) {
-            StudentDashboard(email: $email, joinCode: $joinCode)
+            StudentDashboard(email: $email)
         }
          Spacer()
     }// end of view

@@ -41,20 +41,6 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func createStudentUser(withEmail email: String, password: String, fullname: String) async throws {
-        do {
-            let result = try await Auth.auth().createUser(withEmail: email, password: password) //create user using firebase code that we installed
-            self.userSession = result.user //if we get successful result back
-            let user = StudentUser(id: result.user.uid, fullname: fullname, email: email) //create our user object, from Model itself
-            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
-            try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser) //upload data to firestore
-            await fetchUser()
-        } catch {
-            print("Failed to create user \(error.localizedDescription)")
-        }
-    }
-    
-    
     func signIn(withEmail email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
@@ -92,11 +78,17 @@ class AuthViewModel: ObservableObject {
             return
         }
         do {
+            let studentQuerySnapshot = try await Firestore.firestore().collection("users").whereField("email", isEqualTo: email).getDocuments()
             let professorsQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
             
             //Check if a professor with the given join code exists
             guard let professorDocument = professorsQuerySnapshot.documents.first else {
-                print("error")
+                print("error professors")
+                return
+            }
+            
+            guard let studentDocument = studentQuerySnapshot.documents.first else {
+                print("error student")
                 return
             }
             
@@ -105,9 +97,17 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
+            guard let joincode = professorDocument.data()["joincode"] as? String else { //pull that joincode
+                return
+            }
+            
             //Associate the student with the professor in the database
             let professorID = professorDocument.documentID
             let professorStudentsReference = Firestore.firestore().collection("users").document(professorID).collection("students")
+            
+            //Associate the student with the professor in the database
+            let studentID = studentDocument.documentID
+            let studentsReference = Firestore.firestore().collection("users")
             
             //Check if the student has already joined the class
             let existingStudentDocument = try await professorStudentsReference.document(currentUser).getDocument()
@@ -116,11 +116,31 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
+            let studentDataForProfessor: [String: Any] = [
+                            "id": currentUser,
+                            "fullname":Name,
+                            "email": email,
+                            "coursename": coursename,
+                            "joincode": joinCode
+                        ]
+                        try await professorStudentsReference.document(currentUser).setData(studentDataForProfessor)
+
+
+            let studentData: [String: Any] = [
+                            "id": currentUser,
+                            "fullname": Name,
+                            "email": email,
+                            "coursename": coursename,
+                            "joincode": joinCode
+
+                        ]
+            try await Firestore.firestore().collection("users").document(currentUser).setData(studentData)
             
-            //Associate the student with the prof by adding their name to the document
-            let user = User(id: currentUser, fullname: Name, email: email, coursename: coursename, joincode: joinCode) //create our user object, from Model itself
-            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
-            try await professorStudentsReference.document(currentUser).setData(encodedUser) //upload data to fi
+            
+//            //Associate the student with the prof by adding their name to the document
+//            let user = User(id: currentUser, fullname: Name, email: email, coursename: coursename, joincode: joinCode) //create our user object, from Model itself
+//            let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
+//            try await professorStudentsReference.document(currentUser).setData(encodedUser) //upload data to fi
             
             await fetchUser()
             
@@ -189,10 +209,6 @@ class AuthViewModel: ObservableObject {
             }
             
             
-//            guard let coursename = professorDocument.data()["coursename"] as? String else { //pull that professors coursename
-//                return
-//            }
-            
             //Creates Office Hours collection in Firebase.
             let professorID = professorDocument.documentID
             let professorStudentReference = Firestore.firestore().collection("users").document(professorID).collection("Office Hours")
@@ -203,16 +219,6 @@ class AuthViewModel: ObservableObject {
                 print("You are already in line.")
                 return
             }
-            
-            
-            //Set student data to be entered into the Office Hours collection.
-//            let studentData: [String: Any] = [
-//                            "id": currentUser,
-//                            "email": email
-//                        ]
-
-//            //Upload office hours line (with student) into Firebase.
-//            try await studentsReference.document(currentUser).setData(studentData)
             
             let user = User(id: currentUser, fullname: "", email: email, coursename: "", joincode: "") //create our user object, from Model itself
             let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
@@ -229,6 +235,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
+    //To be implemented.
     func removeStudentFromLine() {
         
     }
