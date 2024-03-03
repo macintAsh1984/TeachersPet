@@ -235,6 +235,53 @@ class AuthViewModel: ObservableObject {
         
     }
     
+    func getNumberOfStudents(joinCode: String, email: String) async throws{
+        guard let currentUser = self.userSession?.uid else {
+            print("user does not exist")
+            return
+        }
+        do {
+            let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+            
+            //Fetches professor document.
+            guard let professorDocument = professorQuerySnapshot.documents.first else {
+                print("Professor not found")
+                return
+            }
+            let professorID = professorDocument.documentID
+            
+            let officeHoursDocuments = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").getDocuments()
+            
+//            //Gets student ID from professor collection
+//            let getStudentId = try await Firestore.firestore().collection("users").document(professorID).collection("students").whereField("students",  isEqualTo: currentUser)
+//            
+//            let currentStudentInLine = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").whereField("students",  isEqualTo: getStudentId)
+            
+            
+            var position = 1
+            //if ( the Office hours queue is empty
+                for document in officeHoursDocuments.documents {
+                    
+                    //Find student ID in every document in Office Hours.
+                    var findStudentID = document.reference.collection("Office Hours").document(currentUser)
+                    
+                    //Get the student by their ID
+                    var getStudentDocument = try await findStudentID.getDocument()
+                    
+                    if let studentData = getStudentDocument.data(), getStudentDocument.exists {
+                        //return position in line
+                    } else {
+                        position += 1
+                    }
+                    
+                }//end of for
+            
+            
+            
+    
+        }
+    }
+    
     //To be implemented.
     func removeStudentFromLine() {
         

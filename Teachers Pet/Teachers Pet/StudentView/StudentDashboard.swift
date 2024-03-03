@@ -183,6 +183,6 @@ struct StudentDashboard: View {
     }
 }
 
-//#Preview {
-//    StudentDashboard()
-//}
+#Preview {
+    StudentDashboard(email: .constant(""))
+}
