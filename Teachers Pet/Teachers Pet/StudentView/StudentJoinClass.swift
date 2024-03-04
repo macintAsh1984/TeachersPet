@@ -71,7 +71,7 @@ struct StudentJoinClass: View {
             .background(Color("AppBackgroundColor"))
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigatetoStudentDashboard) {
-                StudentDashboard(email: $email)
+                StudentDashboard(email: $email, joinCode: $joinCode)
             }
             //for simulator to work
              #if os(iOS)

@@ -51,6 +51,19 @@
 		BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDEC08E22B93E92A009763B9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AB90C20C2B96357F007A6DA7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		AB7F0C922B90280100317EDF /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -58,6 +71,10 @@
 		AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineManagement.swift; sourceTree = "<group>"; };
 		AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Teachers_Pet.entitlements; path = ../../../Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AB90C1F82B96357D007A6DA7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AB90C1FA2B96357D007A6DA7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		AB90C2132B96379B007A6DA7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AB90C2152B96379B007A6DA7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorJoinClass.swift; sourceTree = "<group>"; };
@@ -121,6 +138,25 @@
 			path = InstructorView;
 			sourceTree = "<group>";
 		};
+		AB90C1F72B96357D007A6DA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB90C1F82B96357D007A6DA7 /* WidgetKit.framework */,
+				AB90C1FA2B96357D007A6DA7 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		AB90C2122B96379B007A6DA7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB90C2132B96379B007A6DA7 /* WidgetKit.framework */,
+				AB90C2152B96379B007A6DA7 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ABAC21972B8EBFC2005CF27E /* FirebaseAuth */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				ABF4078B2B90238100444A48 /* Teachers Pet */,
+				AB90C2122B96379B007A6DA7 /* Frameworks */,
 				ABC70DFF2B713DD000A4FFF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -168,6 +205,7 @@
 				ABB4650F2B919E78007B3AA1 /* StudentView */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
+				AB90C1F72B96357D007A6DA7 /* Frameworks */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
 				AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */,
 				AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */,
@@ -185,6 +223,7 @@
 				ABF407862B90238100444A48 /* Sources */,
 				ABF407872B90238100444A48 /* Frameworks */,
 				ABF407882B90238100444A48 /* Resources */,
+				AB90C20C2B96357F007A6DA7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -463,7 +502,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 94WCH5T899;
+				DEVELOPMENT_TEAM = LK4997QHS7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -484,8 +523,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "com.SaiGanesh.Teachers-Pet";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "com.SaiGanesh.Teachers-Pet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

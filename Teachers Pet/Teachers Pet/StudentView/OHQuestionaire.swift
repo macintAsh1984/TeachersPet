@@ -13,7 +13,7 @@ struct OHQuestionaire: View {
     @State var navigateToOfficeHoursLine = false
     
     @Binding var email: String
-    @State var joinCode = String()
+    @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
     
     var options = [
@@ -95,7 +95,7 @@ struct OHQuestionaire: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
-                OHLineView(email: $email)
+                OHLineView(email: $email, joinCode: $joinCode)
             }
         }
     }

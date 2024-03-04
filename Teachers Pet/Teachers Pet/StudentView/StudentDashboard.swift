@@ -19,6 +19,7 @@ struct StudentDashboard: View {
     @State var showClassInfo = false
     
     @Binding var email: String
+    @Binding var joinCode: String
     @State var signOut = false
     
     var body: some View {
@@ -162,7 +163,7 @@ struct StudentDashboard: View {
             .navigationBarBackButtonHidden()
             .background(Color("AppBackgroundColor"))
             .navigationDestination (isPresented: $showClassInfo){
-                OHQuestionaire(email: $email)
+                OHQuestionaire(email: $email, joinCode: $joinCode)
             }
             .alert(isPresented: $signOut) {
                 Alert(
@@ -184,5 +185,5 @@ struct StudentDashboard: View {
 }
 
 #Preview {
-    StudentDashboard(email: .constant(""))
+    StudentDashboard(email: .constant(""), joinCode: .constant(""))
 }
