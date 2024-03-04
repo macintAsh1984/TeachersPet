@@ -11,11 +11,13 @@ struct OHLineView: View {
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
     @Binding var email: String
+    @EnvironmentObject var viewModel: AuthViewModel
+    
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("You are #3 in queue")
+                Text("You are #\(viewModel.positionInLine) in queue!")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)

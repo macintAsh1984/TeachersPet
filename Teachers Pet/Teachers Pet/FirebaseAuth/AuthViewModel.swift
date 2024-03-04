@@ -18,6 +18,7 @@ import FirebaseFirestoreSwift
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var positionInLine: Int = 1
     
     
     init() {
@@ -40,6 +41,58 @@ class AuthViewModel: ObservableObject {
             print("Failed to create user \(error.localizedDescription)")
         }
     }
+    
+    func createUserforStudent(withEmail email: String, password: String, fullname: String, coursename: String, joincode: String) async throws {
+        do {
+            let result = try await Auth.auth().createUser(withEmail: email, password: password)
+            self.userSession = result.user
+            
+            // Find the teacher document using the joincode
+            let teacherQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joincode).getDocuments()
+            
+            guard let teacherDocument = teacherQuerySnapshot.documents.first else {
+                print("Teacher with joincode \(joincode) not found")
+                return
+            }
+            
+            // Create the student user under the teacher's collection
+            let user = User(id: result.user.uid, fullname: fullname, email: email, coursename: coursename, joincode: joincode)
+            let encodedUser = try Firestore.Encoder().encode(user)
+            let teacherID = teacherDocument.documentID
+            try await Firestore.firestore().collection("users").document(teacherID).collection("students").document(user.id).setData(encodedUser)
+            
+            await fetchTeacherDocumentsForStudent()
+            
+        } catch {
+            print("Failed to create student user: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    func fetchTeacherDocumentsForStudent() async {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            do {
+                // Query the users collection to find all teacher documents
+                let teacherQuerySnapshot = try await Firestore.firestore().collection("users").getDocuments()
+                
+                // Iterate through the teacher documents
+                for teacherDocument in teacherQuerySnapshot.documents {
+                    // Get the reference to the student document within the teacher's students subcollection
+                    let studentDocumentRef = teacherDocument.reference.collection("students").document(uid)
+                    
+                    // Fetch the student document
+                    let studentDocumentSnapshot = try await studentDocumentRef.getDocument()
+                    
+                    // Check if the student document exists and matches the provided UID
+                    if let studentData = studentDocumentSnapshot.data(), studentDocumentSnapshot.exists {
+                        // This teacher document contains the student with the provided UID
+                        print("Teacher document found for student with UID \(uid): \(teacherDocument.data())")
+                    }
+                }
+            } catch {
+                print("Error fetching teacher documents: \(error.localizedDescription)")
+            }
+        }
     
     func signIn(withEmail email: String, password: String) async throws {
         do {
@@ -193,9 +246,9 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // Prototype OH Line Implementation
+
     func addStudentToLine(joinCode: String, email: String) async throws {
-        guard let currentUser = self.userSession?.uid else {
+        guard let currentUser = Auth.auth().currentUser?.uid else {
             print("user does not exist")
             return
         }
@@ -208,9 +261,13 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            
-            //Creates Office Hours collection in Firebase.
             let professorID = professorDocument.documentID
+            
+            //Getting the student from the student collection under their professor.
+            let studentDocument = try await Firestore.firestore().collection("users").document(professorID).collection("students").document(currentUser).getDocument()
+            
+    
+            //Creates Office Hours collection in Firebase.
             let professorStudentReference = Firestore.firestore().collection("users").document(professorID).collection("Office Hours")
             
             //Checks if student is already in the office hours line.
@@ -222,11 +279,12 @@ class AuthViewModel: ObservableObject {
             
             let user = User(id: currentUser, fullname: "", email: email, coursename: "", joincode: "") //create our user object, from Model itself
             let encodedUser = try Firestore.Encoder().encode(user) //encode that object through the encodable protocol, encodes into JSON data so that it can be stored into firebase
+            //let teacherID = existingProfessorDocument.documentID
             
             //Upload office hours line (with student) into Firebase.
-            try await professorStudentReference.document(currentUser).setData(encodedUser)
+            try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").document(currentUser).setData(encodedUser)
             
-            await fetchUser()
+            await fetchTeacherDocumentsForStudent()
             
             
         } catch {
@@ -235,7 +293,7 @@ class AuthViewModel: ObservableObject {
         
     }
     
-    func getNumberOfStudents(joinCode: String, email: String) async throws{
+    func calculateStudentLinePosition(joinCode: String, email: String) async throws {
         guard let currentUser = self.userSession?.uid else {
             print("user does not exist")
             return
@@ -250,34 +308,39 @@ class AuthViewModel: ObservableObject {
             }
             let professorID = professorDocument.documentID
             
-            let officeHoursDocuments = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").getDocuments()
+            let userDocuments = try await Firestore.firestore().collection("users").getDocuments()
             
-//            //Gets student ID from professor collection
-//            let getStudentId = try await Firestore.firestore().collection("users").document(professorID).collection("students").whereField("students",  isEqualTo: currentUser)
-//            
-//            let currentStudentInLine = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").whereField("students",  isEqualTo: getStudentId)
-            
-            
-            var position = 1
-            //if ( the Office hours queue is empty
-                for document in officeHoursDocuments.documents {
+        
+            //Go through each and every user
+                for users in userDocuments.documents {
+                    //Get all the students in the Office Hours collection.
+                    let studentsInLine = try await users.reference.collection("Office Hours").getDocuments()
                     
-                    //Find student ID in every document in Office Hours.
-                    var findStudentID = document.reference.collection("Office Hours").document(currentUser)
-                    
-                    //Get the student by their ID
-                    var getStudentDocument = try await findStudentID.getDocument()
-                    
-                    if let studentData = getStudentDocument.data(), getStudentDocument.exists {
-                        //return position in line
-                    } else {
-                        position += 1
+                    //For every student in line, check if the logged in student's ID is in the line.
+                    for student in studentsInLine.documents {
+                        if currentUser == student.documentID {
+                            return
+                        } else {
+                            positionInLine += 1
+                        }
                     }
                     
+//                    //Find student ID in every document in Office Hours.
+//                    var findStudentID = document.reference.collection("Office Hours").document(currentUser)
+//                    
+//                    //Get the student by their ID
+//                    var getStudentDocument = try await findStudentID.getDocument()
+                    
+//                    if let studentData = getStudentDocument.data(), getStudentDocument.exists {
+//                        positionInLine += 1
+//                        return
+//                    } else {
+//                        positionInLine += 1
+//                    }
+
+                    
                 }//end of for
-            
-            
-            
+            }
     
         }
     }
@@ -287,4 +350,4 @@ class AuthViewModel: ObservableObject {
         
     }
     
-}
+

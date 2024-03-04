@@ -57,9 +57,6 @@ struct CreateAccount: View {
                     if firstName.isEmpty || lastName.isEmpty || email.isEmpty || password.isEmpty {
                         showingAlert = true
                     } else if studentview == true {
-                        Task {
-                            try await viewModel.createUser(withEmail: email, password: password, fullname: firstName, coursename: "", joincode: "")
-                        }
                         navigatetoStudentplace = true
                     } else {
                         navigateToCreateClass = true
@@ -108,7 +105,7 @@ struct CreateAccount: View {
             }
             
             .navigationDestination(isPresented: $navigatetoStudentplace) {
-                StudentJoinClass(email: email, Name: firstName)
+                StudentJoinClass(email: $email, name: $firstName, password: $password)
             }
         }
     }

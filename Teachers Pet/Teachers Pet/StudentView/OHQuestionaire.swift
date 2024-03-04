@@ -65,9 +65,17 @@ struct OHQuestionaire: View {
                     Task {
                         do {
                             try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
-                            navigateToOfficeHoursLine = true
                         } catch {
                             print("Couldn't add you to the line :(.")
+                        }
+                    }
+                    
+                    Task {
+                        do {
+                            try await viewModel.calculateStudentLinePosition(joinCode: joinCode, email: email)
+                            navigateToOfficeHoursLine = true
+                        } catch {
+                            print("Couldn't calculate position")
                         }
                     }
                     
