@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18D272AC2B970E3C00E651AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */; };
 		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
 		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
 		AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */; };
@@ -42,7 +43,6 @@
 		AB7F0C972B90285A00317EDF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7F0C962B90285A00317EDF /* User.swift */; };
 		AB90C1B22B91C911007A6DA7 /* CreateClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB90C1B12B91C911007A6DA7 /* CreateClass.swift */; };
 		AB90C1B42B92531A007A6DA7 /* OHLineManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */; };
-		AB90C1F12B9441C5007A6DA7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */; };
 		ABB465032B90290F007B3AA1 /* ClassJoinCodeGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */; };
 		ABB465052B9029D0007B3AA1 /* InstructorJoinClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */; };
 		ABB465082B902A00007B3AA1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = ABB465072B902A00007B3AA1 /* CodeScanner */; };
@@ -84,6 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		AB5B09672B967547004CAE7A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -96,8 +98,6 @@
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB90C1B12B91C911007A6DA7 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
 		AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineManagement.swift; sourceTree = "<group>"; };
-		AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Teachers_Pet.entitlements; path = ../../../Teachers_Pet.entitlements; sourceTree = "<group>"; };
-		AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorJoinClass.swift; sourceTree = "<group>"; };
@@ -242,8 +242,8 @@
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
-				AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */,
-				AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */,
+				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
+				18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -368,7 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				AB90C1F12B9441C5007A6DA7 /* GoogleService-Info.plist in Resources */,
+				18D272AC2B970E3C00E651AF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +427,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -457,7 +457,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -608,7 +608,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -648,7 +648,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
