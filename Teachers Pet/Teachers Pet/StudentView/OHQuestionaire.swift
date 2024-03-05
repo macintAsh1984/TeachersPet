@@ -5,6 +5,7 @@
 //  Created by Ashley Valdez on 2/29/24.
 //
 
+import ActivityKit
 import SwiftUI
 
 struct OHQuestionaire: View {
@@ -15,7 +16,8 @@ struct OHQuestionaire: View {
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
-    
+    @State private var activity: Activity<OfficeHoursAttribute>? = nil
+
     var options = [
         "Need help getting started",
         "Stuck on a certain part",
@@ -73,12 +75,12 @@ struct OHQuestionaire: View {
                     Task {
                         do {
                             try await viewModel.calculateStudentLinePosition(joinCode: joinCode, email: email)
+                            beginLiveActivity()
                             navigateToOfficeHoursLine = true
                         } catch {
                             print("Couldn't calculate position")
                         }
                     }
-                    
                     
                 }) {
                     Text("Join Queue")
@@ -97,7 +99,17 @@ struct OHQuestionaire: View {
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
                 OHLineView(email: $email, joinCode: $joinCode)
             }
+        
         }
+    
+    }
+    
+    func beginLiveActivity() {
+        let attributes = OfficeHoursAttribute(activityTitle: "\(String(describing: viewModel.currentUser?.coursename)) Office Hours")
+        let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
+        
+        activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
+        print(activity.debugDescription)
     }
     
     func submitSurvey() {

@@ -271,7 +271,7 @@ class AuthViewModel: ObservableObject {
             print("Professor ID: \(professorID)")
             
             //Get all of the students in the instructor's course.
-            let studentsInCourse = try await  Firestore.firestore().collection("users").document(professorID).collection("students").getDocuments()
+            let studentsInCourse = try await Firestore.firestore().collection("users").document(professorID).collection("students").getDocuments()
             
             //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, add that student to the Office Hours collection.
             for studentDocument in studentsInCourse.documents {

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
+		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
+		AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */; };
+		AB5B096D2B967547004CAE7A /* OfficeHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096C2B967547004CAE7A /* OfficeHours.swift */; };
+		AB5B096F2B967548004CAE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB5B096E2B967548004CAE7A /* Assets.xcassets */; };
+		AB5B09732B967548004CAE7A /* OfficeHoursExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AB5B097A2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
+		AB5B097B2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
 		AB7F0C652B90278F00317EDF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C642B90278F00317EDF /* FirebaseAnalytics */; };
 		AB7F0C672B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C662B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion */; };
 		AB7F0C692B90278F00317EDF /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C682B90278F00317EDF /* FirebaseAnalyticsSwift */; };
@@ -51,6 +59,16 @@
 		BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDEC08E22B93E92A009763B9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AB5B09712B967548004CAE7A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABC70DF62B713DD000A4FFF3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB5B09622B967547004CAE7A;
+			remoteInfo = OfficeHoursExtension;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		AB90C20C2B96357F007A6DA7 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -58,6 +76,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				AB5B09732B967548004CAE7A /* OfficeHoursExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,16 +84,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AB5B09672B967547004CAE7A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeHoursBundle.swift; sourceTree = "<group>"; };
+		AB5B096C2B967547004CAE7A /* OfficeHours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeHours.swift; sourceTree = "<group>"; };
+		AB5B096E2B967548004CAE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB5B09702B967548004CAE7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeHoursAttribute.swift; sourceTree = "<group>"; };
 		AB7F0C922B90280100317EDF /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB90C1B12B91C911007A6DA7 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
 		AB90C1B32B92531A007A6DA7 /* OHLineManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineManagement.swift; sourceTree = "<group>"; };
 		AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Teachers_Pet.entitlements; path = ../../../Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
-		AB90C1F82B96357D007A6DA7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		AB90C1FA2B96357D007A6DA7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		AB90C2132B96379B007A6DA7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		AB90C2152B96379B007A6DA7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccount.swift; sourceTree = "<group>"; };
 		ABB465022B90290F007B3AA1 /* ClassJoinCodeGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassJoinCodeGeneration.swift; sourceTree = "<group>"; };
 		ABB465042B9029D0007B3AA1 /* InstructorJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructorJoinClass.swift; sourceTree = "<group>"; };
@@ -92,6 +115,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AB5B09602B967547004CAE7A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */,
+				AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF407872B90238100444A48 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -138,23 +170,25 @@
 			path = InstructorView;
 			sourceTree = "<group>";
 		};
-		AB90C1F72B96357D007A6DA7 /* Frameworks */ = {
+		AB5B09642B967547004CAE7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AB90C1F82B96357D007A6DA7 /* WidgetKit.framework */,
-				AB90C1FA2B96357D007A6DA7 /* SwiftUI.framework */,
+				AB5B09652B967547004CAE7A /* WidgetKit.framework */,
+				AB5B09672B967547004CAE7A /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			path = ..;
 			sourceTree = "<group>";
 		};
-		AB90C2122B96379B007A6DA7 /* Frameworks */ = {
+		AB5B09692B967547004CAE7A /* OfficeHours */ = {
 			isa = PBXGroup;
 			children = (
-				AB90C2132B96379B007A6DA7 /* WidgetKit.framework */,
-				AB90C2152B96379B007A6DA7 /* SwiftUI.framework */,
+				AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */,
+				AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */,
+				AB5B096C2B967547004CAE7A /* OfficeHours.swift */,
+				AB5B096E2B967548004CAE7A /* Assets.xcassets */,
+				AB5B09702B967548004CAE7A /* Info.plist */,
 			);
-			name = Frameworks;
+			path = OfficeHours;
 			sourceTree = "<group>";
 		};
 		ABAC21972B8EBFC2005CF27E /* FirebaseAuth */ = {
@@ -181,7 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				ABF4078B2B90238100444A48 /* Teachers Pet */,
-				AB90C2122B96379B007A6DA7 /* Frameworks */,
+				AB5B09692B967547004CAE7A /* OfficeHours */,
+				AB5B09642B967547004CAE7A /* Frameworks */,
 				ABC70DFF2B713DD000A4FFF3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -190,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				ABF4078A2B90238100444A48 /* Teachers Pet.app */,
+				AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -205,7 +241,6 @@
 				ABB4650F2B919E78007B3AA1 /* StudentView */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
-				AB90C1F72B96357D007A6DA7 /* Frameworks */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
 				AB90C1EF2B9441B6007A6DA7 /* Teachers_Pet.entitlements */,
 				AB90C1F02B9441C5007A6DA7 /* GoogleService-Info.plist */,
@@ -216,6 +251,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AB5B09622B967547004CAE7A /* OfficeHoursExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB5B09742B967549004CAE7A /* Build configuration list for PBXNativeTarget "OfficeHoursExtension" */;
+			buildPhases = (
+				AB5B095F2B967547004CAE7A /* Sources */,
+				AB5B09602B967547004CAE7A /* Frameworks */,
+				AB5B09612B967547004CAE7A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OfficeHoursExtension;
+			productName = OfficeHoursExtension;
+			productReference = AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		ABF407892B90238100444A48 /* Teachers Pet */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABF407962B90238200444A48 /* Build configuration list for PBXNativeTarget "Teachers Pet" */;
@@ -228,6 +280,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AB5B09722B967548004CAE7A /* PBXTargetDependency */,
 			);
 			name = "Teachers Pet";
 			packageProductDependencies = (
@@ -270,6 +323,9 @@
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					AB5B09622B967547004CAE7A = {
+						CreatedOnToolsVersion = 15.2;
+					};
 					ABF407892B90238100444A48 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -293,11 +349,20 @@
 			projectRoot = "";
 			targets = (
 				ABF407892B90238100444A48 /* Teachers Pet */,
+				AB5B09622B967547004CAE7A /* OfficeHoursExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AB5B09612B967547004CAE7A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5B096F2B967548004CAE7A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF407882B90238100444A48 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -310,6 +375,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AB5B095F2B967547004CAE7A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */,
+				AB5B096D2B967547004CAE7A /* OfficeHours.swift in Sources */,
+				AB5B097B2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ABF407862B90238100444A48 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,6 +401,7 @@
 				ABF4079E2B90247700444A48 /* TeachersPet_App.swift in Sources */,
 				ABF4079C2B9023FE00444A48 /* SignIn.swift in Sources */,
 				AB90C1B22B91C911007A6DA7 /* CreateClass.swift in Sources */,
+				AB5B097A2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */,
 				ABB4650E2B919D9E007B3AA1 /* OfficeHoursViewModel.swift in Sources */,
 				AB90C1B42B92531A007A6DA7 /* OHLineManagement.swift in Sources */,
 				ABB4651D2B91A760007B3AA1 /* StudentJoinClass.swift in Sources */,
@@ -335,7 +411,76 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AB5B09722B967548004CAE7A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB5B09622B967547004CAE7A /* OfficeHoursExtension */;
+			targetProxy = AB5B09712B967548004CAE7A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		AB5B09752B967549004CAE7A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LK4997QHS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OfficeHours/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet.OfficeHours";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AB5B09762B967549004CAE7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LK4997QHS7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OfficeHours/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet.OfficeHours";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		ABC70E0B2B713DD100A4FFF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -455,6 +600,7 @@
 		ABF407972B90238200444A48 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
@@ -467,6 +613,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "For QR Code scanning only.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -475,8 +622,6 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -495,6 +640,7 @@
 		ABF407982B90238200444A48 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
@@ -507,6 +653,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "For QR Code scanning only.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -515,8 +662,6 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -535,6 +680,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AB5B09742B967549004CAE7A /* Build configuration list for PBXNativeTarget "OfficeHoursExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB5B09752B967549004CAE7A /* Debug */,
+				AB5B09762B967549004CAE7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ABC70DF92B713DD000A4FFF3 /* Build configuration list for PBXProject "Teachers Pet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
