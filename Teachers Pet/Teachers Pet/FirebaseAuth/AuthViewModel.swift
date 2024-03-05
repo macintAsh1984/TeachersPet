@@ -257,7 +257,6 @@ class AuthViewModel: ObservableObject {
         do {
            //Retrieve the instructor document with the same join code.
             let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
-            print("Professor Query Snapshot \(professorQuerySnapshot.documents)")
             
             // Users -> UID -> Students
             //Fetches the instructor with the corresponding join code.
@@ -268,7 +267,6 @@ class AuthViewModel: ObservableObject {
             
             //Retrieve the ID of the instructor document
             let professorID = professorDocument.documentID
-            print("Professor ID: \(professorID)")
             
             //Get all of the students in the instructor's course.
             let studentsInCourse = try await Firestore.firestore().collection("users").document(professorID).collection("students").getDocuments()
@@ -331,7 +329,7 @@ class AuthViewModel: ObservableObject {
     
     //To be implemented.
     func removeStudentFromLine() {
-        
+
     }
     
 

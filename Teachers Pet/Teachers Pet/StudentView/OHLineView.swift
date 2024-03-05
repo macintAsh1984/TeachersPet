@@ -5,6 +5,7 @@
 //  Created by Ashley Valdez on 2/29/24.
 //
 
+import ActivityKit
 import SwiftUI
 
 struct OHLineView: View {
@@ -14,6 +15,7 @@ struct OHLineView: View {
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
+    @Binding var activity: Activity<OfficeHoursAttribute>?
     
     
     var body: some View {
@@ -48,7 +50,11 @@ struct OHLineView: View {
                     title: Text("Are you sure you want to leave the line?"),
                     message: Text("This cannot be undone."),
                     primaryButton: .destructive(Text("Leave")) {
-                        //leave line
+                        let state = OfficeHoursAttribute.ContentState(linePosition: viewModel.positionInLine)
+                        let content = ActivityContent(state: state, staleDate: nil)
+                        Task {
+                            await activity?.end(content, dismissalPolicy:.immediate)
+                        }
                         returnToStudentDashboard = true
                     },
                     secondaryButton: .cancel()

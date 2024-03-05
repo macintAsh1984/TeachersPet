@@ -16,7 +16,7 @@ struct OHQuestionaire: View {
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
-    @State private var activity: Activity<OfficeHoursAttribute>? = nil
+    @State var activity: Activity<OfficeHoursAttribute>? = nil
 
     var options = [
         "Need help getting started",
@@ -97,7 +97,7 @@ struct OHQuestionaire: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
-                OHLineView(email: $email, joinCode: $joinCode)
+                OHLineView(email: $email, joinCode: $joinCode, activity: $activity)
             }
         
         }
