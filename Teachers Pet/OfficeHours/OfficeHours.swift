@@ -9,24 +9,32 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-
 struct OHLiveActivityView: View {
     let context: ActivityViewContext<OfficeHoursAttribute>
     
     var body: some View {
         VStack {
-            Text("You're in line!")
-                .font(.title2)
-                .fontWeight(.medium)
+            Text("Office Hours")
+                .font(.title3)
+                .fontWeight(.semibold)
             Spacer()
                 .frame(height: 10)
-            Text("You are #\(context.state.linePosition)")
-                .fontWeight(.medium)
+            HStack {
+                Image(systemName: "studentdesk")
+                    .font(.largeTitle)
+                Text("You Are")
+                    .font(.title2)
+                    .fontWeight(.medium)
+                Text("#\(context.state.linePosition)")
+                    .font(.title)
+                    .fontWeight(.bold)
+            }
         }
-        .padding()
+        .padding(.all)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .top, endPoint: .bottom)
-            )
+            LinearGradient(gradient: Gradient(colors: [Color("Light Green"), Color("Teal")]), startPoint: .leading, endPoint: .trailing)
+        )
     }
 }
 
@@ -38,24 +46,36 @@ struct OfficeHoursLiveActivity: Widget {
             DynamicIsland {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
-                DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
-                }
-                DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
-                }
-                DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.linePosition)")
-                    // more content
+                DynamicIslandExpandedRegion(.center) {
+                    Text("Office Hours")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                    Spacer()
+                        .frame(height: 10)
+                    HStack {
+                        Text("You Are")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                        Text("#\(context.state.linePosition)")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("Light Green"))
+                    }
+                    
+
                 }
             } compactLeading: {
                 Image(systemName: "studentdesk")
+                    .foregroundColor(Color("Light Green"))
             } compactTrailing: {
-                Text("# \(context.state.linePosition)")
+                Text("#\(context.state.linePosition)")
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("Light Green"))
             } minimal: {
-                Text("# \(context.state.linePosition)")
+                Text("#\(context.state.linePosition)")
+                    .fontWeight(.bold)
+                    .foregroundColor(Color("Light Green"))
             }
         }
     }
 }
-
