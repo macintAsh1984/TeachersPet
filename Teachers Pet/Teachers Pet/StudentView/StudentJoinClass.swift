@@ -33,8 +33,10 @@ struct StudentJoinClass: View {
                     .background()
                     .cornerRadius(10.0)
                 
-                Spacer().frame(height: 100)
+                Spacer()
+                    .frame(height: 100)
                 
+                #if os(iOS)
                 Button {
                     showScanner = true
                 } label: {
@@ -42,9 +44,8 @@ struct StudentJoinClass: View {
                         .fontWeight(.medium)
                         .frame(maxWidth: .infinity)
                 }
-                
+                #endif
                 Spacer()
-                
                 
                 // Loading...
                 if isLoading {
