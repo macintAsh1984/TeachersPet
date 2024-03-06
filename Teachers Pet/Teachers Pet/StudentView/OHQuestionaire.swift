@@ -5,7 +5,9 @@
 //  Created by Ashley Valdez on 2/29/24.
 //
 
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
 import SwiftUI
 
 struct OHQuestionaire: View {
@@ -16,7 +18,9 @@ struct OHQuestionaire: View {
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
+    #if os(iOS)
     @State var activity: Activity<OfficeHoursAttribute>? = nil
+    #endif
 
     var options = [
         "Need help getting started",
@@ -75,7 +79,11 @@ struct OHQuestionaire: View {
                     Task {
                         do {
                             try await viewModel.calculateStudentLinePosition(joinCode: joinCode, email: email)
+                            
+                            #if os(iOS)
                             beginLiveActivity()
+                            #endif
+                            
                             navigateToOfficeHoursLine = true
                         } catch {
                             print("Couldn't calculate position")
@@ -97,13 +105,18 @@ struct OHQuestionaire: View {
                 }
             }
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
+                #if os(iOS)
                 OHLineView(email: $email, joinCode: $joinCode, activity: $activity)
+                #else
+                OHLineView(email: $email, joinCode: $joinCode)
+                #endif
             }
         
         }
     
     }
     
+    #if os(iOS)
     func beginLiveActivity() {
         let attributes = OfficeHoursAttribute(activityTitle: "\(String(describing: viewModel.currentUser?.coursename)) Office Hours")
         let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
@@ -111,6 +124,7 @@ struct OHQuestionaire: View {
         activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
         print(activity.debugDescription)
     }
+    #endif
     
     func submitSurvey() {
         // Perform actions to submit the survey data

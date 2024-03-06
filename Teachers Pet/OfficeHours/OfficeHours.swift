@@ -5,7 +5,10 @@
 //  Created by Ashley Valdez on 3/4/24.
 //
 
+#if canImport(ActvityKit)
 import ActivityKit
+#endif
+
 import WidgetKit
 import SwiftUI
 

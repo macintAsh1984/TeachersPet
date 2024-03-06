@@ -29,8 +29,10 @@ struct OHLineManagement: View {
 //                        students.move(fromOffsets: indices, toOffset: newOffset)
 //                    }
                 }
+                #if os(iOS)
                 .navigationTitle("My Office Hours")
                 .navigationBarItems(trailing: EditButton())
+                #endif
 
             }
         }

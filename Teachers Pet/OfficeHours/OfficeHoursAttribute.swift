@@ -6,8 +6,11 @@
 //
 
 import Foundation
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
 
+#if os(iOS)
 struct OfficeHoursAttribute: ActivityAttributes {
     public typealias LiveActivityStatus = ContentState
     
@@ -17,3 +20,4 @@ struct OfficeHoursAttribute: ActivityAttributes {
     
     var activityTitle: String
 }
+#endif

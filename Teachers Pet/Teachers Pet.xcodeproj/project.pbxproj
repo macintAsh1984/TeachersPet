@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18D272AC2B970E3C00E651AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */; };
 		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
 		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
 		AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */; };
 		AB5B096D2B967547004CAE7A /* OfficeHours.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096C2B967547004CAE7A /* OfficeHours.swift */; };
 		AB5B096F2B967548004CAE7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB5B096E2B967548004CAE7A /* Assets.xcassets */; };
-		AB5B09732B967548004CAE7A /* OfficeHoursExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AB5B09732B967548004CAE7A /* OfficeHoursExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB5B097A2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
 		AB5B097B2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
+		AB6C927C2B98122E0078DBB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */; };
 		AB7F0C652B90278F00317EDF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C642B90278F00317EDF /* FirebaseAnalytics */; };
 		AB7F0C672B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C662B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion */; };
 		AB7F0C692B90278F00317EDF /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C682B90278F00317EDF /* FirebaseAnalyticsSwift */; };
@@ -84,7 +84,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -94,6 +93,7 @@
 		AB5B096E2B967548004CAE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB5B09702B967548004CAE7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeHoursAttribute.swift; sourceTree = "<group>"; };
+		AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB7F0C922B90280100317EDF /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB90C1B12B91C911007A6DA7 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
-				18D272AB2B970E3C00E651AF /* GoogleService-Info.plist */,
+				AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -368,7 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				18D272AC2B970E3C00E651AF /* GoogleService-Info.plist in Resources */,
+				AB6C927C2B98122E0078DBB7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +414,7 @@
 /* Begin PBXTargetDependency section */
 		AB5B09722B967548004CAE7A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = AB5B09622B967547004CAE7A /* OfficeHoursExtension */;
 			targetProxy = AB5B09712B967548004CAE7A /* PBXContainerItemProxy */;
 		};
@@ -427,7 +428,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 47YT86J6JH;
+				DEVELOPMENT_TEAM = LK4997QHS7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -457,7 +458,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 47YT86J6JH;
+				DEVELOPMENT_TEAM = LK4997QHS7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -608,7 +609,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 47YT86J6JH;
+				DEVELOPMENT_TEAM = LK4997QHS7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -648,7 +649,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 47YT86J6JH;
+				DEVELOPMENT_TEAM = LK4997QHS7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
