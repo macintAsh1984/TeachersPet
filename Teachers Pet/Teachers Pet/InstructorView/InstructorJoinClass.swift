@@ -18,6 +18,8 @@ struct InstructorJoinClass: View {
     @State var joinCode = String()
     @State var navigateToDashBoard = false
     @State var showScanner = false
+    @State var isLoading = false
+    
     @EnvironmentObject var viewModel: AuthViewModel
        
     var body: some View {
@@ -50,25 +52,35 @@ struct InstructorJoinClass: View {
                 
                 Spacer()
                 
-                Button {
-                    Task {
-                        do {
-                            try await viewModel.joinClassAsTA(joinCode: joinCode, Name: name, email: email)
-                            navigateToDashBoard = true
-                        } catch {
-                            print("Error joining class")
+                //Show loading indicator.
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding()
+                } else {
+                    Button {
+                        isLoading = true
+                        Task {
+                            do {
+                                try await viewModel.joinClassAsTA(joinCode: joinCode, Name: name, email: email)
+                                navigateToDashBoard = true
+                            } catch {
+                                print("Error joining class")
+                            }
                         }
+                        
+                    } label: {
+                        Text("Join Class")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
                     }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.orange)
+                    .controlSize(.large)
+                    Spacer()
                     
-                } label: {
-                    Text("Join Class")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-                .controlSize(.large)
-                Spacer()
+                
             } // end of VStack
             
             .padding()

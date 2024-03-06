@@ -68,7 +68,7 @@ struct CreateAccount: View {
                 CreateClass(email: $email, password: $password, Name: $firstName)
             }
             .navigationDestination(isPresented: $navigateToInstructorSignIn) {
-                SignIn(isStudent: $navigateToStudentSignIn)
+                SignIn(isStudent: $navigateToStudentSignIn, isInstructor: $instructorView)
             }
             .navigationDestination(isPresented: $navigatetoStudentJoinClass) {
                 StudentJoinClass(email: $email, name: $firstName, password: $password)

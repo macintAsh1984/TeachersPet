@@ -14,6 +14,7 @@ struct SignIn: View {
     @State var navigateToCreateAccount = false
     
     @Binding var isStudent: Bool
+    @Binding var isInstructor: Bool
     @State var navigateToStudentDashboard = false
     @State var navigateToInstructorDashboard = false
     @State var showingAlert = false
@@ -101,7 +102,7 @@ struct SignIn: View {
             .navigationBarBackButtonHidden()
             .background(appBackgroundColor)
             .navigationDestination(isPresented: $navigateToCreateAccount) {
-                //CreateAccount(studentview: <#Binding<Bool>#>)
+                CreateAccount(isStudent: $isStudent, instructorView: $isInstructor)
             }
             .navigationDestination(isPresented: $navigateToInstructorDashboard) {
                 InstructorDashboard()
