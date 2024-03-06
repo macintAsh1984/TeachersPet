@@ -70,7 +70,7 @@ struct InstructorJoinClass: View {
             } // end of VStack
             
             .padding()
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .preferredColorScheme(.light)
             #if os(iOS)
             .sheet(isPresented: $showScanner) {

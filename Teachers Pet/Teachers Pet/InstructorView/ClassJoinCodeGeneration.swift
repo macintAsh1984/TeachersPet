@@ -67,7 +67,7 @@ struct ClassJoinCodeGeneration: View {
             }
             .padding()
             .preferredColorScheme(.light)
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
                 InstructorDashboard()

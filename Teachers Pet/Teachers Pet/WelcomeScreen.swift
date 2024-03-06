@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+let appBackgroundColor = Color("AppBackgroundColor")
 
 struct WelcomeScreen: View {
     
@@ -47,13 +48,13 @@ struct WelcomeScreen: View {
                 .controlSize(.large)
             }
             .padding()
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigateToStudentCreateAccount) {
-                CreateAccount(studentview: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
+                CreateAccount(isStudent: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
             }
             .navigationDestination(isPresented: $navigateToInstructorCreateAccount) {
-                CreateAccount(studentview: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
+                CreateAccount(isStudent: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
             }
         }
     }

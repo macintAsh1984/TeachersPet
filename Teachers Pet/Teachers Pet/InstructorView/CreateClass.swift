@@ -60,7 +60,7 @@ struct CreateClass: View {
             }
             .padding()
             .preferredColorScheme(.light)
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .navigationDestination(isPresented: $navigateToCodeGeneration) {
                 ClassJoinCodeGeneration(email: $email, password: $password, Name: $Name, coursename: $courseName)
             }

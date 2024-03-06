@@ -99,7 +99,7 @@ struct SignIn: View {
             .padding()
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .navigationDestination(isPresented: $navigateToCreateAccount) {
                 //CreateAccount(studentview: <#Binding<Bool>#>)
             }

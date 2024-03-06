@@ -80,7 +80,7 @@ struct StudentJoinClass: View {
                 Spacer()
             } // end of VStack
             .padding()
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigatetoStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)

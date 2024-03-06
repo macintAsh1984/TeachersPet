@@ -104,6 +104,8 @@ struct OHQuestionaire: View {
                     joinCode = currentUser.joincode
                 }
             }
+            .background(appBackgroundColor)
+            .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
                 #if os(iOS)
                 OHLineView(email: $email, joinCode: $joinCode, activity: $activity)

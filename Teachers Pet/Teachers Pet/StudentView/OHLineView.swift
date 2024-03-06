@@ -49,7 +49,7 @@ struct OHLineView: View {
             .navigationBarBackButtonHidden()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .alert(isPresented: $leaveLineAlert) {
                 Alert(
                     title: Text("Are you sure you want to leave the line?"),

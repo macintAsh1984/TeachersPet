@@ -168,13 +168,13 @@ struct InstructorDashboard: View {
             .navigationBarBackButtonHidden()
 //            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .alert(isPresented: $signOut) {
                 Alert(
                     title: Text("Are you sure you want to sign out"),
                     message: Text("This cannot be undone."),
                     primaryButton: .destructive(Text("Sign Out")) {
-                        //leave line
+                        //Sign out of account.
                         
                     },
                     secondaryButton: .cancel()

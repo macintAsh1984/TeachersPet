@@ -161,7 +161,7 @@ struct StudentDashboard: View {
             .padding()
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
-            .background(Color("AppBackgroundColor"))
+            .background(appBackgroundColor)
             .navigationDestination (isPresented: $showClassInfo){
                 OHQuestionaire(email: $email, joinCode: $joinCode)
             }
