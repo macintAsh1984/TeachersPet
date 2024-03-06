@@ -62,7 +62,7 @@ struct InstructorJoinClass: View {
                         isLoading = true
                         Task {
                             do {
-                                try await viewModel.joinClassAsTA(joinCode: joinCode, Name: name, email: email)
+                                try await viewModel.createTA(withEmail: email, password: password, fullname: name, joincode: joinCode)
                                 navigateToDashBoard = true
                             } catch {
                                 print("Error joining class")
@@ -93,11 +93,6 @@ struct InstructorJoinClass: View {
             #endif
             .navigationDestination(isPresented: $navigateToDashBoard) {
                 InstructorDashboard()
-            }
-            .onAppear {
-                Task {
-                    try await viewModel.createUser(withEmail:email, password: password, fullname: name, coursename: "", joincode: joinCode) //only first name for now fix this to have both
-                }
             }
             Spacer()
         }// end of view

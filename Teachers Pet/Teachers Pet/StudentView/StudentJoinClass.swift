@@ -60,7 +60,7 @@ struct StudentJoinClass: View {
                         Task {
                             do {
                                 // Firebase update
-                                try await viewModel.createUserforStudent(withEmail: email, password: password, fullname: name, coursename: "", joincode: joinCode)
+                                try await viewModel.createStudent(withEmail: email, password: password, fullname: name, coursename: "", joincode: joinCode)
                                 navigatetoStudentDashboard = true
                             } catch {
                                 print("Error signing in")
