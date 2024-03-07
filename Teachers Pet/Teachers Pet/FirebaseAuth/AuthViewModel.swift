@@ -19,6 +19,7 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var positionInLine: Int = 1
+    @Published var coursename: String = ""
     
     
     init() {
@@ -93,6 +94,48 @@ class AuthViewModel: ObservableObject {
                 print("Error fetching teacher documents: \(error.localizedDescription)")
             }
         }
+    
+    func getCourseName() async{
+        var coursename = ""
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        do {
+            // Query the users collection to find all teacher documents
+            let teacherQuerySnapshot = try await Firestore.firestore().collection("users").getDocuments()
+            
+            // Iterate through the teacher documents
+            for teacherDocument in teacherQuerySnapshot.documents {
+                // Get the reference to the student document within the teacher's students subcollection
+                let studentDocumentRef = teacherDocument.reference.collection("students").document(uid)
+                
+                // Fetch the student document
+                let studentDocumentSnapshot = try await studentDocumentRef.getDocument()
+                
+                // Check if the student document exists and matches the provided UID
+                if let _ = studentDocumentSnapshot.data(), studentDocumentSnapshot.exists {
+                    // This teacher document contains the student with the provided UID
+                    print("Teacher document found for student with UID \(uid): \(teacherDocument.data())")
+                    let data = teacherDocument.data()
+                    if let coursenameTemp = data["coursename"] as? String {
+                        // If coursename is not nil, print its value
+                        coursename = coursenameTemp
+//                        return coursename
+                    } else {
+                        // If coursename is nil or not a String, print a message or handle the case accordingly
+                        print("coursename is nil or not a String")
+                    }
+                }
+            }
+        } catch {
+            print("Error fetching teacher documents: \(error.localizedDescription)")
+        }
+        
+        self.coursename = coursename
+//        return coursename
+    }
+    
+//    func fetchCourseName() async {
+//        self.coursename = await getCourseName()
+//    }
 
     
     func signIn(withEmail email: String, password: String) async throws {

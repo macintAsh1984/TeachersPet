@@ -21,6 +21,7 @@ struct StudentDashboard: View {
     @Binding var email: String
     @Binding var joinCode: String
     @State var signOut = false
+    @State var coursename = ""
     
     var body: some View {
         NavigationStack{
@@ -37,8 +38,14 @@ struct StudentDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses = [officeHour1, officeHour2]
+                            upcomingClasses.append(officeHour1)
                             currentOfficeHours = [currentOH1, currentOH2]
+//                            DispatchQueue.main.async{
+//                                coursename = await viewModel.fetchCourseName()
+//                            }
+                            Task {
+                                await viewModel.getCourseName()
+                            }
                         }
                     Spacer()
                     
@@ -63,7 +70,7 @@ struct StudentDashboard: View {
                     
                 }
                 .padding(2)
-                Spacer(minLength: 40)
+//                Spacer(minLength: 40)
                 HStack {
                     Text("Upcoming Office Hours")
                         .font(.custom("sideheading", size: 23))
@@ -99,7 +106,7 @@ struct StudentDashboard: View {
                                         .frame(width: 120, height: 40)
                                         .foregroundStyle(.orange)
                                     
-                                    Text("\(upcomingClasses[index].className)")
+                                    Text("\(viewModel.coursename)")
                                         .foregroundStyle(.white)
                                         .bold()
                                     
@@ -134,7 +141,7 @@ struct StudentDashboard: View {
                                 .foregroundColor(.white)
                             VStack {
                                 HStack {
-                                    Text("\(upcomingClasses[index].className)")
+                                    Text("\(currentOfficeHours[index].className)")
                                         .foregroundStyle(.black)
                                         .bold()
                                         .padding(.leading)
@@ -159,6 +166,7 @@ struct StudentDashboard: View {
                 }
             }
             .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
             .background(appBackgroundColor)
@@ -180,7 +188,14 @@ struct StudentDashboard: View {
             Spacer()
             
         }
+        .background(appBackgroundColor)
 
+    }
+    
+    func setCourseName() {
+        Task{
+            coursename = viewModel.coursename
+        }
     }
 }
 
