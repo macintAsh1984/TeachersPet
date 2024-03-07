@@ -32,10 +32,7 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 
 **Toniya Patil**
 - Implemented Student Sign In - in works.
-- Implemented Students Join Class using QR code.
-- Working on understanding the backend and Firebase to create collections for students, TAs, and the queue.
-- Implemented the Loading View for Student Join Class.
-- Building the App Logo.
+- [Implemented Students Join Class using QR code](https://github.com/macintAsh1984/TeachersPet/commit/0a57dc94b6777f8d5fa26853f6fb6999376708e3).
 
 # Planned Tasks
 
@@ -44,7 +41,7 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 - [Created Live Activity](https://github.com/macintAsh1984/TeachersPet/issues/22) that displays a student's position in an Office Hours Line in real time.
 - Began code cleanup by [refactoring views](https://github.com/macintAsh1984/TeachersPet/commit/bc0e16c82b1c5a1ab382f148e66857b74a2240ae) and [reorganizing view model methods](https://github.com/macintAsh1984/TeachersPet/commit/33e7db358fc204542bd8cd1f89c44a90bf2c7352).
 - Bug Fixes
-    - [Fixed app navigation issues]([url](https://github.com/macintAsh1984/TeachersPet/commit/c461251fbae05973a396ce0cd711b8f4dc6b4b6d).
+    - [Fixed app navigation issues](https://github.com/macintAsh1984/TeachersPet/commit/c461251fbae05973a396ce0cd711b8f4dc6b4b6d).
     - [Hid QR Code scanning button ](https://github.com/macintAsh1984/TeachersPet/commit/f062a0a85b8e411b5ea700e6bd7e0d5c8729c2e3) on macOS version of Teacher's Pet.
 
 **Sai Chamarty**
