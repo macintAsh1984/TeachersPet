@@ -55,6 +55,9 @@ struct OHLineView: View {
                     title: Text("Are you sure you want to leave the line?"),
                     message: Text("This cannot be undone."),
                     primaryButton: .destructive(Text("Leave")) {
+                        Task {
+                            try await viewModel.removeStudentFromLine(joinCode: joinCode, email: email)
+                        }
                         #if os(iOS)
                         let state = OfficeHoursAttribute.ContentState(linePosition: viewModel.positionInLine)
                         let content = ActivityContent(state: state, staleDate: nil)

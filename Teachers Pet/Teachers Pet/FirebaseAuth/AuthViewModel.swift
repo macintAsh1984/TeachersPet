@@ -117,8 +117,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     
-    func getCourseName() async{
-        var coursename = ""
+    func getCourseName() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         do {
             // Query the users collection to find all teacher documents
@@ -139,8 +138,7 @@ class AuthViewModel: ObservableObject {
                     let data = teacherDocument.data()
                     if let coursenameTemp = data["coursename"] as? String {
                         // If coursename is not nil, print its value
-                        coursename = coursenameTemp
-//                        return coursename
+                        self.coursename = coursenameTemp
                     } else {
                         // If coursename is nil or not a String, print a message or handle the case accordingly
                         print("coursename is nil or not a String")
@@ -151,13 +149,7 @@ class AuthViewModel: ObservableObject {
             print("Error fetching teacher documents: \(error.localizedDescription)")
         }
         
-        self.coursename = coursename
-//        return coursename
     }
-    
-//    func fetchCourseName() async {
-//        self.coursename = await getCourseName()
-//    }
 
     func fetchTeacherDocumentsForTA() async {
             guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -334,11 +326,51 @@ class AuthViewModel: ObservableObject {
             }
     
         }
-    }
     
     //To be implemented.
-    func removeStudentFromLine() {
-
-    }
+     func removeStudentFromLine(joinCode: String, email: String) async throws {
+         guard let currentUser = self.userSession?.uid else {
+             print("user does not exist")
+             return
+       }
+       
+       do {
+           // Retrieve the instructor document with the same join code.
+           let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+           
+           // Users -> UID -> Students
+           // Fetches the instructor with the corresponding join code.
+           guard let professorDocument = professorQuerySnapshot.documents.first else {
+               print("Professor not found")
+               return
+           }
+           
+           // Retrieve the ID of the instructor document
+           let professorID = professorDocument.documentID
+           
+           // Get the reference to the student's document in the "Office Hours" collection
+           let studentDocumentReference = Firestore.firestore().collection("users").document(professorID).collection("Office Hours").document(currentUser)
+           
+           do {
+               //get all the documents with userID in office hours
+               let studentQuerySnapshot = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").whereField("id", isEqualTo: studentDocumentReference.documentID).getDocuments()
+               
+               
+               //Removing the student
+               for document in studentQuerySnapshot.documents {
+                   try await document.reference.delete()
+                   print("Document \(document.documentID) deleted successfully.")
+               }
+           } catch {
+               print("Error deleting documents: \(error)")
+           }
+           
+       } catch {
+           print("error: \(error)")
+       }
+   }
     
+    
+    
+}//end of class
 

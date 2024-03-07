@@ -28,9 +28,7 @@ struct StudentDashboard: View {
             let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
             let officeHour2 = OfficeHoursViewModel(className: "ECS 189E", month: "February", day: 28, startHour: 9, endHour: 10, buildingName: "Kemper Hall", roomNumber: 1553, profName: "Sam King")
             
-            let currentOH1 = OfficeHoursViewModel(className: "ECS 160", month: "March", day: 21, startHour: 6, endHour: 7, buildingName: "Kemper", roomNumber: 36, profName: "Farrens")
-            
-            let currentOH2 = OfficeHoursViewModel(className: "ECS 140A", month: "April", day: 21, startHour: 3, endHour: 4, buildingName: "Young Hall", roomNumber: 184, profName: "Thakkar")
+            let currentOH1 = OfficeHoursViewModel(className: "Acting Class", month: "March", day: 13, startHour: 6, endHour: 7, buildingName: "Mondavi Center", roomNumber: 36, profName: "Jim Carry")
             
             VStack {
                 HStack {
@@ -39,10 +37,7 @@ struct StudentDashboard: View {
                         .bold()
                         .onAppear{
                             upcomingClasses.append(officeHour1)
-                            currentOfficeHours = [currentOH1, currentOH2]
-//                            DispatchQueue.main.async{
-//                                coursename = await viewModel.fetchCourseName()
-//                            }
+                            currentOfficeHours = [currentOH1]
                             Task {
                                 await viewModel.getCourseName()
                             }
@@ -70,7 +65,8 @@ struct StudentDashboard: View {
                     
                 }
                 .padding(2)
-//                Spacer(minLength: 40)
+                Spacer()
+                    .frame(height: 20)
                 HStack {
                     Text("Upcoming Office Hours")
                         .font(.custom("sideheading", size: 23))
@@ -151,11 +147,11 @@ struct StudentDashboard: View {
                                         .padding(.trailing)
                                 }
                                 HStack {
-                                    Text("Monday, Feb \(currentOfficeHours[index].day)")
+                                    Text("Wednesday, March \(currentOfficeHours[index].day)")
                                         .padding(.leading)
                                         .foregroundStyle(.black)
                                     Spacer()
-                                    Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour)")
+                                    Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour) PM")
                                         .padding(.trailing)
                                         .foregroundStyle(.black)
                                 }
@@ -163,6 +159,7 @@ struct StudentDashboard: View {
                         }
                     })
                     .padding(.bottom)
+                    Spacer()
                 }
             }
             .padding()
