@@ -22,7 +22,7 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 - [Created UI for questionnaire](https://github.com/macintAsh1984/TeachersPet/issues/18).
 
 **Sai Chamarty**
--[ Completed Student Dashboard](https://github.com/macintAsh1984/TeachersPet/commit/de2b46b8e136129bb4bc1ddd12e880bd09e9e6a1).
+- [Completed Student Dashboard](https://github.com/macintAsh1984/TeachersPet/commit/de2b46b8e136129bb4bc1ddd12e880bd09e9e6a1).
 
 **Sukhpreet Aulakh**
 - Helped implement queue on the student side
