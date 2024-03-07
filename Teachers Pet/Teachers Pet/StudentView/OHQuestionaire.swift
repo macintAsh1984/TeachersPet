@@ -78,7 +78,7 @@ struct OHQuestionaire: View {
                     
                     Task {
                         do {
-                            try await viewModel.calculateStudentLinePosition(joinCode: joinCode, email: email)
+                            try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
                             
                             #if os(iOS)
                             beginLiveActivity()

@@ -26,7 +26,7 @@ struct OHLineView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("You are #\(viewModel.positionInLine) in queue!")
+                Text("You are #\(viewModel.positionInLine) in line!")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
