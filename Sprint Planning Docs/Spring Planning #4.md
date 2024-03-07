@@ -25,7 +25,7 @@ Teacher's Pet is an app aimed at streamlining the office hours process. The goal
 - [Completed Student Dashboard](https://github.com/macintAsh1984/TeachersPet/commit/de2b46b8e136129bb4bc1ddd12e880bd09e9e6a1).
 
 **Sukhpreet Aulakh**
-- Created student collection under professors for Firebase
+- [Created student collection under professors for Firebase] (https://github.com/macintAsh1984/TeachersPet/issues/21)
 
 **Toniya Patil**
 - Implemented Student Sign In - in works.
