@@ -15,7 +15,6 @@
 		AB5B09732B967548004CAE7A /* OfficeHoursExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB5B097A2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
 		AB5B097B2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */; };
-		AB6C927C2B98122E0078DBB7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */; };
 		AB7F0C652B90278F00317EDF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C642B90278F00317EDF /* FirebaseAnalytics */; };
 		AB7F0C672B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C662B90278F00317EDF /* FirebaseAnalyticsOnDeviceConversion */; };
 		AB7F0C692B90278F00317EDF /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AB7F0C682B90278F00317EDF /* FirebaseAnalyticsSwift */; };
@@ -56,6 +55,7 @@
 		ABF4079B2B9023FB00444A48 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABF4079C2B9023FE00444A48 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE645E42B88732D0072AA66 /* SignIn.swift */; };
 		ABF4079E2B90247700444A48 /* TeachersPet_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4079D2B90247700444A48 /* TeachersPet_App.swift */; };
+		BD1EEC522B987727003C1AF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */; };
 		BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDEC08E22B93E92A009763B9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -93,7 +93,6 @@
 		AB5B096E2B967548004CAE7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB5B09702B967548004CAE7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB5B09792B967657004CAE7A /* OfficeHoursAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeHoursAttribute.swift; sourceTree = "<group>"; };
-		AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB7F0C922B90280100317EDF /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		AB7F0C962B90285A00317EDF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB90C1B12B91C911007A6DA7 /* CreateClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateClass.swift; sourceTree = "<group>"; };
@@ -111,6 +110,8 @@
 		ABE645E42B88732D0072AA66 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		ABF4078A2B90238100444A48 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF4079D2B90247700444A48 /* TeachersPet_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersPet_App.swift; sourceTree = "<group>"; };
+		BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BD1EEC532B987972003C1AF6 /* Teachers PetRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Teachers PetRelease.entitlements"; sourceTree = "<group>"; };
 		BDEC08E22B93E92A009763B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -233,6 +234,7 @@
 		ABF4078B2B90238100444A48 /* Teachers Pet */ = {
 			isa = PBXGroup;
 			children = (
+				BD1EEC532B987972003C1AF6 /* Teachers PetRelease.entitlements */,
 				ABF4079D2B90247700444A48 /* TeachersPet_App.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
@@ -243,7 +245,7 @@
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
-				AB6C927B2B98122E0078DBB7 /* GoogleService-Info.plist */,
+				BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -368,7 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				AB6C927C2B98122E0078DBB7 /* GoogleService-Info.plist in Resources */,
+				BD1EEC522B987727003C1AF6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,7 +460,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 94WCH5T899;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -471,7 +473,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet.OfficeHours";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SaiGanesh.Teachers-Pet.OfficeHours";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -644,12 +646,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers PetRelease.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 94WCH5T899;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -668,7 +670,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.SaiGanesh.Teachers-Pet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
