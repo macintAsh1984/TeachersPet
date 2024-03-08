@@ -27,7 +27,15 @@ struct OHLineView: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Text("You are #\(viewModel.positionInLine) in line!")
+                Text("You are")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                Text("#\(viewModel.positionInLine)")
+                    .font(.system(size: 50))
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                Text("in line!")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
