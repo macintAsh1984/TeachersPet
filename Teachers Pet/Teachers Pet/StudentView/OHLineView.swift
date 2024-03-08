@@ -26,6 +26,7 @@ struct OHLineView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Spacer()
                 Text("You are #\(viewModel.positionInLine) in line!")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
