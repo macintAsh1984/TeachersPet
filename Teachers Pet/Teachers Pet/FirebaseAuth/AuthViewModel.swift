@@ -298,14 +298,11 @@ class AuthViewModel: ObservableObject {
                     
                     if studentData["id"] as? String == currentUser {
                        try await db.collection("users").document(professorID).collection("Office Hours").addDocument(data: studentData)
-                        print("I'm in the if statement")
                         return false
                     }
                     
                 }
             } else {
-                //throw NSError(domain: "YourDomain", code: 409, userInfo: ["message": "Student already exists in the Office Hours queue"])
-                print("I'm in the else!")
                 return true
             }
             
@@ -313,12 +310,9 @@ class AuthViewModel: ObservableObject {
             
             
         } catch {
-            //throw error
-            print("I'm in the catch!")
             return false
         }
         
-        print("I'm at the end of the function")
         return false
     }
     
@@ -346,16 +340,12 @@ class AuthViewModel: ObservableObject {
              let studentsInCourse = try await db.collection("users").document(professorID).collection("Office Hours").getDocuments()
              
              //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, exit the loop and return the student's position in line.
-            print("Number of students in OH: \(studentsInCourse.documents.count)")
-            print("Before loop: \(self.positionInLine)")
              for studentDocument in studentsInCourse.documents {
                  let studentData = studentDocument.data()
                  
                  if studentData["id"] as? String == currentUser {
-                     print("Before return: \(self.positionInLine)")
                      return
                  } else {
-                     print("Position In Line: \(self.positionInLine)")
                      self.positionInLine += 1
                  }
              }
