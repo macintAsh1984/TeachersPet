@@ -35,6 +35,7 @@ struct OHLiveActivityView: View {
         }
         .padding(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(.white)
         .background(
             LinearGradient(gradient: Gradient(colors: [Color("Light Green"), Color("Teal")]), startPoint: .leading, endPoint: .trailing)
         )
