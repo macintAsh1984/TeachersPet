@@ -261,10 +261,10 @@ class AuthViewModel: ObservableObject {
         }
     }
 
-    func addStudentToLine(joinCode: String, email: String) async throws {
+    func addStudentToLine(joinCode: String, email: String) async throws -> Bool {
         guard let currentUser = self.userSession?.uid else {
             print("user does not exist")
-            return
+            return false
         }
         
         do {
@@ -275,13 +275,8 @@ class AuthViewModel: ObservableObject {
             //Fetches the instructor with the corresponding join code.
             guard let professorDocument = professorQuerySnapshot.documents.first else {
                 print("Professor not found")
-                return
+                return false
             }
-            
-            
-            
-            
-            
             
             //Retrieve the ID of the instructor document
             let professorID = professorDocument.documentID
@@ -290,43 +285,41 @@ class AuthViewModel: ObservableObject {
             let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
             
             let officehourstudents = try await officehoursCollection.whereField("id", isEqualTo: currentUser).getDocuments()
+            print("Current User ID: \(currentUser)")
+            print("Office Hours Student: \(officehourstudents)")
             
             if officehourstudents.isEmpty {
                 //Get all of the students in the instructor's course.
                 let studentsInCourse = try await db.collection("users").document(professorID).collection("students").getDocuments()
                 
-                
                 //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, add that student to the Office Hours collection.
                 for studentDocument in studentsInCourse.documents {
                     let studentData = studentDocument.data()
                     
-                    
-                    
                     if studentData["id"] as? String == currentUser {
                        try await db.collection("users").document(professorID).collection("Office Hours").addDocument(data: studentData)
+                        print("I'm in the if statement")
+                        return false
                     }
                     
-                   
-                    
-                    
                 }
+            } else {
+                //throw NSError(domain: "YourDomain", code: 409, userInfo: ["message": "Student already exists in the Office Hours queue"])
+                print("I'm in the else!")
+                return true
             }
-            else {
-                throw NSError(domain: "YourDomain", code: 409, userInfo: ["message": "Student already exists in the Office Hours queue"])
-            }
-            
-            
-            
-            
-           
             
             await fetchTeacherDocumentsForStudent()
             
             
         } catch {
-            throw error
+            //throw error
+            print("I'm in the catch!")
+            return false
         }
         
+        print("I'm at the end of the function")
+        return false
     }
     
     //Methods related to managing the office hours line.
@@ -353,13 +346,17 @@ class AuthViewModel: ObservableObject {
              let studentsInCourse = try await db.collection("users").document(professorID).collection("Office Hours").getDocuments()
              
              //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, exit the loop and return the student's position in line.
+            print("Number of students in OH: \(studentsInCourse.documents.count)")
+            print("Before loop: \(self.positionInLine)")
              for studentDocument in studentsInCourse.documents {
                  let studentData = studentDocument.data()
                  
                  if studentData["id"] as? String == currentUser {
+                     print("Before return: \(self.positionInLine)")
                      return
                  } else {
-                     positionInLine += 1
+                     print("Position In Line: \(self.positionInLine)")
+                     self.positionInLine += 1
                  }
              }
         
