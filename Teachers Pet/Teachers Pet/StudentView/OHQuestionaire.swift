@@ -14,6 +14,7 @@ struct OHQuestionaire: View {
     @State private var selectedOption: Int? = nil
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
+    @State var isstudentalreadyinqueue = false
     
     @Binding var email: String
     @Binding var joinCode: String
@@ -72,21 +73,31 @@ struct OHQuestionaire: View {
                         do {
                             try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
                         } catch {
-                            print("Couldn't add you to the line :(.")
+                            //print("Couldn't add you to the line :(.")
+                            isstudentalreadyinqueue = true
                         }
                     }
                     
-                    Task {
-                        do {
-                            try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
-                            
-                            #if os(iOS)
-                            beginLiveActivity()
-                            #endif
-                            
-                            navigateToOfficeHoursLine = true
-                        } catch {
-                            print("Couldn't calculate position")
+                    Task { //this needs fixing for frontend
+                        if isstudentalreadyinqueue {
+                            navigateToOfficeHoursLine = false
+                        }
+                        else {
+                            do {
+                                try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                                
+                                #if os(iOS)
+                                beginLiveActivity()
+                                #endif
+                                
+                                
+                                navigateToOfficeHoursLine = true
+                                
+                                
+                                
+                            } catch {
+                                print("Couldn't calculate position")
+                            }
                         }
                     }
                     
@@ -112,6 +123,9 @@ struct OHQuestionaire: View {
                 #else
                 OHLineView(email: $email, joinCode: $joinCode)
                 #endif
+            }
+            .alert(isPresented: $isstudentalreadyinqueue) {
+                Alert(title: Text("Error"), message: Text("You are already in the queue"), dismissButton: .default(Text("OK")))
             }
         
         }

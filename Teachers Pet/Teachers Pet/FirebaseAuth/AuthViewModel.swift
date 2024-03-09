@@ -44,6 +44,19 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    
+    
+    func signInforStudents(withEmail email: String, password: String) async throws {
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            self.userSession = result.user
+            await fetchStudentUserInfo()
+        } catch {
+            print("Failed to log in \(error.localizedDescription)")
+        }
+    }
+    
+    
     func signout() {
         do {
             try Auth.auth().signOut()
@@ -265,26 +278,53 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
+            
+            
+            
+            
+            
             //Retrieve the ID of the instructor document
             let professorID = professorDocument.documentID
             
-            //Get all of the students in the instructor's course.
-            let studentsInCourse = try await db.collection("users").document(professorID).collection("students").getDocuments()
             
-            //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, add that student to the Office Hours collection.
-            for studentDocument in studentsInCourse.documents {
-                let studentData = studentDocument.data()
+            let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
+            
+            let officehourstudents = try await officehoursCollection.whereField("id", isEqualTo: currentUser).getDocuments()
+            
+            if officehourstudents.isEmpty {
+                //Get all of the students in the instructor's course.
+                let studentsInCourse = try await db.collection("users").document(professorID).collection("students").getDocuments()
                 
-                if studentData["id"] as? String == currentUser {
-                   try await db.collection("users").document(professorID).collection("Office Hours").addDocument(data: studentData)
+                
+                //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, add that student to the Office Hours collection.
+                for studentDocument in studentsInCourse.documents {
+                    let studentData = studentDocument.data()
+                    
+                    
+                    
+                    if studentData["id"] as? String == currentUser {
+                       try await db.collection("users").document(professorID).collection("Office Hours").addDocument(data: studentData)
+                    }
+                    
+                   
+                    
+                    
                 }
             }
+            else {
+                throw NSError(domain: "YourDomain", code: 409, userInfo: ["message": "Student already exists in the Office Hours queue"])
+            }
+            
+            
+            
+            
+           
             
             await fetchTeacherDocumentsForStudent()
             
             
         } catch {
-            print("error")
+            throw error
         }
         
     }
