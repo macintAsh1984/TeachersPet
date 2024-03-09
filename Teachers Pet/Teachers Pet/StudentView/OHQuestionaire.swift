@@ -85,8 +85,7 @@ struct OHQuestionaire: View {
                         _ = await addStudentTask.result
                         if studentAlreadyInLine {
                             navigateToOfficeHoursLine = false
-                        }
-                        else {
+                        } else {
                             do {
                                 try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
                                 

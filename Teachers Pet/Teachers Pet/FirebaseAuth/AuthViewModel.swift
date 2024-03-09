@@ -18,7 +18,7 @@ import FirebaseFirestoreSwift
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
-    @Published var positionInLine: Int = 1
+    @Published var positionInLine: Int = 0
     @Published var coursename: String = ""
     
     
@@ -285,8 +285,8 @@ class AuthViewModel: ObservableObject {
             let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
             
             let officehourstudents = try await officehoursCollection.whereField("id", isEqualTo: currentUser).getDocuments()
-            print("Current User ID: \(currentUser)")
-            print("Office Hours Student: \(officehourstudents)")
+//            print("Current User ID: \(currentUser)")
+//            print("Office Hours Student: \(officehourstudents)")
             
             if officehourstudents.isEmpty {
                 //Get all of the students in the instructor's course.
@@ -335,25 +335,33 @@ class AuthViewModel: ObservableObject {
              }
              
              //Retrieve the ID of the instructor document
-             let professorID = professorDocument.documentID
+            let professorID = professorDocument.documentID
+            let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
              
              //Get all of the students in the instructor's course.
-             let studentsInCourse = try await db.collection("users").document(professorID).collection("Office Hours").getDocuments()
+            let studentsInOfficeHours = try await officehoursCollection.order(by: "entryDate").getDocuments()
              
              //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, exit the loop and return the student's position in line.
-             for studentDocument in studentsInCourse.documents {
-                 let studentData = studentDocument.data()
+            var linePosition = 1
+             for student in studentsInOfficeHours.documents {
+                 var studentData = student.data()
                  
                  if studentData["id"] as? String == currentUser {
+                     try await student.reference.updateData(["linePosition" : linePosition])
+                     self.positionInLine = linePosition
                      return
                  } else {
-                     self.positionInLine += 1
+                     try await student.reference.updateData(["linePosition" : linePosition])
+                     linePosition += 1
+                     
                  }
              }
-        
-            }
-    
+            
+        } catch {
+            print("Issue with calculating line position: \(error.localizedDescription)")
         }
+    
+    }
     
     //To be implemented.
      func removeStudentFromLine(joinCode: String, email: String) async throws {
