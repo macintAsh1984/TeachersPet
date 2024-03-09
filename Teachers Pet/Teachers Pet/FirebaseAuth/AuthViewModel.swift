@@ -294,10 +294,11 @@ class AuthViewModel: ObservableObject {
                 
                 //For all the students under the instructor, get their data (name, email, etc.). Then check if the logged in student's ID in Firebase is the same ID that is under the instructor. If they match, add that student to the Office Hours collection.
                 for studentDocument in studentsInCourse.documents {
-                    let studentData = studentDocument.data()
+                    var studentData = studentDocument.data()
                     
                     if studentData["id"] as? String == currentUser {
-                       try await db.collection("users").document(professorID).collection("Office Hours").addDocument(data: studentData)
+                        studentData["entryDate"] = Timestamp()
+                        try await officehoursCollection.addDocument(data: studentData)
                         return false
                     }
                     
