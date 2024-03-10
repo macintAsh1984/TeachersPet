@@ -57,7 +57,7 @@
 		ABF4079B2B9023FB00444A48 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABF4079C2B9023FE00444A48 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE645E42B88732D0072AA66 /* SignIn.swift */; };
 		ABF4079E2B90247700444A48 /* TeachersPet_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4079D2B90247700444A48 /* TeachersPet_App.swift */; };
-		BD1EEC522B987727003C1AF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */; };
+		BDE82A1A2B9D0DF7006AFE17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */; };
 		BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDEC08E22B93E92A009763B9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -112,7 +112,7 @@
 		ABEB6C352B99912600293A48 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		ABF4078A2B90238100444A48 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF4079D2B90247700444A48 /* TeachersPet_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersPet_App.swift; sourceTree = "<group>"; };
-		BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDEC08E22B93E92A009763B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -246,8 +246,8 @@
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
+				BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
-				BD1EEC512B987727003C1AF6 /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -374,7 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				BD1EEC522B987727003C1AF6 /* GoogleService-Info.plist in Resources */,
+				BDE82A1A2B9D0DF7006AFE17 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,7 +615,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 3A7FZ95N5N;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

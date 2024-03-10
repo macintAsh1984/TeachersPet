@@ -59,6 +59,11 @@ struct OHLineView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
+            .onAppear {
+                Task {
+                    try await viewModel.addListnerToLine(joinCode: joinCode)
+                }
+            }
             .alert(isPresented: $leaveLineAlert) {
                 Alert(
                     title: Text("Are you sure you want to leave the line?"),

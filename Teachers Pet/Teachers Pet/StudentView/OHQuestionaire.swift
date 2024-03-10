@@ -14,6 +14,7 @@ struct OHQuestionaire: View {
     @State private var selectedOption: Int? = nil
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
+    @State var studentAlreadyInLine = false
     
     @Binding var email: String
     @Binding var joinCode: String
@@ -68,25 +69,34 @@ struct OHQuestionaire: View {
                 Button(action: {
                     // Handle the submission here, including the selected option or the text from the TextField
                     submitSurvey()
-                    Task {
+                    
+                    //Add the student to the line before calculating their place in line.
+                    let addStudentTask = Task {
                         do {
-                            try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
+                            studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
                         } catch {
                             print("Couldn't add you to the line :(.")
                         }
                     }
                     
+                   
                     Task {
-                        do {
-                            try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
-                            
-                            #if os(iOS)
-                            beginLiveActivity()
-                            #endif
-                            
-                            navigateToOfficeHoursLine = true
-                        } catch {
-                            print("Couldn't calculate position")
+                        //Wait for student to be added to the line before running this task.
+                        _ = await addStudentTask.result
+                        if studentAlreadyInLine {
+                            navigateToOfficeHoursLine = false
+                        } else {
+                            do {
+                                try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                                
+                                #if os(iOS)
+                                beginLiveActivity()
+                                #endif
+                                
+                                navigateToOfficeHoursLine = true
+                            } catch {
+                                print("Couldn't calculate position")
+                            }
                         }
                     }
                     
@@ -113,6 +123,9 @@ struct OHQuestionaire: View {
                 OHLineView(email: $email, joinCode: $joinCode)
                 #endif
             }
+            .alert(isPresented: $studentAlreadyInLine) {
+                Alert(title: Text("Cannot Join Queue"), message: Text("You are already in the queue"), dismissButton: .default(Text("OK")))
+            }
         
         }
     
@@ -124,7 +137,6 @@ struct OHQuestionaire: View {
         let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
         
         activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
-        print(activity.debugDescription)
     }
     #endif
     

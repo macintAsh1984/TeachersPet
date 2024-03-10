@@ -54,18 +54,23 @@ struct SignIn: View {
                     } else {
                         Task {
                             do {
-                                try await viewModel.signIn(withEmail: email, password: password)
-                                joinCode = viewModel.currentUser?.joincode ?? ""
-                                
                                 if isStudent {
+                                    try await viewModel.signInforStudents(withEmail: email, password: password)
+                                    joinCode = viewModel.currentUser?.joincode ?? ""
                                     navigateToStudentDashboard = true
-                                } else {
+                                }
+                                else {
+                                    try await viewModel.signIn(withEmail: email, password: password)
+                                    joinCode = viewModel.currentUser?.joincode ?? ""
                                     navigateToInstructorDashboard = true
                                 }
-                            }catch {
+                            } catch {
                                 print("Error signing in")
                             }
                         }
+                        
+                        
+                        
                     }
                 } label: {
                     Text("Sign In")

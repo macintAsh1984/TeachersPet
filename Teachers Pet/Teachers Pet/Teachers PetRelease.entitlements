@@ -13,7 +13,6 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)com.macintAsh.Teachers-Pet</string>
-		<string>$(AppIdentifierPrefix)com.SaiGanesh.Teachers-Pet</string>
 	</array>
 </dict>
 </plist>
