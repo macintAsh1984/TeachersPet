@@ -385,13 +385,14 @@ class AuthViewModel: ObservableObject {
            
            // Retrieve the ID of the instructor document
            let professorID = professorDocument.documentID
+           let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
            
            // Get the reference to the student's document in the "Office Hours" collection
-           let studentDocumentReference = Firestore.firestore().collection("users").document(professorID).collection("Office Hours").document(currentUser)
+           let studentDocumentReference = officehoursCollection.document(currentUser)
            
            do {
                //get all the documents with userID in office hours
-               let studentQuerySnapshot = try await Firestore.firestore().collection("users").document(professorID).collection("Office Hours").whereField("id", isEqualTo: studentDocumentReference.documentID).getDocuments()
+               let studentQuerySnapshot = try await officehoursCollection.whereField("id", isEqualTo: studentDocumentReference.documentID).getDocuments()
                
                
                //Removing the student
@@ -408,8 +409,6 @@ class AuthViewModel: ObservableObject {
                print("Error deleting documents: \(error)")
            }
            
-           let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
-            
             //Get all of the students in the instructor's course.
            let studentsInOfficeHours = try await officehoursCollection.order(by: "entryDate").getDocuments()
            
@@ -432,6 +431,51 @@ class AuthViewModel: ObservableObject {
            print("error: \(error)")
        }
    }
+    
+    func addListnerToLine(joinCode: String) async throws {
+        guard let currentUser = self.userSession?.uid else {
+            print("user does not exist")
+            return
+        }
+        
+        do {
+            // Retrieve the instructor document with the same join code.
+            let professorQuerySnapshot = try await db.collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+            
+            // Users -> UID -> Students
+            // Fetches the instructor with the corresponding join code.
+            guard let professorDocument = professorQuerySnapshot.documents.first else {
+                print("Professor not found")
+                return
+            }
+            
+            // Retrieve the ID of the instructor document
+            let professorID = professorDocument.documentID
+            let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours").order(by: "linePosition")
+            
+            officehoursCollection.addSnapshotListener(includeMetadataChanges: true) { querySnapshot, error in
+                //Check if there are documents (aka "students") in the Office Hours collection.
+                guard let documents = querySnapshot?.documents else {
+                    print("No students in Office Hours.")
+                    return
+                }
+                
+                if let querySnapshot = querySnapshot {
+                    //For every document that changed, if the document was modified, that means the student line psotions were updated.
+                    querySnapshot.documentChanges.forEach { diff in
+                        if diff.type == .modified {
+                            var student = diff.document.data()
+                            self.positionInLine = student["linePosition"] as? Int ?? 0
+                        }
+                        
+                    }
+                }
+                
+                
+            }
+            
+        }
+    }
     
     
     

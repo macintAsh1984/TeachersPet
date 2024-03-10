@@ -118,7 +118,7 @@ struct OHQuestionaire: View {
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
                 #if os(iOS)
-                OHLineView(email: $email, joinCode: $joinCode, viewModel: viewModel, activity: $activity)
+                OHLineView(email: $email, joinCode: $joinCode, activity: $activity)
                 #else
                 OHLineView(email: $email, joinCode: $joinCode)
                 #endif

@@ -13,11 +13,10 @@ import SwiftUI
 struct OHLineView: View {
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
-    @State var queuePosition: Int = 0
     
     @Binding var email: String
     @Binding var joinCode: String
-    @ObservedObject var viewModel: AuthViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
     
     #if os(iOS)
     @Binding var activity: Activity<OfficeHoursAttribute>?
@@ -32,7 +31,7 @@ struct OHLineView: View {
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                Text("#\(queuePosition)")
+                Text("#\(viewModel.positionInLine)")
                     .font(.system(size: 50))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
@@ -60,11 +59,10 @@ struct OHLineView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
-            .onAppear{
-                queuePosition = viewModel.positionInLine
-            }
-            .onChange(of: viewModel.positionInLine) { newPosition in
-                    self.queuePosition = newPosition
+            .onAppear {
+                Task {
+                    try await viewModel.addListnerToLine(joinCode: joinCode)
+                }
             }
             .alert(isPresented: $leaveLineAlert) {
                 Alert(
