@@ -365,6 +365,8 @@ class AuthViewModel: ObservableObject {
     
     //To be implemented.
      func removeStudentFromLine(joinCode: String, email: String) async throws {
+         
+         var currentLinePosition = 0;
          guard let currentUser = self.userSession?.uid else {
              print("user does not exist")
              return
@@ -394,11 +396,36 @@ class AuthViewModel: ObservableObject {
                
                //Removing the student
                for document in studentQuerySnapshot.documents {
+                   var studentData = document.data()
+                   //get the removed student's position in line.
+                   if let linePosition = studentData["linePosition"] as? Int {
+                       currentLinePosition = linePosition
+                   }
                    try await document.reference.delete()
                    print("Document \(document.documentID) deleted successfully.")
                }
            } catch {
                print("Error deleting documents: \(error)")
+           }
+           
+           let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
+            
+            //Get all of the students in the instructor's course.
+           let studentsInOfficeHours = try await officehoursCollection.order(by: "entryDate").getDocuments()
+           
+           for student in studentsInOfficeHours.documents {
+               var studentData = student.data()
+               
+               guard let studentLinePosition = studentData["linePosition"] as? Int else {
+                   print("could not find the line position...")
+                   return
+               }
+               
+               if studentLinePosition > currentLinePosition {
+                   try await student.reference.updateData(["linePosition" : (studentLinePosition - 1)])
+                   self.positionInLine = studentLinePosition - 1
+                   return
+               }
            }
            
        } catch {
