@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18B5815F2B9E4CA0009FADF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B5815E2B9E4C9F009FADF3 /* GoogleService-Info.plist */; };
 		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
 		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
 		AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */; };
@@ -57,7 +58,6 @@
 		ABF4079B2B9023FB00444A48 /* CreateAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */; };
 		ABF4079C2B9023FE00444A48 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE645E42B88732D0072AA66 /* SignIn.swift */; };
 		ABF4079E2B90247700444A48 /* TeachersPet_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF4079D2B90247700444A48 /* TeachersPet_App.swift */; };
-		BDE82A1A2B9D0DF7006AFE17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */; };
 		BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDEC08E22B93E92A009763B9 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		18B5815E2B9E4C9F009FADF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -112,7 +113,6 @@
 		ABEB6C352B99912600293A48 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		ABF4078A2B90238100444A48 /* Teachers Pet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teachers Pet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF4079D2B90247700444A48 /* TeachersPet_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersPet_App.swift; sourceTree = "<group>"; };
-		BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BDEC08E22B93E92A009763B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,6 +218,7 @@
 		ABC70DF52B713DD000A4FFF3 = {
 			isa = PBXGroup;
 			children = (
+				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
 				ABF4078B2B90238100444A48 /* Teachers Pet */,
 				AB5B09692B967547004CAE7A /* OfficeHours */,
 				AB5B09642B967547004CAE7A /* Frameworks */,
@@ -245,9 +246,8 @@
 				ABB4650F2B919E78007B3AA1 /* StudentView */,
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
-				BDEC08E22B93E92A009763B9 /* Assets.xcassets */,
-				BDE82A192B9D0DF7006AFE17 /* GoogleService-Info.plist */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
+				18B5815E2B9E4C9F009FADF3 /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -374,7 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				BDE82A1A2B9D0DF7006AFE17 /* GoogleService-Info.plist in Resources */,
+				18B5815F2B9E4CA0009FADF3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,7 +434,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LK4997QHS7;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -464,7 +464,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 94WCH5T899;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OfficeHours/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OfficeHours;
@@ -608,14 +608,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Teacher'sPet_icon_temp_ios";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers_Pet.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 3A7FZ95N5N;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -648,14 +648,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Teacher'sPet_icon_temp_ios";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Teachers Pet/Teachers PetRelease.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 94WCH5T899;
+				DEVELOPMENT_TEAM = 47YT86J6JH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -674,7 +674,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.SaiGanesh.Teachers-Pet";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.macintAsh.Teachers-Pet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

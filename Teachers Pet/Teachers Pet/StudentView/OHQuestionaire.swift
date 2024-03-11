@@ -15,14 +15,15 @@ struct OHQuestionaire: View {
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
     @State var studentAlreadyInLine = false
+    @State var isLoading = false
     
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
-    #if os(iOS)
+#if os(iOS)
     @State var activity: Activity<OfficeHoursAttribute>? = nil
-    #endif
-
+#endif
+    
     var options = [
         "Need help getting started",
         "Stuck on a certain part",
@@ -45,7 +46,7 @@ struct OHQuestionaire: View {
                         } else {
                             self.selectedOption = index
                         }
-                    }) {
+                    }){
                         HStack {
                             Text(options[index])
                             Spacer()
@@ -66,47 +67,58 @@ struct OHQuestionaire: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
-                Button(action: {
-                    // Handle the submission here, including the selected option or the text from the TextField
-                    submitSurvey()
-                    
-                    //Add the student to the line before calculating their place in line.
-                    let addStudentTask = Task {
-                        do {
-                            studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
-                        } catch {
-                            print("Couldn't add you to the line :(.")
-                        }
-                    }
-                    
-                   
-                    Task {
-                        //Wait for student to be added to the line before running this task.
-                        _ = await addStudentTask.result
-                        if studentAlreadyInLine {
-                            navigateToOfficeHoursLine = false
-                        } else {
+                
+                
+                // Loading...
+                if isLoading {
+                    ProgressView() // Show loading indicator
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding()
+                }
+                else{
+                    Button(action: {
+                        // Handle the submission here, including the selected option or the text from the TextField
+                        submitSurvey()
+                        
+                        //Add the student to the line before calculating their place in line.
+                        let addStudentTask = Task {
                             do {
-                                try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
-                                
-                                #if os(iOS)
-                                beginLiveActivity()
-                                #endif
-                                
-                                navigateToOfficeHoursLine = true
+                                studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
                             } catch {
-                                print("Couldn't calculate position")
+                                print("Couldn't add you to the line :(.")
                             }
                         }
+                        
+                        isLoading = true // Show Loading
+                        Task {
+                            //Wait for student to be added to the line before running this task.
+                            _ = await addStudentTask.result
+                            if studentAlreadyInLine {
+                                navigateToOfficeHoursLine = false
+                            } else {
+                                do {
+                                    try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                                    
+                                    #if os(iOS)
+                                    beginLiveActivity()
+                                    #endif
+                                    
+                                    navigateToOfficeHoursLine = true
+                                } catch {
+                                    print("Couldn't calculate position")
+                                }
+                            }
+                            isLoading = false
+                        } //end of Task
+                        
+                    }) {
+                        Text("Join Queue")
+                            .foregroundColor(Color.white)
+                            .padding()
+                            .background(Color.orange)
+                            .cornerRadius(10)
                     }
-                    
-                }) {
-                    Text("Join Queue")
-                        .foregroundColor(Color.white)
-                        .padding()
-                        .background(Color.orange)
-                        .cornerRadius(10)
-                }
+                }//end of else
                 
             }
             .onAppear {
@@ -126,19 +138,19 @@ struct OHQuestionaire: View {
             .alert(isPresented: $studentAlreadyInLine) {
                 Alert(title: Text("Cannot Join Queue"), message: Text("You are already in the queue"), dismissButton: .default(Text("OK")))
             }
-        
+            
         }
-    
+        
     }
     
-    #if os(iOS)
+#if os(iOS)
     func beginLiveActivity() {
         let attributes = OfficeHoursAttribute(activityTitle: "\(String(describing: viewModel.currentUser?.coursename)) Office Hours")
         let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
         
         activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
     }
-    #endif
+#endif
     
     func submitSurvey() {
         // Perform actions to submit the survey data
@@ -152,7 +164,7 @@ struct OHQuestionaire: View {
 }
 
 
-//
+
 //#Preview {
-//    OHQuestionaire(email: .constant(""))
+//    OHQuestionaire(email: .constant(""), joinCode: .constant(""))
 //}

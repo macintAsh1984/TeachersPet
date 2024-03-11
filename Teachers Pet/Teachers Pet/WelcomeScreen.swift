@@ -19,6 +19,14 @@ struct WelcomeScreen: View {
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
+                
+                Image("Welcome Icon") // adds the app logo on the welcome screen
+                    .resizable()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 400, height: 400)
+                    .cornerRadius(5)
+                
                 Spacer()
                 Text("I am a...")
                     .font(.headline)
