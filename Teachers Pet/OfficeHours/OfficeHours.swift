@@ -38,7 +38,7 @@ struct OHLiveActivityView: View {
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                 } else {
-                    Text("Up Next!")
+                    Text("You're Up Next!")
                         .font(.title)
                         .foregroundColor(.white)
                         .fontWeight(.bold)

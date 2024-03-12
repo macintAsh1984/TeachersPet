@@ -73,9 +73,22 @@ struct OHLineView: View {
                 }
             }
             .onChange(of: viewModel.positionInLine) { newPosition in
-                Task {
-                    let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
-                    await activity?.update(using: updatedState)
+                var state = UIApplication.shared.applicationState
+                print("App State before if \(state)")
+                switch state {
+                case .active, .inactive, .background:
+                    print("App State \(state)")
+                    Task {
+                        let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
+                        await activity?.update(using: updatedState)
+                    }
+                
+                default:
+                    print("App State \(state)")
+                    Task {
+                        let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
+                        await activity?.update(using: updatedState)
+                    }
                 }
             }
             .alert(isPresented: $leaveLineAlert) {
