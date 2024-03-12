@@ -19,18 +19,30 @@ struct OHLiveActivityView: View {
         VStack {
             Text("Office Hours")
                 .font(.title3)
+                .foregroundColor(.white)
                 .fontWeight(.semibold)
             Spacer()
                 .frame(height: 10)
             HStack {
                 Image(systemName: "studentdesk")
                     .font(.largeTitle)
-                Text("You Are")
-                    .font(.title2)
-                    .fontWeight(.medium)
-                Text("#\(context.state.linePosition)")
-                    .font(.title)
-                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+            
+                if context.state.linePosition != 1 {
+                    Text("You Are")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .fontWeight(.medium)
+                    Text("#\(context.state.linePosition)")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                } else {
+                    Text("Up Next!")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
             }
         }
         .padding(.all)
@@ -59,21 +71,38 @@ struct OfficeHoursLiveActivity: Widget {
                         Text("You Are")
                             .font(.title2)
                             .fontWeight(.medium)
-                        Text("#\(context.state.linePosition)")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color("Light Green"))
+                        if context.state.linePosition != 1 {
+                            Text("#\(context.state.linePosition)")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color("Light Green"))
+                        } else {
+                            Text("Up Next!")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color("Light Green"))
+                        }
                     }
                     
 
                 }
+                
+            //When Dynamic Island is a pill.
             } compactLeading: {
                 Image(systemName: "studentdesk")
                     .foregroundColor(Color("Light Green"))
             } compactTrailing: {
-                Text("#\(context.state.linePosition)")
-                    .fontWeight(.bold)
-                    .foregroundColor(Color("Light Green"))
+                if context.state.linePosition != 1 {
+                    Text("#\(context.state.linePosition)")
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("Light Green"))
+                } else {
+                    Text("Up Next!")
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("Light Green"))
+                }
+            
+            //When Dynamic Island is a bubble.
             } minimal: {
                 Text("#\(context.state.linePosition)")
                     .fontWeight(.bold)

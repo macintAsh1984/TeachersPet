@@ -31,14 +31,22 @@ struct OHLineView: View {
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                Text("#\(viewModel.positionInLine)")
-                    .font(.system(size: 50))
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                Text("in line!")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
+                
+                if viewModel.positionInLine != 1 {
+                    Text("#\(viewModel.positionInLine)")
+                        .font(.system(size: 50))
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                    Text("in line!")
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.center)
+                } else {
+                    Text("Up Next!")
+                        .font(.system(size: 50))
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                }
                 
                 
                 Button {
@@ -62,6 +70,12 @@ struct OHLineView: View {
             .onAppear {
                 Task {
                     try await viewModel.addListnerToLine(joinCode: joinCode)
+                }
+            }
+            .onChange(of: viewModel.positionInLine) { newPosition in
+                Task {
+                    let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
+                    await activity?.update(using: updatedState)
                 }
             }
             .alert(isPresented: $leaveLineAlert) {
