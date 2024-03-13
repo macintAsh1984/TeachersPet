@@ -21,9 +21,10 @@ struct OHQuestionaire: View {
     @Binding var email: String
     @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
-#if os(iOS)
+    
+    #if os(iOS)
     @State var activity: Activity<OfficeHoursAttribute>? = nil
-#endif
+    #endif
     
     var options = [
         "Need help getting started",
@@ -35,8 +36,9 @@ struct OHQuestionaire: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Please answer the survey:")
-                    .font(.title)
+                Text("Office Hours Survey")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
                     .padding()
                 
                 ForEach(0..<4, id: \.self) { index in
@@ -50,6 +52,7 @@ struct OHQuestionaire: View {
                     }){
                         HStack {
                             Text(options[index])
+                                .fontWeight(.medium)
                             Spacer()
                             if self.selectedOption == index {
                                 Image(systemName: "checkmark")
@@ -62,13 +65,17 @@ struct OHQuestionaire: View {
                     }
                     .padding(.horizontal)
                 }
+                Spacer()
+                    .frame(height: 20)
                 
-                // Textfield for other option
-                TextField("If other, please specify here", text: $otherOptionText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                
+                // Textfield for adding additional details.
+                TextField("Add additional details here", text: $otherOptionText)
+                    .frame(width: 325, height: 20)
+                    .padding(.all)
+                    .background(.white)
+                    .cornerRadius(10.0)
+                Spacer()
+                    .frame(height: 20)
                 
                 // Loading...
                 if isLoading {
@@ -114,7 +121,8 @@ struct OHQuestionaire: View {
                         
                     }) {
                         Text("Join Queue")
-                            .foregroundColor(Color.white)
+                            .foregroundColor(.white)
+                            .fontWeight(.semibold)
                             .padding()
                             .background(Color.orange)
                             .cornerRadius(10)
@@ -128,6 +136,7 @@ struct OHQuestionaire: View {
                 }
             }
             .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(appBackgroundColor)
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
@@ -166,7 +175,6 @@ struct OHQuestionaire: View {
     func beginLiveActivity() {
         let attributes = OfficeHoursAttribute(activityTitle: "\(String(describing: viewModel.currentUser?.coursename)) Office Hours")
         let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
-        
         activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
     }
 #endif
@@ -185,5 +193,5 @@ struct OHQuestionaire: View {
 
 
 //#Preview {
-//    OHQuestionaire(email: .constant(""), joinCode: .constant(""))
+//    OHQuestionaire()
 //}
