@@ -58,6 +58,7 @@ struct WelcomeScreen: View {
             .padding()
             .background(appBackgroundColor)
             .preferredColorScheme(.light)
+            .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToStudentCreateAccount) {
                 CreateAccount(isStudent: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
             }

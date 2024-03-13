@@ -11,6 +11,7 @@ struct StudentDashboard: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
+    @State var navigateToWelcomeScreen = false
     @State private var date = Date()
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
@@ -167,15 +168,19 @@ struct StudentDashboard: View {
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
             .background(appBackgroundColor)
-            .navigationDestination (isPresented: $showClassInfo){
+            .navigationDestination (isPresented: $showClassInfo) {
                 OHQuestionaire(email: $email, joinCode: $joinCode)
+            }
+            .navigationDestination (isPresented: $navigateToWelcomeScreen) {
+                WelcomeScreen()
             }
             .alert(isPresented: $signOut) {
                 Alert(
                     title: Text("Are you sure you want to sign out"),
                     message: Text("This cannot be undone."),
                     primaryButton: .destructive(Text("Sign Out")) {
-                        //leave line
+                        viewModel.signout()
+                        navigateToWelcomeScreen = true
                         
                     },
                     secondaryButton: .cancel()

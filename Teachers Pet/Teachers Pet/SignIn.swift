@@ -19,7 +19,8 @@ struct SignIn: View {
     @State var navigateToInstructorDashboard = false
     @State var showingAlert = false
     @State var alertMessage = ""
-    @EnvironmentObject var viewModel:AuthViewModel
+    
+    @EnvironmentObject var viewModel: AuthViewModel
 
     var body: some View {
         NavigationStack {

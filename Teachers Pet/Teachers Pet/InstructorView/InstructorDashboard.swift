@@ -11,10 +11,13 @@ struct InstructorDashboard: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
+    @State var navigateToWelcomeScreen = false
     @State private var date = Date()
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
+    
+    @EnvironmentObject var viewModel: AuthViewModel
     
     @State var signOut = false
     
@@ -169,12 +172,16 @@ struct InstructorDashboard: View {
 //            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
+            .navigationDestination (isPresented: $navigateToWelcomeScreen) {
+                WelcomeScreen()
+            }
             .alert(isPresented: $signOut) {
                 Alert(
                     title: Text("Are you sure you want to sign out"),
                     message: Text("This cannot be undone."),
                     primaryButton: .destructive(Text("Sign Out")) {
-                        //Sign out of account.
+                        viewModel.signout()
+                        navigateToWelcomeScreen = true
                         
                     },
                     secondaryButton: .cancel()
