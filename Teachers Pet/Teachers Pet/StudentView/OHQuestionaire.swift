@@ -14,6 +14,7 @@ struct OHQuestionaire: View {
     @State private var selectedOption: Int? = nil
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
+    @State var navigateToStudentDashboard = false
     @State var studentAlreadyInLine = false
     @State var isLoading = false
     
@@ -126,6 +127,7 @@ struct OHQuestionaire: View {
                     joinCode = currentUser.joincode
                 }
             }
+            .padding()
             .background(appBackgroundColor)
             .preferredColorScheme(.light)
             .navigationDestination(isPresented: $navigateToOfficeHoursLine) {
@@ -135,12 +137,29 @@ struct OHQuestionaire: View {
                 OHLineView(email: $email, joinCode: $joinCode)
                 #endif
             }
-            .alert(isPresented: $studentAlreadyInLine) {
-                Alert(title: Text("Cannot Join Queue"), message: Text("You are already in the queue"), dismissButton: .default(Text("OK")))
+            .navigationDestination(isPresented: $navigateToStudentDashboard) {
+                StudentDashboard(email: $email, joinCode: $joinCode)
             }
-            
+            .alert(isPresented: $studentAlreadyInLine) {
+                Alert(
+                    title: Text("Cannot Join Line"),
+                    message: Text("You are already in the Office Hours line for this class."),
+                    primaryButton: .default(Text("See Place In Line")) {
+                        Task {
+                            try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                            navigateToOfficeHoursLine = true
+                        }
+                    },
+                    secondaryButton: .destructive(Text("Leave Line")) {
+                        Task {
+                            try await viewModel.removeStudentFromLine(joinCode: joinCode, email: email)
+                            navigateToStudentDashboard = true
+                        }
+                    }
+                )
+                
+            }
         }
-        
     }
     
 #if os(iOS)
