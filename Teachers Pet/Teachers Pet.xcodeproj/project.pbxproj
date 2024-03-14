@@ -242,8 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				AB27FC312BA054B700047BFE /* Teachers-Pet-Info.plist */,
-				ABF4079D2B90247700444A48 /* TeachersPet_App.swift */,
 				AB27FC322BA282C700047BFE /* RootView.swift */,
+				ABF4079D2B90247700444A48 /* TeachersPet_App.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
 				ABE645E42B88732D0072AA66 /* SignIn.swift */,

@@ -42,7 +42,7 @@ struct CreateAccount: View {
                     .frame(height: 40)
                 EnterAccountInfo(firstName: $firstName, lastName: $lastName, email: $email, password: $password)
                 Spacer()
-                    .frame(height: 40)
+                    .frame(height: 50)
                 
                 Button {
                     createAccount()
@@ -53,14 +53,14 @@ struct CreateAccount: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.orange)
+                .tint(.green)
                 .controlSize(.large)
                 .alert(alertMessage, isPresented: $showAlert) {
                     Button("OK") { }
                 }
-                
                 Spacer()
                     .frame(height: 20)
+                
                 SignInButton(isStudent: $isStudent, studentSignIn: $navigateToStudentSignIn, instructorSignIn: $navigateToInstructorSignIn)
                 Spacer()
             }
@@ -137,7 +137,7 @@ struct SignInButton: View {
             } label: {
                 Text("Sign In")
                     .underline()
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(.green)
             }
 
         }

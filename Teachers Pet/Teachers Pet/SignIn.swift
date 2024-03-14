@@ -8,19 +8,25 @@
 import SwiftUI
 
 struct SignIn: View {
+    //User Account Information State Variables
     @State var email = String()
     @State var password = String()
     @State var joinCode = String()
-    @State var navigateToCreateAccount = false
     
+    //Account Type Toggle Bindings
     @Binding var isStudent: Bool
     @Binding var isInstructor: Bool
+    
+    //Navigation Toggle State Variables
     @State var navigateToStudentDashboard = false
     @State var navigateToInstructorDashboard = false
+    @State var navigateToCreateAccount = false
     
-    @State var showingAlert = false
+    //Alert Toggle State Variables
+    @State var displayAlert = false
     @State var invalidSignInInfo = false
     
+    //Error Messages
     let emptyFieldsErrMessage = "Please fill in all fields to sign in."
     @State var invalidSignInErrMessage = String()
     
@@ -30,53 +36,13 @@ struct SignIn: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Text("Welcome Back")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                    .frame(height: 20)
-                Text("Please sign in.")
-                    .font(.title2)
-                    .fontWeight(.regular)
-                Spacer()
-                    .frame(height: 30)
-                
-                TextField("Email", text: $email)
-                    .padding(.all)
-                    .background()
-                    .cornerRadius(10.0)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                SecureField("Password", text: $password)
-                    .padding(.all)
-                    .background()
-                    .cornerRadius(10.0)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
+                SignInPageTitle()
+                SignInTextFields(email: $email, password: $password)
                 Spacer()
                     .frame(height: 50)
+                
                 Button {
-                    if email.isEmpty || password.isEmpty {
-                        showingAlert = true
-                    } else {
-                        Task {
-                            do {
-                                if isStudent {
-                                    try await viewModel.signInforStudents(withEmail: email, password: password)
-                                    joinCode = viewModel.currentUser?.joincode ?? ""
-                                    navigateToStudentDashboard = true
-                                } else {
-                                    try await viewModel.signIn(withEmail: email, password: password)
-                                    joinCode = viewModel.currentUser?.joincode ?? ""
-                                    navigateToInstructorDashboard = true
-                                }
-                            } catch {
-                                invalidSignInInfo = true
-                                invalidSignInErrMessage = error.localizedDescription
-                            }
-                        }
-                    }
+                    signUserIntoAccount()
                 } label: {
                     Text("Sign In")
                         .fontWeight(.semibold)
@@ -84,23 +50,11 @@ struct SignIn: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.orange)
+                .tint(.green)
                 .controlSize(.large)
                 Spacer()
                     .frame(height: 40)
-                
-                HStack(spacing: 5) {
-                    Text("Don't have an account?")
-                    Button {
-                        navigateToCreateAccount = true
-                    } label: {
-                        Text("Join Now")
-                            .underline()
-                            .foregroundStyle(.orange)
-                    }
-    
-                }
-                
+                CreateAccountButton(createAccount: $navigateToCreateAccount)
                 Spacer()
                 
             }
@@ -117,7 +71,7 @@ struct SignIn: View {
             .navigationDestination(isPresented: $navigateToStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
-            .alert(emptyFieldsErrMessage, isPresented: $showingAlert) {
+            .alert(emptyFieldsErrMessage, isPresented: $displayAlert) {
                 Button(role: .cancel) {} label: {Text("OK")}
             }
             .alert(isPresented: $invalidSignInInfo) {
@@ -125,7 +79,83 @@ struct SignIn: View {
             }
         }
     }
+    
+    func signUserIntoAccount() {
+        if email.isEmpty || password.isEmpty {
+            displayAlert = true
+        } else {
+            Task {
+                do {
+                    if isStudent {
+                        try await viewModel.signInforStudents(withEmail: email, password: password)
+                        joinCode = viewModel.currentUser?.joincode ?? ""
+                        navigateToStudentDashboard = true
+                    } else {
+                        try await viewModel.signIn(withEmail: email, password: password)
+                        joinCode = viewModel.currentUser?.joincode ?? ""
+                        navigateToInstructorDashboard = true
+                    }
+                } catch {
+                    invalidSignInInfo = true
+                    invalidSignInErrMessage = error.localizedDescription
+                }
+            }
+        }
+    }
 
+}
+
+struct SignInPageTitle: View {
+    var body: some View {
+        Text("Welcome Back")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+        Spacer()
+            .frame(height: 10)
+        Text("Sign In To Your Account")
+            .font(.title2)
+            .fontWeight(.regular)
+        Spacer()
+            .frame(height: 40)
+    }
+}
+
+struct SignInTextFields: View {
+    @Binding var email: String
+    @Binding var password: String
+    
+    var body: some View {
+        TextField("Email", text: $email)
+            .padding(.all)
+            .background()
+            .cornerRadius(10.0)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+        SecureField("Password", text: $password)
+            .padding(.all)
+            .background()
+            .cornerRadius(10.0)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+    }
+}
+
+struct CreateAccountButton: View {
+    @Binding var createAccount: Bool
+    
+    var body: some View {
+        HStack(spacing: 5) {
+            Text("Don't have an account?")
+            Button {
+                createAccount = true
+            } label: {
+                Text("Join Now")
+                    .underline()
+                    .foregroundStyle(.green)
+            }
+        }
+    }
 }
 
 //#Preview {

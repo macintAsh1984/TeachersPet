@@ -15,45 +15,13 @@ struct WelcomeScreen: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Welcome To Teacher's Pet")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                
-                Image("Welcome Icon") // adds the app logo on the welcome screen
-                    .resizable()
-                    .scaledToFit()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 400, height: 400)
-                    .cornerRadius(5)
-                
-                Spacer()
-                Text("I am a...")
-                    .font(.headline)
-                Spacer()
-                    .frame(height: 20)
-                
-                Button {
-                    navigateToStudentCreateAccount = true
-                } label: {
-                    Text("Student")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-                .controlSize(.large)
-                
-                Button {
-                    navigateToInstructorCreateAccount = true
-                } label: {
-                    Text("Instructor")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.orange)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
+                DisplayAppTitleAndIcon()
+                AccountSelectionButton(createAccount: $navigateToStudentCreateAccount, accountType: "Student")
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
+                AccountSelectionButton(createAccount: $navigateToInstructorCreateAccount, accountType: "Instructor")
+                    .buttonStyle(.bordered)
+                    .foregroundColor(.green)
             }
             .padding()
             .background(appBackgroundColor)
@@ -66,6 +34,42 @@ struct WelcomeScreen: View {
                 CreateAccount(isStudent: $navigateToStudentCreateAccount, instructorView: $navigateToInstructorCreateAccount)
             }
         }
+    }
+}
+
+struct DisplayAppTitleAndIcon: View {
+    var body: some View {
+        Text("Welcome To Teacher's Pet")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+        Image("Welcome Icon")
+            .resizable()
+            .scaledToFit()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 400, height: 400)
+            .cornerRadius(5)
+        Spacer()
+        Text("I am a...")
+            .font(.headline)
+        Spacer()
+            .frame(height: 20)
+    }
+}
+
+struct AccountSelectionButton: View {
+    @Binding var createAccount: Bool
+    var accountType: String
+    
+    var body: some View {
+        Button {
+            createAccount = true
+        } label: {
+            Text(accountType)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity)
+        }
+        .controlSize(.large)
     }
 }
 
