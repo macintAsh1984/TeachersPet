@@ -4,7 +4,6 @@ import SwiftUI
 #if canImport(CodeScanner)
 import CodeScanner
 #endif
-//above part is to only have scanner if available like on iphone or ipad
 
 struct StudentJoinClass: View {
     @State var joinCode = String()
@@ -21,20 +20,24 @@ struct StudentJoinClass: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Access Code")
+                Spacer()
+                Text("Enter Class Join Code")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                 Spacer()
-                
+                    .frame(height: 60)
                 Text("Enter The Code Manually")
-                TextField("Access Code", text: $joinCode)
+                    .fontWeight(.semibold)
+                Spacer()
+                    .frame(height: 20)
+                TextField("Join Code", text: $joinCode)
                     .padding(.all)
                     .background()
                     .cornerRadius(10.0)
                 
                 Spacer()
-                    .frame(height: 100)
+                    .frame(height: 50)
                 
                 #if os(iOS)
                 Button {
@@ -46,16 +49,15 @@ struct StudentJoinClass: View {
                 }
                 #endif
                 Spacer()
+                    .frame(height: 50)
                 
                 // Loading...
                 if isLoading {
                     ProgressView() // Show loading indicator
                         .progressViewStyle(CircularProgressViewStyle())
                         .padding()
-                }
-                else {
-                    // Join Class button
-                    Button(action: {
+                } else {
+                    Button {
                         isLoading = true // Show loading
                         Task {
                             do {
@@ -68,21 +70,24 @@ struct StudentJoinClass: View {
                             
                             isLoading = false // Hide loading when firebase done updating
                         }
-                    })
-                    { //button text:
+                    } label: {
                         Text("Join Class")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.orange)
                     .controlSize(.large)
                     .disabled(isLoading) // Disable "join class"
                 }
-                
                 Spacer()
             } // end of VStack
             .padding()
             .background(appBackgroundColor)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
+            .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigatetoStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
@@ -114,3 +119,7 @@ struct StudentJoinClass: View {
     }
     #endif
 }
+
+//#Preview {
+//    StudentJoinClass(email: .constant(""), name: .constant(""), password: .constant(""))
+//}

@@ -87,6 +87,7 @@ struct SignIn: View {
                 .tint(.orange)
                 .controlSize(.large)
                 Spacer()
+                    .frame(height: 40)
                 
                 HStack(spacing: 5) {
                     Text("Don't have an account?")

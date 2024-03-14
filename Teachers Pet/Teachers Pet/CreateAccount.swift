@@ -33,13 +33,16 @@ struct CreateAccount: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Spacer()
                 Text("Create An Account")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                 Spacer()
+                    .frame(height: 40)
                 EnterAccountInfo(firstName: $firstName, lastName: $lastName, email: $email, password: $password)
                 Spacer()
+                    .frame(height: 40)
                 
                 Button {
                     createAccount()
