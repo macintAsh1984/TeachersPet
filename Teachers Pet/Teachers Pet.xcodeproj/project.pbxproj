@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18B5815F2B9E4CA0009FADF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18B5815E2B9E4C9F009FADF3 /* GoogleService-Info.plist */; };
+		AB27FC332BA282C700047BFE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27FC322BA282C700047BFE /* RootView.swift */; };
 		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
 		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
 		AB5B096B2B967547004CAE7A /* OfficeHoursBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5B096A2B967547004CAE7A /* OfficeHoursBundle.swift */; };
@@ -89,6 +90,7 @@
 		18B5815E2B9E4C9F009FADF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
 		AB27FC312BA054B700047BFE /* Teachers-Pet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Teachers-Pet-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AB27FC322BA282C700047BFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		AB5B09672B967547004CAE7A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -241,6 +243,7 @@
 			children = (
 				AB27FC312BA054B700047BFE /* Teachers-Pet-Info.plist */,
 				ABF4079D2B90247700444A48 /* TeachersPet_App.swift */,
+				AB27FC322BA282C700047BFE /* RootView.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
 				ABADDFE52B85D3C300614BB2 /* CreateAccount.swift */,
 				ABE645E42B88732D0072AA66 /* SignIn.swift */,
@@ -411,6 +414,7 @@
 				AB90C1B22B91C911007A6DA7 /* CreateClass.swift in Sources */,
 				AB5B097A2B967657004CAE7A /* OfficeHoursAttribute.swift in Sources */,
 				ABB4650E2B919D9E007B3AA1 /* OfficeHoursViewModel.swift in Sources */,
+				AB27FC332BA282C700047BFE /* RootView.swift in Sources */,
 				AB90C1B42B92531A007A6DA7 /* OHLineManagement.swift in Sources */,
 				ABB4651D2B91A760007B3AA1 /* StudentJoinClass.swift in Sources */,
 				ABB465172B91A227007B3AA1 /* OHQuestionaire.swift in Sources */,

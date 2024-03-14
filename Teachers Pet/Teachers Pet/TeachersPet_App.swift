@@ -17,10 +17,9 @@ struct Teachers_PetApp: App {
         FirebaseApp.configure()
     }
     
-    
     var body: some Scene {
         WindowGroup {
-            WelcomeScreen().environmentObject(viewModel)
+            RootView().environmentObject(viewModel)
         }
     }
 }

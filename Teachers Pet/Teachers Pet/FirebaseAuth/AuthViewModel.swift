@@ -25,8 +25,13 @@ class AuthViewModel: ObservableObject {
     init() {
         self.userSession = Auth.auth().currentUser
         
-        Task {
+       let fetchInstructorUser = Task {
             await fetchUser()
+        }
+        
+        Task {
+            _ = await fetchInstructorUser.result
+            await fetchStudentUserInfo()
         }
     }
     
