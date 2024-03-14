@@ -45,11 +45,9 @@ class AuthViewModel: ObservableObject {
             self.userSession = result.user
             await fetchUser()
         } catch {
-            print("Failed to log in \(error.localizedDescription)")
+            throw error
         }
     }
-    
-    
     
     func signInforStudents(withEmail email: String, password: String) async throws {
         do {
@@ -57,7 +55,7 @@ class AuthViewModel: ObservableObject {
             self.userSession = result.user
             await fetchStudentUserInfo()
         } catch {
-            print("Failed to log in \(error.localizedDescription)")
+            throw error
         }
     }
     

@@ -17,8 +17,12 @@ struct SignIn: View {
     @Binding var isInstructor: Bool
     @State var navigateToStudentDashboard = false
     @State var navigateToInstructorDashboard = false
+    
     @State var showingAlert = false
-    @State var alertMessage = ""
+    @State var invalidSignInInfo = false
+    
+    let emptyFieldsErrMessage = "Please fill in all fields to sign in."
+    @State var invalidSignInErrMessage = String()
     
     @EnvironmentObject var viewModel: AuthViewModel
 
@@ -42,14 +46,17 @@ struct SignIn: View {
                     .padding(.all)
                     .background()
                     .cornerRadius(10.0)
-                TextField("Password", text: $password)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                SecureField("Password", text: $password)
                     .padding(.all)
                     .background()
                     .cornerRadius(10.0)
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
                 Spacer()
                     .frame(height: 50)
                 Button {
-                    
                     if email.isEmpty || password.isEmpty {
                         showingAlert = true
                     } else {
@@ -59,19 +66,16 @@ struct SignIn: View {
                                     try await viewModel.signInforStudents(withEmail: email, password: password)
                                     joinCode = viewModel.currentUser?.joincode ?? ""
                                     navigateToStudentDashboard = true
-                                }
-                                else {
+                                } else {
                                     try await viewModel.signIn(withEmail: email, password: password)
                                     joinCode = viewModel.currentUser?.joincode ?? ""
                                     navigateToInstructorDashboard = true
                                 }
                             } catch {
-                                print("Error signing in")
+                                invalidSignInInfo = true
+                                invalidSignInErrMessage = error.localizedDescription
                             }
                         }
-                        
-                        
-                        
                     }
                 } label: {
                     Text("Sign In")
@@ -82,10 +86,6 @@ struct SignIn: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.orange)
                 .controlSize(.large)
-                .alert(isPresented: $showingAlert) {
-                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                }
-                
                 Spacer()
                 
                 HStack(spacing: 5) {
@@ -113,8 +113,14 @@ struct SignIn: View {
             .navigationDestination(isPresented: $navigateToInstructorDashboard) {
                 InstructorDashboard()
             }
-            .navigationDestination(isPresented: $navigateToStudentDashboard) { //pass in the email and password entered
+            .navigationDestination(isPresented: $navigateToStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
+            }
+            .alert(emptyFieldsErrMessage, isPresented: $showingAlert) {
+                Button(role: .cancel) {} label: {Text("OK")}
+            }
+            .alert(isPresented: $invalidSignInInfo) {
+                Alert(title: Text("Could Not Sign In"), message: Text(invalidSignInErrMessage), dismissButton: .cancel(Text("OK")))
             }
         }
     }

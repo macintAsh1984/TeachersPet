@@ -106,10 +106,14 @@ struct EnterAccountInfo: View {
             .padding(.all)
             .background()
             .cornerRadius(10.0)
-        TextField("Password", text: $password)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+        SecureField("Password", text: $password)
             .padding(.all)
             .background()
             .cornerRadius(10.0)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
     }
 }
 
