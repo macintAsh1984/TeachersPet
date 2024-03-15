@@ -6,16 +6,18 @@ import CodeScanner
 #endif
 
 struct StudentJoinClass: View {
-    @State var joinCode = String()
-    @State var showScanner = false
-    
+    //User Account Information Binding/State Variables
     @Binding var email: String
     @Binding var name: String
     @Binding var password: String
-    @EnvironmentObject var viewModel: AuthViewModel
+    @State var joinCode = String()
     
+    //Navigation & View Toggle State Variables
     @State var navigatetoStudentDashboard = false
+    @State var showScanner = false
     @State var isLoading = false
+    
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         NavigationStack {
@@ -27,49 +29,24 @@ struct StudentJoinClass: View {
                     .multilineTextAlignment(.center)
                 Spacer()
                     .frame(height: 60)
-                Text("Enter The Code Manually")
-                    .fontWeight(.semibold)
-                Spacer()
-                    .frame(height: 20)
-                TextField("Join Code", text: $joinCode)
-                    .padding(.all)
-                    .background()
-                    .cornerRadius(10.0)
-                
+                JoinCodeTextField(joinCode: $joinCode)
                 Spacer()
                     .frame(height: 50)
                 
                 #if os(iOS)
-                Button {
-                    showScanner = true
-                } label: {
-                    Label("Or Scan A QR Code", systemImage: "qrcode.viewfinder")
-                        .fontWeight(.medium)
-                        .frame(maxWidth: .infinity)
-                }
+                ScanQRCodeButton(showScanner: $showScanner)
                 #endif
                 Spacer()
                     .frame(height: 50)
                 
-                // Loading...
+                //Show loading indicator.
                 if isLoading {
-                    ProgressView() // Show loading indicator
+                    ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .padding()
                 } else {
                     Button {
-                        isLoading = true // Show loading
-                        Task {
-                            do {
-                                // Firebase update
-                                try await viewModel.createStudent(withEmail: email, password: password, fullname: name, coursename: "", joincode: joinCode)
-                                navigatetoStudentDashboard = true
-                            } catch {
-                                print("Error signing in")
-                            }
-                            
-                            isLoading = false // Hide loading when firebase done updating
-                        }
+                        createStudentAccount()
                     } label: {
                         Text("Join Class")
                             .fontWeight(.semibold)
@@ -77,9 +54,9 @@ struct StudentJoinClass: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(.orange)
+                    .tint(.green)
                     .controlSize(.large)
-                    .disabled(isLoading) // Disable "join class"
+                    .disabled(isLoading)
                 }
                 Spacer()
             } // end of VStack
@@ -92,8 +69,6 @@ struct StudentJoinClass: View {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
         
-            
-            // Scanner view for iOS
             #if os(iOS)
             .sheet(isPresented: $showScanner) {
                 CodeScannerView(codeTypes: [.qr], simulatedData: "7A04A", completion: handleScan)
@@ -104,7 +79,7 @@ struct StudentJoinClass: View {
     }// end of view
     
     
-    // Handle scanning result
+    // Handle Scanning
     #if os(iOS)
     func handleScan(result: Result<ScanResult, ScanError>) {
         showScanner = false
@@ -118,8 +93,48 @@ struct StudentJoinClass: View {
         }
     }
     #endif
+    
+    func createStudentAccount() {
+        isLoading = true
+        Task {
+            do {
+                try await viewModel.createStudent(withEmail: email, password: password, fullname: name, coursename: "", joincode: joinCode)
+                navigatetoStudentDashboard = true
+            } catch {
+                print("Error signing in")
+            }
+            
+            isLoading = false
+        }
+    }
+    
 }
 
-//#Preview {
-//    StudentJoinClass(email: .constant(""), name: .constant(""), password: .constant(""))
-//}
+struct JoinCodeTextField: View {
+    @Binding var joinCode: String
+    
+    var body: some View {
+        Text("Enter The Code Manually")
+            .fontWeight(.semibold)
+        Spacer()
+            .frame(height: 20)
+        TextField("Join Code", text: $joinCode)
+            .padding(.all)
+            .background()
+            .cornerRadius(10.0)
+    }
+}
+
+struct ScanQRCodeButton: View {
+    @Binding var showScanner: Bool
+    
+    var body: some View {
+        Button {
+            showScanner = true
+        } label: {
+            Label("Or Scan A QR Code", systemImage: "qrcode.viewfinder")
+                .fontWeight(.medium)
+                .frame(maxWidth: .infinity)
+        }
+    }
+}

@@ -11,11 +11,13 @@ import CodeScanner
 #endif
 
 struct InstructorJoinClass: View {
+    //User Account Information Binding/State Variables
     @Binding var email: String
     @Binding var password: String
     @Binding var name: String
-    
     @State var joinCode = String()
+    
+    //Navigation & View Toggle State Variables
     @State var navigateToDashBoard = false
     @State var showScanner = false
     @State var isLoading = false
@@ -25,32 +27,21 @@ struct InstructorJoinClass: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Access Code")
+                Text("Enter Class Join Code")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                 Spacer()
-                
-                Text("Enter The Code Manually")
-                TextField("Access Code", text: $joinCode)
-                    .padding(.all)
-                    .background()
-                    .cornerRadius(10.0)
-                
+                    .frame(height: 60)
+                JoinCodeEntry(joinCode: $joinCode)
                 Spacer()
-                    .frame(height: 100)
+                    .frame(height: 50)
                 
                 #if os(iOS)
-                Button {
-                    showScanner = true
-                } label: {
-                    Label("Or Scan A QR Code", systemImage: "qrcode.viewfinder")
-                        .fontWeight(.medium)
-                        .frame(maxWidth: .infinity)
-                }
+                ScanQRCode(showScanner: $showScanner)
                 #endif
-                
                 Spacer()
+                    .frame(height: 50)
                 
                 //Show loading indicator.
                 if isLoading {
@@ -59,41 +50,34 @@ struct InstructorJoinClass: View {
                         .padding()
                 } else {
                     Button {
-                        isLoading = true
-                        Task {
-                            do {
-                                try await viewModel.createTA(withEmail: email, password: password, fullname: name, joincode: joinCode)
-                                navigateToDashBoard = true
-                            } catch {
-                                print("Error joining class")
-                            }
-                        }
-                        
+                        createTAAccount()
                     } label: {
                         Text("Join Class")
                             .fontWeight(.semibold)
+                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(.orange)
+                    .tint(.green)
                     .controlSize(.large)
-                    Spacer()
-                    
+                    .disabled(isLoading)
                 }
-                
+                Spacer()
             } // end of VStack
-            
             .padding()
             .background(appBackgroundColor)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
+            .navigationBarBackButtonHidden()
+            .navigationDestination(isPresented: $navigateToDashBoard) {
+                InstructorDashboard()
+            }
+            
             #if os(iOS)
             .sheet(isPresented: $showScanner) {
                 CodeScannerView(codeTypes: [.qr], simulatedData: "7A04A", completion: handleScan)
             }
             #endif
-            .navigationDestination(isPresented: $navigateToDashBoard) {
-                InstructorDashboard()
-            }
             Spacer()
         }// end of view
     }
@@ -111,8 +95,48 @@ struct InstructorJoinClass: View {
         }
     }
     #endif
+    
+    func createTAAccount() {
+        isLoading = true
+        Task {
+            do {
+                try await viewModel.createTA(withEmail: email, password: password, fullname: name, joincode: joinCode)
+                navigateToDashBoard = true
+            } catch {
+                print("Error joining class")
+            }
+            
+            isLoading = false
+        }
+    }
+    
 }
 
-//#Preview {
-//    InstructorJoinClass()
-//}
+struct JoinCodeEntry: View {
+    @Binding var joinCode: String
+    
+    var body: some View {
+        Text("Enter The Code Manually")
+            .fontWeight(.semibold)
+        Spacer()
+            .frame(height: 20)
+        TextField("Join Code", text: $joinCode)
+            .padding(.all)
+            .background()
+            .cornerRadius(10.0)
+    }
+}
+
+struct ScanQRCode: View {
+    @Binding var showScanner: Bool
+    
+    var body: some View {
+        Button {
+            showScanner = true
+        } label: {
+            Label("Or Scan A QR Code", systemImage: "qrcode.viewfinder")
+                .fontWeight(.medium)
+                .frame(maxWidth: .infinity)
+        }
+    }
+}

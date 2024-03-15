@@ -9,9 +9,10 @@ import SwiftUI
 let appBackgroundColor = Color("AppBackgroundColor")
 
 struct WelcomeScreen: View {
-    
+    //Navigation Toggle State Variables
     @State var navigateToStudentCreateAccount = false
     @State var navigateToInstructorCreateAccount = false
+    
     var body: some View {
         NavigationStack {
             VStack {
