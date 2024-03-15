@@ -2,7 +2,7 @@
 //  OHLineView.swift
 //  Teachers Pet
 //
-//  Created by Ashley Valdez on 2/29/24.
+//  Created by Roshini Pothapragada on 2/29/24.
 //
 
 #if canImport(ActivityKit)
@@ -11,13 +11,17 @@ import ActivityKit
 import SwiftUI
 
 struct OHLineView: View {
+    //User Account Info Bindings
+    @Binding var email: String
+    @Binding var joinCode: String
+    
+    //Alert & Navigation Toggle State Variables
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
     
-    @Binding var email: String
-    @Binding var joinCode: String
     @EnvironmentObject var viewModel: AuthViewModel
     
+    //Live Activity Binding
     #if os(iOS)
     @Binding var activity: Activity<OfficeHoursAttribute>?
     #endif
@@ -27,39 +31,9 @@ struct OHLineView: View {
         NavigationStack {
             VStack {
                 Spacer()
-                Text("You are")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                
-                if viewModel.positionInLine != 1 {
-                    Text("#\(viewModel.positionInLine)")
-                        .font(.system(size: 50))
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                    Text("in line!")
-                        .font(.largeTitle)
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                } else {
-                    Text("Up Next!")
-                        .font(.system(size: 50))
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                }
-                
-                
-                Button {
-                    leaveLineAlert = true
-                } label: {
-                    Text("Leave Office Hours Line")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-                .controlSize(.large)
+                DisplayLinePosition()
+                    .environmentObject(viewModel)
+                LeaveOfficeHoursButton(willLeave: $leaveLineAlert)
                 Spacer()
             }
             .padding()
@@ -72,25 +46,18 @@ struct OHLineView: View {
                     try await viewModel.addListnerToLine(joinCode: joinCode)
                 }
             }
+            #if os(iOS)
             .onChange(of: viewModel.positionInLine) { newPosition in
-                var state = UIApplication.shared.applicationState
-                print("App State before if \(state)")
+                let state = UIApplication.shared.applicationState
                 switch state {
                 case .active, .inactive, .background:
-                    print("App State \(state)")
-                    Task {
-                        let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
-                        await activity?.update(using: updatedState)
-                    }
-                
+                    updateLiveActivity(newPosition: newPosition)
                 default:
-                    print("App State \(state)")
-                    Task {
-                        let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
-                        await activity?.update(using: updatedState)
-                    }
+                    updateLiveActivity(newPosition: newPosition)
                 }
             }
+            #endif
+            
             .alert(isPresented: $leaveLineAlert) {
                 Alert(
                     title: Text("Are you sure you want to leave the line?"),
@@ -100,11 +67,7 @@ struct OHLineView: View {
                             try await viewModel.removeStudentFromLine(joinCode: joinCode, email: email)
                         }
                         #if os(iOS)
-                        let state = OfficeHoursAttribute.ContentState(linePosition: viewModel.positionInLine)
-                        let content = ActivityContent(state: state, staleDate: nil)
-                        Task {
-                            await activity?.end(content, dismissalPolicy:.immediate)
-                        }
+                        endLiveActivity()
                         #endif
                         
                         returnToStudentDashboard = true
@@ -118,11 +81,67 @@ struct OHLineView: View {
             }
         }
     }
+    
+    #if os(iOS)
+    func updateLiveActivity(newPosition: Int) {
+        Task {
+            let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
+            let content = ActivityContent(state: updatedState, staleDate: nil)
+            await activity?.update(content)
+        }
+    }
+
+    func endLiveActivity() {
+        let state = OfficeHoursAttribute.ContentState(linePosition: viewModel.positionInLine)
+        let content = ActivityContent(state: state, staleDate: nil)
+        Task {
+            await activity?.end(content, dismissalPolicy:.immediate)
+        }
+    }
+    #endif
 }
 
-//#Preview {
-//    OHLineView()
-//}
+struct DisplayLinePosition: View {
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    var body: some View {
+        Text("You are")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+        if viewModel.positionInLine != 1 {
+            Text("#\(viewModel.positionInLine)")
+                .font(.system(size: 50))
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+            Text("in line!")
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+                .multilineTextAlignment(.center)
+        } else {
+            Text("Up Next!")
+                .font(.system(size: 50))
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+        }
+    }
+}
 
+struct LeaveOfficeHoursButton: View {
+    @Binding var willLeave: Bool
+    
+    var body: some View {
+        Button {
+            willLeave = true
+        } label: {
+            Text("Leave Office Hours Line")
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.orange)
+        .controlSize(.large)
 
-
+    }
+}
