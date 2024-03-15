@@ -9,59 +9,26 @@ import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 struct ClassJoinCodeGeneration: View {
-    @EnvironmentObject var viewModel: AuthViewModel
-    
+    //User Account Info Bindings/State Variables
     @Binding var email: String
     @Binding var password: String
     @Binding var Name: String
     @Binding var coursename: String
+    @State var joinCode: String = String()
     
+    //Navigation & QR Code Generation State Variables
     @State var navigateToDashboard = false
     @State var qrCode: Image?
-    @State var joinCode: String = String()
+    
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         NavigationStack {
             VStack {
                 Spacer()
-              
-                Text("\(coursename) Join Code")
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-            
-                Text(joinCode)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                    .frame(height: 20)
-                Text("Or give your students this QR Code")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.center)
-                
-                    if let qrCode = qrCode {
-                        qrCode
-                            .interpolation(.none)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                    } else {
-                        Text("Generating QR code..")
-                    }
-                
-                Button {
-                    navigateToDashboard = true
-                } label: {
-                    Text("Go To Dashboard")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-                .controlSize(.large)
+                DisplayJoinCode(courseName: $coursename, joinCode: $joinCode)
+                DisplayQRCode(qrCode: $qrCode)
+                GoToDashboardButton(navigateToDashboard: $navigateToDashboard)
                 Spacer()
                 
             }
@@ -78,13 +45,9 @@ struct ClassJoinCodeGeneration: View {
                 Task {
                     try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode) //only first name for now fix this to have both
                 }
-                
                 generateQRCode()
             }
-            
-            
         }
-        
        
     }
     
@@ -115,14 +78,61 @@ struct ClassJoinCodeGeneration: View {
             }
         }
     }
-    
-    
-   
-    
-    
-    
+
 }
 
-//#Preview {
-//    ClassJoinCodeGeneration()
-//}
+struct DisplayJoinCode: View {
+    @Binding var courseName: String
+    @Binding var joinCode: String
+    
+    var body: some View {
+        Text("\(courseName) Join Code")
+            .font(.largeTitle)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+        Text(joinCode)
+            .font(.title2)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+        Spacer()
+            .frame(height: 20)
+        Text("Or give your students this QR Code")
+            .font(.title3)
+            .fontWeight(.semibold)
+            .multilineTextAlignment(.center)
+    }
+}
+
+struct DisplayQRCode: View {
+    @Binding var qrCode: Image?
+    
+    var body: some View {
+        if let qrCode = qrCode {
+            qrCode
+                .interpolation(.none)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+        } else {
+            Text("Generating QR code..")
+        }
+    }
+}
+
+struct GoToDashboardButton: View {
+    @Binding var navigateToDashboard: Bool
+    
+    var body: some View {
+        Button {
+            navigateToDashboard = true
+        } label: {
+            Text("Go To Dashboard")
+                .fontWeight(.semibold)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.orange)
+        .controlSize(.large)
+    }
+}

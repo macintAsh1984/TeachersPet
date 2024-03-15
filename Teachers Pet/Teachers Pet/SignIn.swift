@@ -131,13 +131,17 @@ struct SignInTextFields: View {
             .background()
             .cornerRadius(10.0)
             .disableAutocorrection(true)
+        #if os(iOS)
             .autocapitalization(.none)
+        #endif
         SecureField("Password", text: $password)
             .padding(.all)
             .background()
             .cornerRadius(10.0)
             .disableAutocorrection(true)
+        #if os(iOS)
             .autocapitalization(.none)
+        #endif
     }
 }
 
