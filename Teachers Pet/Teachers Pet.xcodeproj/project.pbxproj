@@ -28,7 +28,7 @@
 		ABB465172B91A227007B3AA1 /* OHQuestionaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465162B91A227007B3AA1 /* OHQuestionaire.swift */; };
 		ABB465192B91A2BB007B3AA1 /* OHLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465182B91A2BB007B3AA1 /* OHLineView.swift */; };
 		ABB4651D2B91A760007B3AA1 /* StudentJoinClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4651C2B91A760007B3AA1 /* StudentJoinClass.swift */; };
-		ABB90BF32BA5370E009AE8A1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABB90BF22BA5370E009AE8A1 /* GoogleService-Info.plist */; };
+		ABBA49AF2BA5685700B5CD33 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */; };
 		ABEB6C042B99903F00293A48 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C032B99903F00293A48 /* FirebaseAnalytics */; };
 		ABEB6C062B99903F00293A48 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C052B99903F00293A48 /* FirebaseAnalyticsOnDeviceConversion */; };
 		ABEB6C082B99903F00293A48 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C072B99903F00293A48 /* FirebaseAnalyticsSwift */; };
@@ -110,7 +110,7 @@
 		ABB465162B91A227007B3AA1 /* OHQuestionaire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHQuestionaire.swift; sourceTree = "<group>"; };
 		ABB465182B91A2BB007B3AA1 /* OHLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineView.swift; sourceTree = "<group>"; };
 		ABB4651C2B91A760007B3AA1 /* StudentJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentJoinClass.swift; sourceTree = "<group>"; };
-		ABB90BF22BA5370E009AE8A1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		ABE645E42B88732D0072AA66 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		ABEB6C352B99912600293A48 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -252,7 +252,7 @@
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
-				ABB90BF22BA5370E009AE8A1 /* GoogleService-Info.plist */,
+				ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				ABB90BF32BA5370E009AE8A1 /* GoogleService-Info.plist in Resources */,
+				ABBA49AF2BA5685700B5CD33 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

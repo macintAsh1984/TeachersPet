@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.macintAsh.Teachers-Pet</string>
+	<string>com.macintAsh.TeachersPet</string>
 	<key>PROJECT_ID</key>
 	<string>swiftuiauth-7dd06</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:961171386094:ios:75b72afbe66a70de114dff</string>
+	<string>1:961171386094:ios:c9046dea574fccf5114dff</string>
 </dict>
 </plist>
