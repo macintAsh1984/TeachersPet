@@ -19,7 +19,7 @@ struct RootView: View {
                     if user.coursename.isEmpty {
                         StudentDashboard(email: .constant(user.email), joinCode: .constant(user.joincode))
                     } else {
-                        InstructorDashboard()
+                        InstructorDashboard(email: .constant(user.email), joinCode: .constant(user.joincode))
                     }
                 }
             } else {

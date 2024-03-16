@@ -37,7 +37,7 @@ struct ClassJoinCodeGeneration: View {
             .background(appBackgroundColor)
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
-                InstructorDashboard()
+                InstructorDashboard(email: $email, joinCode: $joinCode)
             }
             .onAppear {
                 let generatedJoinCode = generateJoinCode()

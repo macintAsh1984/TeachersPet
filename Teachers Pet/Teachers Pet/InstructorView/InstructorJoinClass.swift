@@ -70,7 +70,7 @@ struct InstructorJoinClass: View {
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashBoard) {
-                InstructorDashboard()
+                InstructorDashboard(email: $email, joinCode: $joinCode)
             }
             
             #if os(iOS)

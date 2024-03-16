@@ -1,8 +1,8 @@
 //
-//  InstructorDashboard.swift
+//  StudentDashboard.swift
 //  Teachers Pet
 //
-//  Created by Ashley Valdez on 2/21/24.
+//  Created by Sai Ganesh Chamarty on 2/28/24.
 //
 
 import SwiftUI
@@ -16,19 +16,20 @@ struct InstructorDashboard: View {
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
-    
     @EnvironmentObject var viewModel: AuthViewModel
+    @State var showClassInfo = false
     
+    @Binding var email: String
+    @Binding var joinCode: String
     @State var signOut = false
+    @State var coursename = ""
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
             let officeHour2 = OfficeHoursViewModel(className: "ECS 189E", month: "February", day: 28, startHour: 9, endHour: 10, buildingName: "Kemper Hall", roomNumber: 1553, profName: "Sam King")
             
-            let currentOH1 = OfficeHoursViewModel(className: "ECS 160", month: "March", day: 21, startHour: 6, endHour: 7, buildingName: "Kemper", roomNumber: 36, profName: "Farrens")
-            
-            let currentOH2 = OfficeHoursViewModel(className: "ECS 140A", month: "April", day: 21, startHour: 3, endHour: 4, buildingName: "Young Hall", roomNumber: 184, profName: "Thakkar")
+            let currentOH1 = OfficeHoursViewModel(className: "Acting Class", month: "March", day: 13, startHour: 6, endHour: 7, buildingName: "Mondavi Center", roomNumber: 36, profName: "Jim Carry")
             
             VStack {
                 HStack {
@@ -36,10 +37,16 @@ struct InstructorDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses = [officeHour1, officeHour2]
-                            currentOfficeHours = [currentOH1, currentOH2]
+                            if upcomingClasses.isEmpty{
+                                upcomingClasses = [officeHour1]
+                                currentOfficeHours = [currentOH1]
+                                Task {
+                                    await viewModel.getCourseNameForInstructors()
+                                }
+                            }
                         }
                     Spacer()
+                    
                     Menu() {
                         
                         Button(role: .destructive) {
@@ -55,58 +62,50 @@ struct InstructorDashboard: View {
                     } label: {
                         Image(systemName: "person.crop.circle")
                             .font(.title)
-                            .foregroundColor(.orange)
+                            .foregroundColor(.green)
                             .padding(5)
                     } //end of menu options
+                    
                 }
                 .padding(2)
-                Spacer(minLength: 40)
+                Spacer()
+                    .frame(height: 20)
                 HStack {
                     Text("Upcoming Office Hours")
                         .font(.custom("sideheading", size: 23))
                     Spacer()
                     Button(action: {
                         // Action to perform when the button is tapped
-                        print("Button tapped!")
+                        print("Calender button tapped!")
                     }) {
-                        //                        Image(systemName: "calender")
-                        //                            .foregroundColor(.orange)
-                        //                            .font(.title)
-                        //                            .padding(5)
                         Image(systemName: "calendar")
                             .resizable()
                             .frame(width: 25, height: 25)
-                            .foregroundColor(.orange)
+                            .foregroundColor(.green)
                     }
-                    //                    DatePicker(
-                    //                            "Start Date",
-                    //                            selection: $date,
-                    //                            displayedComponents: [.date]
-                    //                        )
-                    //                        .datePickerStyle(.graphical)
                 }
                 .padding(5)
                 .padding(.bottom)
                 
                 ForEach(upcomingClasses.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
                                 .frame(height: 110)
                                 .foregroundColor(.clear)
                                 .background(
-                                    LinearGradient(gradient: Gradient(colors: [.black, .orange]), startPoint: .leading, endPoint: .trailing)
+                                    LinearGradient(gradient: Gradient(colors: [.black, .green]), startPoint: .leading, endPoint: .trailing)
                                 )
                                 .cornerRadius(20)
                             VStack (alignment: .leading){
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 15)
                                         .frame(width: 120, height: 40)
-                                        .foregroundStyle(.orange)
+                                        .foregroundStyle(.green)
                                     
-                                    Text("\(upcomingClasses[index].className)")
+                                    Text("\(viewModel.coursename)")
                                         .foregroundStyle(.white)
                                         .bold()
                                     
@@ -133,7 +132,7 @@ struct InstructorDashboard: View {
                 .padding()
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
@@ -141,7 +140,7 @@ struct InstructorDashboard: View {
                                 .foregroundColor(.white)
                             VStack {
                                 HStack {
-                                    Text("\(upcomingClasses[index].className)")
+                                    Text("\(currentOfficeHours[index].className)")
                                         .foregroundStyle(.black)
                                         .bold()
                                         .padding(.leading)
@@ -151,27 +150,29 @@ struct InstructorDashboard: View {
                                         .padding(.trailing)
                                 }
                                 HStack {
-                                    Text("Monday, Feb \(currentOfficeHours[index].day)")
+                                    Text("Wednesday, March \(currentOfficeHours[index].day)")
                                         .padding(.leading)
                                         .foregroundStyle(.black)
                                     Spacer()
-                                    Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour)")
+                                    Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour) PM")
                                         .padding(.trailing)
                                         .foregroundStyle(.black)
                                 }
-                                
                             }
                         }
-                        
                     })
                     .padding(.bottom)
+                    Spacer()
                 }
             }
             .padding()
-            .navigationBarBackButtonHidden()
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
+            .navigationBarBackButtonHidden()
             .background(appBackgroundColor)
+            .navigationDestination (isPresented: $showClassInfo) {
+                OHLineManagement()
+            }
             .navigationDestination (isPresented: $navigateToWelcomeScreen) {
                 WelcomeScreen()
             }
@@ -191,14 +192,17 @@ struct InstructorDashboard: View {
             Spacer()
             
         }
+        .background(appBackgroundColor)
+
+    }
+    
+    func setCourseName() {
+        Task{
+            coursename = viewModel.coursename
+        }
     }
 }
 
 #Preview {
-    InstructorDashboard()
+    InstructorDashboard(email: .constant(""), joinCode: .constant(""))
 }
-
-
-//#Preview {
-//    InstructorDashboard(email: .constant(""), password: .constant(""))
-//}

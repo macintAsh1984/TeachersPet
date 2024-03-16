@@ -133,6 +133,27 @@ class AuthViewModel: ObservableObject {
             }
         }
     
+    func getCourseNameForInstructors() async {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        do {
+            let teacherQuerySnapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+            
+            let data = teacherQuerySnapshot.data()
+            
+            if let coursenameTemp = data?["coursename"] as? String {
+                // If coursename is not nil, print its value
+                self.coursename = coursenameTemp
+            } else {
+                // If coursename is nil or not a String, print a message or handle the case accordingly
+                print("coursename is nil or not a String")
+            }
+            
+        } catch {
+            print("Error fetching teacher documents: \(error.localizedDescription)")
+        }
+    }
+    
+    
     func getCourseName() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         do {

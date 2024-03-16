@@ -37,10 +37,12 @@ struct StudentDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses.append(officeHour1)
-                            currentOfficeHours = [currentOH1]
-                            Task {
-                                await viewModel.getCourseName()
+                            if upcomingClasses.isEmpty{
+                                upcomingClasses.append(officeHour1)
+                                currentOfficeHours = [currentOH1]
+                                Task {
+                                    await viewModel.getCourseName()
+                                }
                             }
                         }
                     Spacer()
@@ -60,7 +62,7 @@ struct StudentDashboard: View {
                     } label: {
                         Image(systemName: "person.crop.circle")
                             .font(.title)
-                            .foregroundColor(.orange)
+                            .foregroundColor(.green)
                             .padding(5)
                     } //end of menu options
                     
@@ -74,12 +76,12 @@ struct StudentDashboard: View {
                     Spacer()
                     Button(action: {
                         // Action to perform when the button is tapped
-                        print("Button tapped!")
+                        print("Calender button tapped!")
                     }) {
                         Image(systemName: "calendar")
                             .resizable()
                             .frame(width: 25, height: 25)
-                            .foregroundColor(.orange)
+                            .foregroundColor(.green)
                     }
                 }
                 .padding(5)
@@ -94,14 +96,14 @@ struct StudentDashboard: View {
                                 .frame(height: 110)
                                 .foregroundColor(.clear)
                                 .background(
-                                    LinearGradient(gradient: Gradient(colors: [.black, .orange]), startPoint: .leading, endPoint: .trailing)
+                                    LinearGradient(gradient: Gradient(colors: [.black, .green]), startPoint: .leading, endPoint: .trailing)
                                 )
                                 .cornerRadius(20)
                             VStack (alignment: .leading){
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 15)
                                         .frame(width: 120, height: 40)
-                                        .foregroundStyle(.orange)
+                                        .foregroundStyle(.green)
                                     
                                     Text("\(viewModel.coursename)")
                                         .foregroundStyle(.white)
