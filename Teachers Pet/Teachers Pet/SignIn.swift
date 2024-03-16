@@ -66,7 +66,7 @@ struct SignIn: View {
                 CreateAccount(isStudent: $isStudent, instructorView: $isInstructor)
             }
             .navigationDestination(isPresented: $navigateToInstructorDashboard) {
-                InstructorDashboard()
+                InstructorDashboard(email: $email, joinCode: $joinCode)
             }
             .navigationDestination(isPresented: $navigateToStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)

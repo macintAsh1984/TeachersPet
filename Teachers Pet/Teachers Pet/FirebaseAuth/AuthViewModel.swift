@@ -20,7 +20,9 @@ class AuthViewModel: ObservableObject {
     @Published var currentUser: User?
     @Published var positionInLine: Int = 0
     @Published var coursename: String = ""
-    
+    @Published var joincode: String = ""
+    @Published var allstudentsinOH: [(uid: String, fullname: String)] = []
+    @Published var totellstudentstheyhavebeenremoved = false
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -474,11 +476,203 @@ class AuthViewModel: ObservableObject {
                     }
                 }
                 
+//                if let querySnapshot = querySnapshot {
+//                    for document in querySnapshot.documents {
+//                        let studentData = document.data()
+//                        
+//                        
+//                        if let studentUID = studentData["uid"] as? String, studentUID == currentUser {
+//                            self.totellstudentstheyhavebeenremoved = true
+//                            break
+//                        }
+//                            
+//                        
+//                    }
+//                }
+                
                 
             }
             
         }
     }
+    
+    
+    
+    func setupStudentsListListener() async throws{
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        // Reference to the "Office Hours" collection
+        let officeHoursCollectionRef = db.collection("users").document(uid).collection("Office Hours")
+
+        // Setup snapshot listener
+        officeHoursCollectionRef.addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                print("Error fetching students")
+                return
+            }
+
+            var studentsList: [(uid: String, fullname: String)] = []
+
+            // Sort documents based on their positionNumber attribute
+            let sortedDocuments = snapshot.documents.sorted { (doc1, doc2) -> Bool in
+                guard let position1 = doc1["linePosition"] as? Int,
+                      let position2 = doc2["linePosition"] as? Int else {
+                    return false // If positionNumber attribute is missing in any document, don't change order
+                }
+                return position1 < position2
+            }
+
+            for document in sortedDocuments {
+                if let uid = document["id"] as? String,
+                   let fullname = document["fullname"] as? String{
+                    studentsList.append((uid: uid, fullname: fullname))
+                }
+            }
+            // Update the local array with the new data
+            self.allstudentsinOH = studentsList
+           
+        }
+    }
+    
+    
+    
+    func removeStudentFromLineInstructor(joinCode: String, UID: String) async throws {
+         
+         var currentLinePosition = 0;
+
+        
+         
+       
+       do {
+           // Retrieve the instructor document with the same join code.
+           let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+           
+           // Users -> UID -> Students
+           // Fetches the instructor with the corresponding join code.
+           guard let professorDocument = professorQuerySnapshot.documents.first else {
+               print("Professor not found")
+               return
+           }
+           
+           // Retrieve the ID of the instructor document
+           let professorID = professorDocument.documentID
+           let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
+           
+           // Get the reference to the student's document in the "Office Hours" collection
+           let studentDocumentReference = officehoursCollection.document(UID)
+           
+           do {
+               //get all the documents with userID in office hours
+               let studentQuerySnapshot = try await officehoursCollection.whereField("id", isEqualTo: studentDocumentReference.documentID).getDocuments()
+               
+               
+               //Removing the student
+               for document in studentQuerySnapshot.documents {
+                   var studentData = document.data()
+                   //get the removed student's position in line.
+                   if let linePosition = studentData["linePosition"] as? Int {
+                       currentLinePosition = linePosition
+                   }
+                   try await document.reference.delete()
+                   print("Document \(document.documentID) deleted successfully.")
+               }
+           } catch {
+               print("Error deleting documents: \(error)")
+           }
+           
+            //Get all of the students in the instructor's course.
+           let studentsInOfficeHours = try await officehoursCollection.order(by: "entryDate").getDocuments()
+           
+           for student in studentsInOfficeHours.documents {
+               var studentData = student.data()
+               
+               guard let studentLinePosition = studentData["linePosition"] as? Int else {
+                   print("could not find the line position...")
+                   return
+               }
+               
+               if studentLinePosition > currentLinePosition {
+                   try await student.reference.updateData(["linePosition" : (studentLinePosition - 1)])
+                   print("Updated position for student \(student.documentID) to \(studentLinePosition - 1)")
+                   
+               }
+           }
+           
+       } catch {
+           print("error: \(error)")
+       }
+   }
+    
+    
+    
+    
+    func endOH(joinCode: String) async throws {
+         
+         var currentLinePosition = 0;
+
+        
+         
+       
+       do {
+           // Retrieve the instructor document with the same join code.
+           let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+           
+           // Users -> UID -> Students
+           // Fetches the instructor with the corresponding join code.
+           guard let professorDocument = professorQuerySnapshot.documents.first else {
+               print("Professor not found")
+               return
+           }
+           
+           // Retrieve the ID of the instructor document
+           let professorID = professorDocument.documentID
+           let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
+           
+           // Get the reference to the student's document in the "Office Hours" collection
+           //let studentDocumentReference = officehoursCollection.document(UID)
+           
+           let studentDocumentReference = try await officehoursCollection.getDocuments()
+           
+           do {
+              
+               
+               //Removing the student
+               for document in studentDocumentReference.documents {
+                   var studentData = document.data()
+                   //get the removed student's position in line.
+                   if let linePosition = studentData["linePosition"] as? Int {
+                       currentLinePosition = linePosition
+                   }
+                   try await document.reference.delete()
+                   print("Document \(document.documentID) deleted successfully.")
+               }
+           } catch {
+               print("Error deleting documents: \(error)")
+           }
+           
+            //Get all of the students in the instructor's course.
+           let studentsInOfficeHours = try await officehoursCollection.order(by: "entryDate").getDocuments()
+           
+           for student in studentsInOfficeHours.documents {
+               var studentData = student.data()
+               
+               guard let studentLinePosition = studentData["linePosition"] as? Int else {
+                   print("could not find the line position...")
+                   return
+               }
+               
+               if studentLinePosition > currentLinePosition {
+                   try await student.reference.updateData(["linePosition" : (studentLinePosition - 1)])
+                   print("Updated position for student \(student.documentID) to \(studentLinePosition - 1)")
+                   
+               }
+           }
+           
+       } catch {
+           print("error: \(error)")
+       }
+   }
+
     
     
     

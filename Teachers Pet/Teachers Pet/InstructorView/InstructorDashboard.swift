@@ -16,6 +16,9 @@ struct InstructorDashboard: View {
     @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
+    @Binding var email: String
+    @Binding var joinCode: String
+    @State var showClassInfo = false
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -133,7 +136,7 @@ struct InstructorDashboard: View {
                 .padding()
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
@@ -175,6 +178,10 @@ struct InstructorDashboard: View {
             .navigationDestination (isPresented: $navigateToWelcomeScreen) {
                 WelcomeScreen()
             }
+            
+            .navigationDestination (isPresented: $showClassInfo) {
+                OHLineManagement(joinCode: $joinCode)
+            }
             .alert(isPresented: $signOut) {
                 Alert(
                     title: Text("Are you sure you want to sign out"),
@@ -194,9 +201,9 @@ struct InstructorDashboard: View {
     }
 }
 
-#Preview {
-    InstructorDashboard()
-}
+//#Preview {
+//    InstructorDashboard()
+//}
 
 
 //#Preview {

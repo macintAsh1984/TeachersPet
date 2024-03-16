@@ -1,69 +1,127 @@
-//
-//  OHLineManagement.swift
-//  Teachers Pet
-//
-//  Created by Ashley Valdez on 3/1/24.
-//
 
 import SwiftUI
 
 struct OHLineManagement: View {
-    @State var students = [
-        "Student A",
-        "Student B",
-        "Student C",
-        "Student D"
-    ]
+    @EnvironmentObject var viewModel: AuthViewModel
+    @State var students: [String] = [] // Use @State to manage the list of students
+    @Binding var joinCode:String
+    @State var counter = "1"
+    @State var counter1 = 1
+    @State var showingEndOHAlert = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(0..<students.count, id: \.self) { index in
-                        StudentEntry(studentInLine: students[index])
-                  }
-                    .onDelete { indexSet in
-                        students.remove(atOffsets: indexSet)
+                    if viewModel.allstudentsinOH.isEmpty {
+                        Text("No one in queue")
+                            .foregroundStyle(.gray)
+                            .padding()
+                    } else {
+                        ForEach(viewModel.allstudentsinOH, id: \.self.fullname) { student in
+                            StudentEntry(studentName: student.fullname, joinCode: $joinCode)
+                        }
+                            
+                                .onDelete { indexSet in
+                                    Task {
+                                        do {
+                                            for index in indexSet {
+                                                let student = viewModel.allstudentsinOH[index]
+                                                let uid = student.uid
+                                            
+                                                try await viewModel.removeStudentFromLineInstructor(joinCode: joinCode, UID: uid)
+                                            }
+                                            viewModel.allstudentsinOH.remove(atOffsets: indexSet)
+                                            try await viewModel.setupStudentsListListener()
+                                        } catch {
+                                            print("Error removing student: \(error)")
+                                        }
+                                    }
+                                }
+     
+                        }
                     }
-//                    .onMove { indices, newOffset in
-//                        students.move(fromOffsets: indices, toOffset: newOffset)
-//                    }
+                    
+                    
+                }
+                .onAppear {
+                    Task {
+                        do {
+                            try await viewModel.setupStudentsListListener()
+                    
+                            
+                        } catch {
+                            print("Error: \(error)")
+                        }
+                    }
                 }
                 #if os(iOS)
                 .navigationTitle("My Office Hours")
                 .navigationBarItems(trailing: EditButton())
                 #endif
-
+                
+                
+                Spacer()
+                Button {
+                    showingEndOHAlert = true
+                   
+                
+                    
+                } label: {
+                    Text("End Office Hours")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+                .controlSize(.large)
+                .padding()
+                .alert(isPresented: $showingEndOHAlert) {
+                    Alert(title: Text("End Office Hours?"), message: Text("Are you sure?"), primaryButton: .destructive(Text("End")) {
+                        Task{
+                            do {
+                                try await viewModel.endOH(joinCode: joinCode)
+                            } catch {
+                                print("Error")
+                            }
+                        }
+                        
+                    }, secondaryButton: .cancel())
+                    
+                }
+            
+            
             }
         }
     }
-}
 
 
 struct StudentEntry: View {
-    @State var studentInLine: String
-    
+    @EnvironmentObject var viewModel: AuthViewModel
+    let studentName: String
+    @Binding var joinCode: String
     var body: some View {
-            NavigationStack {
-                  HStack {
-                      Image(systemName: "graduationcap")
-                      .resizable()
-                      .aspectRatio(contentMode: .fill)
-                      .frame(width: 30, height: 30)
-                      .cornerRadius(5)
-                      .padding(.leading, 8)
-                    Text(studentInLine)
-                      .font(.headline)
-                      .lineLimit(1)
-                    Spacer()
-                  }
-                  .padding(.vertical, 8)
-                }
-
+        
+            HStack {
+                Image(systemName: "graduationcap")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(5)
+                    .padding(.leading, 8)
+                Text(studentName)
+                    .font(.headline)
+                    .lineLimit(1)
+                Spacer()
+            }
+            
+            
+        
+        
+       
     }
 }
 
 
-#Preview {
-    OHLineManagement()
-}
+
+
