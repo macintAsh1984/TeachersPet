@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB16D8F92BA6D43B00AD273E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB16D8F72BA6D3A300AD273E /* GoogleService-Info.plist */; };
+		AB16D8FB2BA6D4F200AD273E /* Teachers-Pet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB16D8FA2BA6D4F200AD273E /* Teachers-Pet-Info.plist */; };
 		AB27FC332BA282C700047BFE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB27FC322BA282C700047BFE /* RootView.swift */; };
 		AB5B09662B967547004CAE7A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09652B967547004CAE7A /* WidgetKit.framework */; };
 		AB5B09682B967547004CAE7A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B09672B967547004CAE7A /* SwiftUI.framework */; };
@@ -28,7 +30,6 @@
 		ABB465172B91A227007B3AA1 /* OHQuestionaire.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465162B91A227007B3AA1 /* OHQuestionaire.swift */; };
 		ABB465192B91A2BB007B3AA1 /* OHLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB465182B91A2BB007B3AA1 /* OHLineView.swift */; };
 		ABB4651D2B91A760007B3AA1 /* StudentJoinClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4651C2B91A760007B3AA1 /* StudentJoinClass.swift */; };
-		ABBA49AF2BA5685700B5CD33 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */; };
 		ABEB6C042B99903F00293A48 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C032B99903F00293A48 /* FirebaseAnalytics */; };
 		ABEB6C062B99903F00293A48 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C052B99903F00293A48 /* FirebaseAnalyticsOnDeviceConversion */; };
 		ABEB6C082B99903F00293A48 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ABEB6C072B99903F00293A48 /* FirebaseAnalyticsSwift */; };
@@ -88,7 +89,8 @@
 
 /* Begin PBXFileReference section */
 		18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Teachers_Pet.entitlements; sourceTree = "<group>"; };
-		AB27FC312BA054B700047BFE /* Teachers-Pet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Teachers-Pet-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AB16D8F72BA6D3A300AD273E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AB16D8FA2BA6D4F200AD273E /* Teachers-Pet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Teachers-Pet-Info.plist"; sourceTree = "<group>"; };
 		AB27FC322BA282C700047BFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AB5B09632B967547004CAE7A /* OfficeHoursExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OfficeHoursExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5B09652B967547004CAE7A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -110,7 +112,6 @@
 		ABB465162B91A227007B3AA1 /* OHQuestionaire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHQuestionaire.swift; sourceTree = "<group>"; };
 		ABB465182B91A2BB007B3AA1 /* OHLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OHLineView.swift; sourceTree = "<group>"; };
 		ABB4651C2B91A760007B3AA1 /* StudentJoinClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentJoinClass.swift; sourceTree = "<group>"; };
-		ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
 		ABE645E42B88732D0072AA66 /* SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
 		ABEB6C352B99912600293A48 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -241,7 +242,7 @@
 		ABF4078B2B90238100444A48 /* Teachers Pet */ = {
 			isa = PBXGroup;
 			children = (
-				AB27FC312BA054B700047BFE /* Teachers-Pet-Info.plist */,
+				AB16D8FA2BA6D4F200AD273E /* Teachers-Pet-Info.plist */,
 				AB27FC322BA282C700047BFE /* RootView.swift */,
 				ABF4079D2B90247700444A48 /* TeachersPet_App.swift */,
 				ABC70E032B713DD000A4FFF3 /* WelcomeScreen.swift */,
@@ -252,7 +253,7 @@
 				AB4B930F2B88285900FAEC37 /* InstructorView */,
 				ABAC21972B8EBFC2005CF27E /* FirebaseAuth */,
 				18D272AD2B970E5200E651AF /* Teachers_Pet.entitlements */,
-				ABBA49AE2BA5685700B5CD33 /* GoogleService-Info.plist */,
+				AB16D8F72BA6D3A300AD273E /* GoogleService-Info.plist */,
 			);
 			path = "Teachers Pet";
 			sourceTree = "<group>";
@@ -379,7 +380,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDEC08E32B93E92A009763B9 /* Assets.xcassets in Resources */,
-				ABBA49AF2BA5685700B5CD33 /* GoogleService-Info.plist in Resources */,
+				AB16D8FB2BA6D4F200AD273E /* Teachers-Pet-Info.plist in Resources */,
+				AB16D8F92BA6D43B00AD273E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,7 +627,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Teachers-Pet-Info.plist";
+				INFOPLIST_FILE = "Teachers Pet/Teachers-Pet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Teacher's Pet";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For QR Code scanning only.";
@@ -669,7 +671,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Teachers-Pet-Info.plist";
+				INFOPLIST_FILE = "Teachers Pet/Teachers-Pet-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Teacher's Pet";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_NSCameraUsageDescription = "For QR Code scanning only.";
