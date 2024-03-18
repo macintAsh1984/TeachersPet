@@ -59,7 +59,10 @@ struct StudentDashboard: View {
                     Spacer()
                     
                     //calender button to be implemented
-                    CalenderButton()
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.green)
                 }
                 .padding(5)
                 .padding(.bottom)
@@ -142,21 +145,6 @@ struct AccountButton: View {
                 .foregroundColor(.green)
                 .padding(5)
         } //end of menu options
-    }
-}
-
-//calender button
-struct CalenderButton: View {
-    var body: some View {
-        Button(action: {
-            // Action to perform when the button is tapped
-            print("Calender button tapped!")
-        }) {
-            Image(systemName: "calendar")
-                .resizable()
-                .frame(width: 25, height: 25)
-                .foregroundColor(.green)
-        }
     }
 }
 

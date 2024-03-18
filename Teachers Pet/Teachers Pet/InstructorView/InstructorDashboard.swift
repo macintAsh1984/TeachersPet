@@ -52,7 +52,10 @@ struct InstructorDashboard: View {
                     Text("Upcoming Office Hours")
                         .font(.custom("sideheading", size: 23))
                     Spacer()
-                    CalenderButton()
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.green)
                 }
                 .padding(5)
                 .padding(.bottom)
