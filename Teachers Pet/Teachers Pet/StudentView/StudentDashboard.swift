@@ -37,7 +37,7 @@ struct StudentDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses.append(officeHour1)
+                            upcomingClasses = [officeHour1]
                             currentOfficeHours = [currentOH1]
                             Task {
                                 await viewModel.getCourseName()

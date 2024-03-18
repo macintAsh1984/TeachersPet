@@ -72,28 +72,18 @@ struct InstructorDashboard: View {
                         // Action to perform when the button is tapped
                         print("Button tapped!")
                     }) {
-                        //                        Image(systemName: "calender")
-                        //                            .foregroundColor(.orange)
-                        //                            .font(.title)
-                        //                            .padding(5)
                         Image(systemName: "calendar")
                             .resizable()
                             .frame(width: 25, height: 25)
                             .foregroundColor(.orange)
                     }
-                    //                    DatePicker(
-                    //                            "Start Date",
-                    //                            selection: $date,
-                    //                            displayedComponents: [.date]
-                    //                        )
-                    //                        .datePickerStyle(.graphical)
                 }
                 .padding(5)
                 .padding(.bottom)
                 
                 ForEach(upcomingClasses.indices, id: \.self){ index in
                     Button(action: {
-                        //class 1 -> go to class page
+                        showClassInfo = true
                     }, label: {
                         ZStack(alignment: .leading){
                             RoundedRectangle(cornerRadius: 20)
