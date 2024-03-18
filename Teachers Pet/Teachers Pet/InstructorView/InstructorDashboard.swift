@@ -27,7 +27,6 @@ struct InstructorDashboard: View {
     var body: some View {
         NavigationStack{
             let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
-            let officeHour2 = OfficeHoursViewModel(className: "ECS 189E", month: "February", day: 28, startHour: 9, endHour: 10, buildingName: "Kemper Hall", roomNumber: 1553, profName: "Sam King")
             
             let currentOH1 = OfficeHoursViewModel(className: "Acting Class", month: "March", day: 13, startHour: 6, endHour: 7, buildingName: "Mondavi Center", roomNumber: 36, profName: "Jim Carry")
             
@@ -37,35 +36,14 @@ struct InstructorDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            if upcomingClasses.isEmpty{
-                                upcomingClasses = [officeHour1]
-                                currentOfficeHours = [currentOH1]
-                                Task {
-                                    await viewModel.getCourseNameForInstructors()
-                                }
+                            upcomingClasses = [officeHour1]
+                            currentOfficeHours = [currentOH1]
+                            Task {
+                                await viewModel.getCourseNameForInstructors()
                             }
                         }
                     Spacer()
-                    
-                    Menu() {
-                        
-                        Button(role: .destructive) {
-                            signOut = true
-                            print("Button tapped!")
-                        } label: {
-                            Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
-                                .font(.title)
-                                .foregroundColor(.orange)
-                                .padding(5)
-                        }
-                        
-                    } label: {
-                        Image(systemName: "person.crop.circle")
-                            .font(.title)
-                            .foregroundColor(.green)
-                            .padding(5)
-                    } //end of menu options
-                    
+                    AccountButton(signOut: $signOut)
                 }
                 .padding(2)
                 Spacer()
@@ -74,54 +52,16 @@ struct InstructorDashboard: View {
                     Text("Upcoming Office Hours")
                         .font(.custom("sideheading", size: 23))
                     Spacer()
-                    Button(action: {
-                        // Action to perform when the button is tapped
-                        print("Calender button tapped!")
-                    }) {
-                        Image(systemName: "calendar")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(.green)
-                    }
+                    Image(systemName: "calendar")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.green)
                 }
                 .padding(5)
                 .padding(.bottom)
                 
                 ForEach(upcomingClasses.indices, id: \.self){ index in
-                    Button(action: {
-                        showClassInfo = true
-                    }, label: {
-                        ZStack(alignment: .leading){
-                            RoundedRectangle(cornerRadius: 20)
-                                .frame(height: 110)
-                                .foregroundColor(.clear)
-                                .background(
-                                    LinearGradient(gradient: Gradient(colors: [.black, .green]), startPoint: .leading, endPoint: .trailing)
-                                )
-                                .cornerRadius(20)
-                            VStack (alignment: .leading){
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .frame(width: 120, height: 40)
-                                        .foregroundStyle(.green)
-                                    
-                                    Text("\(viewModel.coursename)")
-                                        .foregroundStyle(.white)
-                                        .bold()
-                                    
-                                }
-
-                                Text("\(upcomingClasses[index].month) \(upcomingClasses[index].day), \(upcomingClasses[index].startHour) - \(upcomingClasses[index].endHour)")
-                                    .foregroundStyle(.white)
-                                    .font(.subheadline)
-                                Text("\(upcomingClasses[index].buildingName), \(upcomingClasses[index].roomNumber)")
-                                    .foregroundStyle(.white)
-                                    .font(.subheadline)
-                            }
-                            .padding(.leading)
-                        }
-                    })
-                    .padding(.bottom)
+                    UpcomingClasses(showClassInfo: $showClassInfo, upcomingClasses: $upcomingClasses, index: Binding<Int>(get: { index},set: { newValue in}))
                 }
                 
                 HStack {
@@ -131,39 +71,9 @@ struct InstructorDashboard: View {
                 }
                 .padding()
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
-                    Button(action: {
-                        showClassInfo = true
-                    }, label: {
-                        ZStack(alignment: .leading){
-                            RoundedRectangle(cornerRadius: 20)
-                                .frame(height: 105)
-                                .foregroundColor(.white)
-                            VStack {
-                                HStack {
-                                    Text("\(currentOfficeHours[index].className)")
-                                        .foregroundStyle(.black)
-                                        .bold()
-                                        .padding(.leading)
-                                    Spacer()
-                                    Text("Prof. \(currentOfficeHours[index].profName)")
-                                        .foregroundStyle(.black)
-                                        .padding(.trailing)
-                                }
-                                HStack {
-                                    Text("Wednesday, March \(currentOfficeHours[index].day)")
-                                        .padding(.leading)
-                                        .foregroundStyle(.black)
-                                    Spacer()
-                                    Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour) PM")
-                                        .padding(.trailing)
-                                        .foregroundStyle(.black)
-                                }
-                            }
-                        }
-                    })
-                    .padding(.bottom)
-                    Spacer()
+                    CurrentOfficeHours(showClassInfo: $showClassInfo, currentOfficeHours: $currentOfficeHours, index: Binding<Int>(get: { index},set: { newValue in}))
                 }
+                Spacer()
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
