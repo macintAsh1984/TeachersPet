@@ -103,7 +103,7 @@ struct StudentDashboard: View {
                                         .frame(width: 120, height: 40)
                                         .foregroundStyle(.orange)
                                     
-                                    Text("\(viewModel.coursename)")
+                                    Text("\(viewModel.courseName)")
                                         .foregroundStyle(.white)
                                         .bold()
                                     
@@ -196,7 +196,7 @@ struct StudentDashboard: View {
     
     func setCourseName() {
         Task{
-            coursename = viewModel.coursename
+            coursename = viewModel.courseName
         }
     }
 }

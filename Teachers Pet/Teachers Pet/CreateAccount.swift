@@ -26,7 +26,10 @@ struct CreateAccount: View {
     @State var navigateToInstructorSignIn = false
     
     @State var showAlert = false
-    let alertMessage = "Error, please fill in all the information"
+    @State var emailpasswordalert = false
+    @State var alertMessage = ""
+    //let alertMessage = "Error, please fill in all the information"
+    //let alertMessageforemailpassword = "Error, incorrect email/password format"
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -58,6 +61,8 @@ struct CreateAccount: View {
                 .alert(alertMessage, isPresented: $showAlert) {
                     Button("OK") { }
                 }
+                
+                
                 Spacer()
                     .frame(height: 20)
                 
@@ -80,8 +85,28 @@ struct CreateAccount: View {
     }
     
     func createAccount() {
+        // Regualar expression for email validation
+        
+        let emailRegex = #"^[a-zA-Z0-9._%+-]+@(yahoo\.com|gmail\.com|hotmail\.com|icloud\.com|[^@]+\.edu)$"#
+        
+        // Password should be at least 6 characters long
+        let PasswordValid = password.count >= 6
+        
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        
+        let isEmailValid = emailPredicate.evaluate(with: email)  //check if email is valid
+
+        
         if firstName.isEmpty || lastName.isEmpty || email.isEmpty || password.isEmpty {
             showAlert = true
+            alertMessage = "All fields are required."
+            
+        } else if !isEmailValid {
+            showAlert = true
+            alertMessage = "Invalid email format."
+        } else if !PasswordValid {
+            showAlert = true
+            alertMessage = "Password must be at least 6 characters long."
         } else if isStudent {
             navigatetoStudentJoinClass = true
         } else {

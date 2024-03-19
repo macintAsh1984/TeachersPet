@@ -18,6 +18,9 @@ struct CreateClass: View {
     @State var navigateToCodeGeneration = false
     @State var navigateToJoinClass = false
     @State var noCourseNameAlert = false
+    @State var alertMessage = ""
+    @State var alertTitle = ""
+    @State var navigatetoInstructorSignIn = false
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -32,7 +35,7 @@ struct CreateClass: View {
                     .cornerRadius(10.0)
                 Spacer()
                     .frame(height: 40)
-                CreateClassButton(navigateToCodeGeneration: $navigateToCodeGeneration, courseName: $courseName, noCourseNameAlert: $noCourseNameAlert)
+                CreateClassButton(navigateToCodeGeneration: $navigateToCodeGeneration, courseName: $courseName, noCourseNameAlert: $noCourseNameAlert, email: $email, alertMessage: $alertMessage, alertTitle: $alertTitle)
                 Spacer()
                     .frame(height: 40)
                 JoinClassPageButton(navigateToJoinClass: $navigateToJoinClass)
@@ -41,9 +44,23 @@ struct CreateClass: View {
             .padding()
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
+            
             .alert(isPresented: $noCourseNameAlert) {
-                Alert(title: Text("Invalid Course Name"), message: Text("Please Enter A Course Name"), dismissButton: .cancel(Text("OK")))
+                Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton:  .default(Text("Sign In"), action: {
+                        navigatetoInstructorSignIn = true
+                        //SignIn(isStudent: .constant(false), isInstructor: .constant(true))
+                    }),
+                    secondaryButton: .default(Text("OK"))
+                )
             }
+            
+            .navigationDestination(isPresented: $navigatetoInstructorSignIn) {
+                SignIn(isStudent: .constant(false), isInstructor: .constant(true))
+            }
+            
 
             .navigationDestination(isPresented: $navigateToCodeGeneration) {
                 ClassJoinCodeGeneration(email: $email, password: $password, Name: $Name, coursename: $courseName)
@@ -71,16 +88,21 @@ struct CreateClassPageTitle: View {
 }
 
 struct CreateClassButton: View {
+    @EnvironmentObject var viewModel: AuthViewModel
     @Binding var navigateToCodeGeneration: Bool
     @Binding var courseName: String
     @Binding var noCourseNameAlert: Bool
+    @Binding var email: String
+    @Binding var alertMessage: String
+    @Binding var alertTitle: String
     
     var body: some View {
         Button {
             if courseName.isEmpty {
                 noCourseNameAlert = true
+                alertMessage = "Please enter a course name"
             } else {
-                navigateToCodeGeneration = true
+                checkIfInstructorcanbemade()
             }
         } label: {
             Text("Create Class")
@@ -91,6 +113,25 @@ struct CreateClassButton: View {
         .buttonStyle(.borderedProminent)
         .tint(.green)
         .controlSize(.large)
+    }
+    
+    func checkIfInstructorcanbemade() {
+        Task {
+            do {
+                let emaildoesNotexist = try await viewModel.canCreateInstructor(withEmail: email)
+                if !emaildoesNotexist {
+                    noCourseNameAlert = true
+                    alertTitle = "Incorrect."
+                    alertMessage = "Account with email already exists."
+                } else {
+                    navigateToCodeGeneration = true
+                }
+            } catch {
+                noCourseNameAlert = true
+                alertMessage = "Account with email already exists"
+            }
+            
+        }
     }
 }
 

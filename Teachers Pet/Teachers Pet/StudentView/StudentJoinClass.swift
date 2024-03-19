@@ -16,6 +16,12 @@ struct StudentJoinClass: View {
     @State var navigatetoStudentDashboard = false
     @State var showScanner = false
     @State var isLoading = false
+    @State var showAlert = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
+    @State var joinCodeisvalid = false
+    @State var navigatetoStudentSignIn = false
+    
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -46,7 +52,7 @@ struct StudentJoinClass: View {
                         .padding()
                 } else {
                     Button {
-                        createStudentAccount()
+                        checkIfJoinCodeIsValidAndCreateAccount()
                     } label: {
                         Text("Join Class")
                             .fontWeight(.semibold)
@@ -64,7 +70,24 @@ struct StudentJoinClass: View {
             .background(appBackgroundColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
-            .navigationBarBackButtonHidden()
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text(alertTitle),
+                    message: Text(alertMessage),
+                    primaryButton:  .default(Text("Sign In"), action: {
+                        navigatetoStudentSignIn = true
+                        //SignIn(isStudent: .constant(true), isInstructor: .constant(false))
+                    }),
+                    secondaryButton: .default(Text("OK"))
+                )
+            }
+            
+            
+            
+            .navigationDestination(isPresented: $navigatetoStudentSignIn) {
+                SignIn(isStudent: .constant(true), isInstructor: .constant(false))
+            }
+            
             .navigationDestination(isPresented: $navigatetoStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
@@ -94,16 +117,26 @@ struct StudentJoinClass: View {
     }
     #endif
     
-    func createStudentAccount() {
+    func checkIfJoinCodeIsValidAndCreateAccount() {
         isLoading = true
         Task {
             do {
+                let joinCodedoesnotexist = try await viewModel.canjoinClass(joinCode: joinCode)
+                if joinCodedoesnotexist {
+                    showAlert = true
+                    alertTitle = "Incorrect."
+                    alertMessage = "Invalid join code."
+                    isLoading = false
+                    return
+                }
+                
                 try await viewModel.createStudent(withEmail: email, password: password, fullname: name, coursename: "", joincode: joinCode)
                 navigatetoStudentDashboard = true
             } catch {
-                print("Error signing in")
+                showAlert = true
+                alertTitle = "Existing Account Detected."
+                alertMessage = "Please sign into your account"
             }
-            
             isLoading = false
         }
     }

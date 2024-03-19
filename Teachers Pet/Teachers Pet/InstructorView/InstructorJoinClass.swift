@@ -21,6 +21,8 @@ struct InstructorJoinClass: View {
     @State var navigateToDashBoard = false
     @State var showScanner = false
     @State var isLoading = false
+    @State var alertMessage = ""
+    @State var showAlert = false
     
     @EnvironmentObject var viewModel: AuthViewModel
        
@@ -69,6 +71,9 @@ struct InstructorJoinClass: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
+            .alert(alertMessage, isPresented: $showAlert) {
+                Button("OK") { }
+            }
             .navigationDestination(isPresented: $navigateToDashBoard) {
                 InstructorDashboard(email: $email, joinCode: $joinCode)
             }
@@ -100,6 +105,14 @@ struct InstructorJoinClass: View {
         isLoading = true
         Task {
             do {
+                let joinCodedoesnotexist = try await viewModel.canjoinClass(joinCode: joinCode)
+                
+                if joinCodedoesnotexist {
+                    showAlert = true
+                    alertMessage = "Invalid join code."
+                    isLoading = false
+                    return
+                }
                 try await viewModel.createTA(withEmail: email, password: password, fullname: name, joincode: joinCode)
                 navigateToDashBoard = true
             } catch {

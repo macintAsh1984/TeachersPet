@@ -72,21 +72,12 @@ struct InstructorDashboard: View {
                         // Action to perform when the button is tapped
                         print("Button tapped!")
                     }) {
-                        //                        Image(systemName: "calender")
-                        //                            .foregroundColor(.orange)
-                        //                            .font(.title)
-                        //                            .padding(5)
                         Image(systemName: "calendar")
                             .resizable()
                             .frame(width: 25, height: 25)
                             .foregroundColor(.orange)
                     }
-                    //                    DatePicker(
-                    //                            "Start Date",
-                    //                            selection: $date,
-                    //                            displayedComponents: [.date]
-                    //                        )
-                    //                        .datePickerStyle(.graphical)
+                 
                 }
                 .padding(5)
                 .padding(.bottom)
@@ -172,7 +163,6 @@ struct InstructorDashboard: View {
             }
             .padding()
             .navigationBarBackButtonHidden()
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
             .navigationDestination (isPresented: $navigateToWelcomeScreen) {
@@ -201,11 +191,4 @@ struct InstructorDashboard: View {
     }
 }
 
-//#Preview {
-//    InstructorDashboard()
-//}
 
-
-//#Preview {
-//    InstructorDashboard(email: .constant(""), password: .constant(""))
-//}

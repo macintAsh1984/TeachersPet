@@ -19,10 +19,9 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var positionInLine: Int = 0
-    @Published var coursename: String = ""
-    @Published var joincode: String = ""
-    @Published var allstudentsinOH: [(uid: String, fullname: String)] = []
-    @Published var totellstudentstheyhavebeenremoved = false
+    @Published var courseName: String = ""
+    @Published var joinCode: String = ""
+    @Published var allStudentsinoh: [(uid: String, fullname: String)] = []
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -156,7 +155,7 @@ class AuthViewModel: ObservableObject {
                     let data = teacherDocument.data()
                     if let coursenameTemp = data["coursename"] as? String {
                         // If coursename is not nil, print its value
-                        self.coursename = coursenameTemp
+                        self.courseName = coursenameTemp
                     } else {
                         // If coursename is nil or not a String, print a message or handle the case accordingly
                         print("coursename is nil or not a String")
@@ -174,15 +173,12 @@ class AuthViewModel: ObservableObject {
             do {
                 // Query the users collection to find all teacher documents
                 let teacherQuerySnapshot = try await db.collection("users").getDocuments()
-                
                 // Iterate through the teacher documents
                 for teacherDocument in teacherQuerySnapshot.documents {
                     // Get the reference to the student document within the teacher's TA subcollection
                     let TADocRef = teacherDocument.reference.collection("TAs").document(uid)
-                    
                     // Fetch the TA document
                     let TADocumentSnapshot = try await TADocRef.getDocument()
-                    
                     // Check if the TA document exists and matches the provided UID
                     if let studentData = TADocumentSnapshot.data(), TADocumentSnapshot.exists {
                         // This teacher document contains the student with the provided UID
@@ -204,10 +200,49 @@ class AuthViewModel: ObservableObject {
             try await db.collection("users").document(user.id).setData(encodedUser) //upload data to firestore
             await fetchUser()
         } catch {
-            print("Failed to create user \(error.localizedDescription)")
+            throw error
+            
         }
     }
     
+    func canCreateInstructor(withEmail email: String) async throws -> Bool {
+        do {
+            // Check if the email is already in use
+            let emailExists = try await db.collection("users").whereField("email", isEqualTo: email).getDocuments()
+            
+            if !emailExists.isEmpty {
+                //If email does exist return false
+                return false
+            }
+            //If the email does not exist return true
+            return true
+        } catch {
+            // If an error occurs, return false (to be safe)
+            return false
+        }
+    }
+    
+    
+    
+    
+    func canjoinClass(joinCode: String) async throws -> Bool {
+        do {
+            // Check if the email is already in use
+            let joinCodeexists = try await db.collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
+            if !joinCodeexists.isEmpty {
+                //If email does exist return false
+                return false
+            }
+            //If the email does not exist return true
+            return true
+        } catch {
+            // If an error occurs, return false (to be safe)
+            return false
+        }
+    }
+    
+    
+
     func createStudent(withEmail email: String, password: String, fullname: String, coursename: String, joincode: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
@@ -218,6 +253,7 @@ class AuthViewModel: ObservableObject {
             
             guard let teacherDocument = teacherQuerySnapshot.documents.first else {
                 print("Teacher with joincode \(joincode) not found")
+                //throw NSError(domain: "EROR", code: 101)
                 return
             }
             
@@ -230,7 +266,7 @@ class AuthViewModel: ObservableObject {
             await fetchTeacherDocumentsForStudent()
             
         } catch {
-            print("Failed to create student user: \(error.localizedDescription)")
+            throw error
         }
     }
     
@@ -290,8 +326,6 @@ class AuthViewModel: ObservableObject {
             let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours")
             
             let officehourstudents = try await officehoursCollection.whereField("id", isEqualTo: currentUser).getDocuments()
-//            print("Current User ID: \(currentUser)")
-//            print("Office Hours Student: \(officehourstudents)")
             
             if officehourstudents.isEmpty {
                 //Get all of the students in the instructor's course.
@@ -437,12 +471,13 @@ class AuthViewModel: ObservableObject {
        }
    }
     
+    
+    
     func addListnerToLine(joinCode: String) async throws {
         guard let currentUser = self.userSession?.uid else {
             print("user does not exist")
             return
         }
-        
         do {
             // Retrieve the instructor document with the same join code.
             let professorQuerySnapshot = try await db.collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
@@ -466,7 +501,7 @@ class AuthViewModel: ObservableObject {
                 }
                 
                 if let querySnapshot = querySnapshot {
-                    //For every document that changed, if the document was modified, that means the student line psotions were updated.
+                    
                     querySnapshot.documentChanges.forEach { diff in
                         if diff.type == .modified {
                             var student = diff.document.data()
@@ -475,22 +510,6 @@ class AuthViewModel: ObservableObject {
                         
                     }
                 }
-                
-//                if let querySnapshot = querySnapshot {
-//                    for document in querySnapshot.documents {
-//                        let studentData = document.data()
-//                        
-//                        
-//                        if let studentUID = studentData["uid"] as? String, studentUID == currentUser {
-//                            self.totellstudentstheyhavebeenremoved = true
-//                            break
-//                        }
-//                            
-//                        
-//                    }
-//                }
-                
-                
             }
             
         }
@@ -529,7 +548,7 @@ class AuthViewModel: ObservableObject {
                 }
             }
             // Update the local array with the new data
-            self.allstudentsinOH = studentsList
+            self.allStudentsinoh = studentsList
            
         }
     }
@@ -537,12 +556,8 @@ class AuthViewModel: ObservableObject {
     
     
     func removeStudentFromLineInstructor(joinCode: String, UID: String) async throws {
-         
          var currentLinePosition = 0;
 
-        
-         
-       
        do {
            // Retrieve the instructor document with the same join code.
            let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
@@ -606,13 +621,10 @@ class AuthViewModel: ObservableObject {
     
     
     
-    func endOH(joinCode: String) async throws {
+    func endOh(joinCode: String) async throws {
          
          var currentLinePosition = 0;
 
-        
-         
-       
        do {
            // Retrieve the instructor document with the same join code.
            let professorQuerySnapshot = try await Firestore.firestore().collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
@@ -672,9 +684,5 @@ class AuthViewModel: ObservableObject {
            print("error: \(error)")
        }
    }
-
-    
-    
-    
 }//end of class
 

@@ -50,8 +50,6 @@ struct OHLineView: View {
             }
             #if os(iOS)
             .onChange(of: viewModel.positionInLine) { newPosition in
-                //leaveLineAlert = viewModel.totellstudentstheyhavebeenremoved
-                //print(viewModel.totellstudentstheyhavebeenremoved)
                 let state = UIApplication.shared.applicationState
                 switch state {
                 case .active, .inactive, .background:

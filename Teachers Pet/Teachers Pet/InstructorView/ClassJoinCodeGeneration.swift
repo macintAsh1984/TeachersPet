@@ -15,6 +15,8 @@ struct ClassJoinCodeGeneration: View {
     @Binding var Name: String
     @Binding var coursename: String
     @State var joinCode: String = String()
+    @State var showAlert = true
+    @State var alertMessage = ""
     
     //Navigation & QR Code Generation State Variables
     @State var navigateToDashboard = false
@@ -35,6 +37,9 @@ struct ClassJoinCodeGeneration: View {
             .padding()
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
+//            .alert(alertMessage, isPresented: $showAlert) {
+//                Button("OK") { }
+//            }
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
                 InstructorDashboard(email: $email, joinCode: $joinCode)

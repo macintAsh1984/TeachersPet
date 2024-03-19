@@ -5,20 +5,18 @@ struct OHLineManagement: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @State var students: [String] = [] // Use @State to manage the list of students
     @Binding var joinCode:String
-    @State var counter = "1"
-    @State var counter1 = 1
     @State var showingEndOHAlert = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 List {
-                    if viewModel.allstudentsinOH.isEmpty {
+                    if viewModel.allStudentsinoh.isEmpty {
                         Text("No one in queue")
                             .foregroundStyle(.gray)
                             .padding()
                     } else {
-                        ForEach(viewModel.allstudentsinOH, id: \.self.fullname) { student in
+                        ForEach(viewModel.allStudentsinoh, id: \.self.fullname) { student in
                             StudentEntry(studentName: student.fullname, joinCode: $joinCode)
                         }
                             
@@ -26,12 +24,12 @@ struct OHLineManagement: View {
                                     Task {
                                         do {
                                             for index in indexSet {
-                                                let student = viewModel.allstudentsinOH[index]
+                                                let student = viewModel.allStudentsinoh[index]
                                                 let uid = student.uid
                                             
                                                 try await viewModel.removeStudentFromLineInstructor(joinCode: joinCode, UID: uid)
                                             }
-                                            viewModel.allstudentsinOH.remove(atOffsets: indexSet)
+                                            viewModel.allStudentsinoh.remove(atOffsets: indexSet)
                                             try await viewModel.setupStudentsListListener()
                                         } catch {
                                             print("Error removing student: \(error)")
@@ -80,7 +78,7 @@ struct OHLineManagement: View {
                     Alert(title: Text("End Office Hours?"), message: Text("Are you sure?"), primaryButton: .destructive(Text("End")) {
                         Task{
                             do {
-                                try await viewModel.endOH(joinCode: joinCode)
+                                try await viewModel.endOh(joinCode: joinCode)
                             } catch {
                                 print("Error")
                             }
