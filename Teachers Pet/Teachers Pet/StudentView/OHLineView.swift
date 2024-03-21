@@ -140,7 +140,7 @@ struct LeaveOfficeHoursButton: View {
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
-        .tint(.orange)
+        .tint(.green)
         .controlSize(.large)
 
     }
