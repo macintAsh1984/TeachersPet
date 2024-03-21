@@ -1,20 +1,20 @@
 # Teacher's Pet
 
-# About Teacher’s Pet
----
-
-Teacher's Pet is a multi-platorm app aimed at streamlining the office hours process for students and instructors in an effective, efficient manner. We were inspired by our own experiences in office hours as students, forgetting our places in line, being in office hours with a packed house and never receiving help.
-
-Don't believe us? Here are some students crowding around our professor to ask him questions:
-![IMG_4535-2](https://github.com/macintAsh1984/TeachersPet/assets/84110959/a228ca2a-da37-4a9e-8a7a-fc7d6fea5c86)
-
-
 **Created By:** \
 Ashley Valdez (macintAsh1984) \
 Roshini Pothapragada (rpothapr) \
 Sai Chamarty (SaiChamarty) \
 Sukhpreet Aulakh (Sukhpreet0927) \
 Toniya Patil (tbpatil)
+
+# About Teacher’s Pet
+---
+
+Teacher's Pet is a multi-platorm app aimed at streamlining the office hours process for students and instructors in an effective, efficient manner. We were inspired by our own experiences in office hours as students, forgetting our places in line, being in office hours with a packed house and never receiving help.
+
+Don't believe us? Here are some students crowding around our professor to ask him questions:
+
+![IMG_4535-2](https://github.com/macintAsh1984/TeachersPet/assets/84110959/a228ca2a-da37-4a9e-8a7a-fc7d6fea5c86)
 
 # Technical Stack
 ---
