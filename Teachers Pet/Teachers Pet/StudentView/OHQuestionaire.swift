@@ -82,8 +82,7 @@ struct OHQuestionaire: View {
                     ProgressView() // Show loading indicator
                         .progressViewStyle(CircularProgressViewStyle())
                         .padding()
-                }
-                else{
+                } else {
                     Button(action: {
                         // Handle the submission here, including the selected option or the text from the TextField
                         submitSurvey()
