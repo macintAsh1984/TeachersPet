@@ -200,7 +200,3 @@ struct StudentDashboard: View {
         }
     }
 }
-
-#Preview {
-    StudentDashboard(email: .constant(""), joinCode: .constant(""))
-}

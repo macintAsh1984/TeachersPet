@@ -190,5 +190,3 @@ struct InstructorDashboard: View {
         }
     }
 }
-
-

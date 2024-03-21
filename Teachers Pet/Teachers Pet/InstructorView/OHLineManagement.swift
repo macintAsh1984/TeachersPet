@@ -19,7 +19,6 @@ struct OHLineManagement: View {
                         ForEach(viewModel.allStudentsinoh, id: \.self.fullname) { student in
                             StudentEntry(studentName: student.fullname, joinCode: $joinCode)
                         }
-                            
                                 .onDelete { indexSet in
                                     Task {
                                         do {
@@ -36,7 +35,7 @@ struct OHLineManagement: View {
                                         }
                                     }
                                 }
-     
+    
                         }
                     }
                     
@@ -46,8 +45,6 @@ struct OHLineManagement: View {
                     Task {
                         do {
                             try await viewModel.setupStudentsListListener()
-                    
-                            
                         } catch {
                             print("Error: \(error)")
                         }
@@ -57,14 +54,10 @@ struct OHLineManagement: View {
                 .navigationTitle("My Office Hours")
                 .navigationBarItems(trailing: EditButton())
                 #endif
-                
-                
                 Spacer()
+            
                 Button {
                     showingEndOHAlert = true
-                   
-                
-                    
                 } label: {
                     Text("End Office Hours")
                         .fontWeight(.semibold)
@@ -76,14 +69,13 @@ struct OHLineManagement: View {
                 .padding()
                 .alert(isPresented: $showingEndOHAlert) {
                     Alert(title: Text("End Office Hours?"), message: Text("Are you sure?"), primaryButton: .destructive(Text("End")) {
-                        Task{
+                        Task {
                             do {
                                 try await viewModel.endOh(joinCode: joinCode)
                             } catch {
                                 print("Error")
                             }
                         }
-                        
                     }, secondaryButton: .cancel())
                     
                 }
@@ -99,7 +91,6 @@ struct StudentEntry: View {
     let studentName: String
     @Binding var joinCode: String
     var body: some View {
-        
             HStack {
                 Image(systemName: "graduationcap")
                     .resizable()
@@ -112,10 +103,6 @@ struct StudentEntry: View {
                     .lineLimit(1)
                 Spacer()
             }
-            
-            
-        
-        
        
     }
 }

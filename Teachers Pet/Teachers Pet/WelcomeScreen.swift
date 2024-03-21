@@ -73,7 +73,3 @@ struct AccountSelectionButton: View {
         .controlSize(.large)
     }
 }
-
-#Preview {
-    WelcomeScreen()
-}

@@ -152,8 +152,3 @@ struct JoinClassPageButton: View {
         }
     }
 }
-
-
-//#Preview {
-//    CreateClass()
-//}

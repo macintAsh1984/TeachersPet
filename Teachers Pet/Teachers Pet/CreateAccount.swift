@@ -28,8 +28,6 @@ struct CreateAccount: View {
     @State var showAlert = false
     @State var emailpasswordalert = false
     @State var alertMessage = ""
-    //let alertMessage = "Error, please fill in all the information"
-    //let alertMessageforemailpassword = "Error, incorrect email/password format"
     
     @EnvironmentObject var viewModel: AuthViewModel
     

@@ -190,8 +190,3 @@ struct OHQuestionaire: View {
     }
 }
 
-
-
-//#Preview {
-//    OHQuestionaire()
-//}

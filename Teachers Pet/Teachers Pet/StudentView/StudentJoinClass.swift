@@ -76,7 +76,6 @@ struct StudentJoinClass: View {
                     message: Text(alertMessage),
                     primaryButton:  .default(Text("Sign In"), action: {
                         navigatetoStudentSignIn = true
-                        //SignIn(isStudent: .constant(true), isInstructor: .constant(false))
                     }),
                     secondaryButton: .default(Text("OK"))
                 )
