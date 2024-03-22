@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct InstructorDashboard: View {
-    @Environment(\.managedObjectContext) var managedObjContext
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
     @State var navigateToWelcomeScreen = false
     @State private var date = Date()
-    @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
     @EnvironmentObject var viewModel: AuthViewModel
@@ -24,11 +22,11 @@ struct InstructorDashboard: View {
     @State var signOut = false
     @State var coursename = ""
     
+    //This object is temporary and will be removed after the implementation of class settings.
+    let officeHour1 = OfficeHoursViewModel(className: "", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "")
+    
     var body: some View {
         NavigationStack{
-            let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
-            
-            let currentOH1 = OfficeHoursViewModel(className: "Acting Class", month: "March", day: 13, startHour: 6, endHour: 7, buildingName: "Mondavi Center", roomNumber: 36, profName: "Jim Carry")
             
             VStack {
                 HStack {
@@ -36,8 +34,7 @@ struct InstructorDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses = [officeHour1]
-                            currentOfficeHours = [currentOH1]
+                            currentOfficeHours = [officeHour1]
                             Task {
                                 await viewModel.getCourseNameForInstructors()
                             }
@@ -49,30 +46,17 @@ struct InstructorDashboard: View {
                 Spacer()
                     .frame(height: 20)
                 HStack {
-                    Text("Upcoming Office Hours")
-                        .font(.custom("sideheading", size: 23))
-                    Spacer()
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.green)
-                }
-                .padding(5)
-                .padding(.bottom)
-                
-                ForEach(upcomingClasses.indices, id: \.self){ index in
-                    UpcomingClasses(showClassInfo: $showClassInfo, upcomingClasses: $upcomingClasses, index: Binding<Int>(get: { index},set: { newValue in}))
-                }
-                
-                HStack {
                     Text("Current Office Hours")
                         .font(.custom("sideheading", size: 23))
                     Spacer()
                 }
-                .padding()
+                .padding(5)
+                .padding(.bottom)
+                
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
                     CurrentOfficeHours(showClassInfo: $showClassInfo, currentOfficeHours: $currentOfficeHours, index: Binding<Int>(get: { index},set: { newValue in}))
                 }
+                
                 Spacer()
             }
             .padding()
@@ -111,8 +95,4 @@ struct InstructorDashboard: View {
             coursename = viewModel.courseName
         }
     }
-}
-
-#Preview {
-    InstructorDashboard(email: .constant(""), joinCode: .constant(""))
 }

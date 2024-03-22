@@ -51,7 +51,6 @@ struct CreateClass: View {
                     message: Text(alertMessage),
                     primaryButton:  .default(Text("Sign In"), action: {
                         navigatetoInstructorSignIn = true
-                        //SignIn(isStudent: .constant(false), isInstructor: .constant(true))
                     }),
                     secondaryButton: .default(Text("OK"))
                 )
@@ -61,7 +60,6 @@ struct CreateClass: View {
                 SignIn(isStudent: .constant(false), isInstructor: .constant(true))
             }
             
-
             .navigationDestination(isPresented: $navigateToCodeGeneration) {
                 ClassJoinCodeGeneration(email: $email, password: $password, Name: $Name, coursename: $courseName)
             }

@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct StudentDashboard: View {
-    @Environment(\.managedObjectContext) var managedObjContext
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
     @State var navigateToWelcomeScreen = false
     @State private var date = Date()
-    @State var upcomingClasses: [OfficeHoursViewModel] = []
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
     @EnvironmentObject var viewModel: AuthViewModel
@@ -24,10 +22,8 @@ struct StudentDashboard: View {
     @State var signOut = false
     @State var coursename = ""
     
-    //the following objects are temporary and will be removed after implementation of class settings.
-    let officeHour1 = OfficeHoursViewModel(className: "ECS 154A", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "Farrens")
-    
-    let currentOH1 = OfficeHoursViewModel(className: "Acting Class", month: "March", day: 13, startHour: 6, endHour: 7, buildingName: "Mondavi Center", roomNumber: 36, profName: "Jim Carry")
+    //This object is temporary and will be removed after the implementation of class settings.
+    let officeHour1 = OfficeHoursViewModel(className: "", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "")
     
     var body: some View {
         NavigationStack{
@@ -37,8 +33,7 @@ struct StudentDashboard: View {
                         .font(.largeTitle)
                         .bold()
                         .onAppear{
-                            upcomingClasses = [officeHour1]
-                            currentOfficeHours = [currentOH1]
+                            currentOfficeHours = [officeHour1]
                             Task {
                                 await viewModel.getCourseName()
                             }
@@ -54,35 +49,18 @@ struct StudentDashboard: View {
                     .frame(height: 20)
                 
                 HStack {
-                    Text("Upcoming Office Hours")
-                        .font(.custom("sideheading", size: 23))
-                    Spacer()
-                    
-                    //calender button to be implemented
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(.green)
-                }
-                .padding(5)
-                .padding(.bottom)
-                //upcoming class button(s)
-                
-                ForEach(upcomingClasses.indices, id: \.self){ index in
-                    UpcomingClasses(showClassInfo: $showClassInfo, upcomingClasses: $upcomingClasses, index: Binding<Int>(get: { index},set: { newValue in}))
-                }
-                
-                HStack {
                     Text("Current Office Hours")
                         .font(.custom("sideheading", size: 23))
                     Spacer()
                 }
-                .padding()
-                //current office hours buttons
+                .padding(5)
+                .padding(.bottom)
+                //Current class office hours button(s)
                 
                 ForEach(currentOfficeHours.indices, id: \.self){ index in
                     CurrentOfficeHours(showClassInfo: $showClassInfo, currentOfficeHours: $currentOfficeHours, index: Binding<Int>(get: { index},set: { newValue in}))
                 }
+
                 Spacer()
             }
             .padding()
@@ -124,7 +102,7 @@ struct StudentDashboard: View {
 }
 
 
-//account button
+//Account button
 struct AccountButton: View {
     @Binding var signOut: Bool
     var body: some View {
@@ -148,11 +126,11 @@ struct AccountButton: View {
     }
 }
 
-//Upcoming classes for users to navigate to their respective classes
-struct UpcomingClasses: View {
+//Upcoming classes for users to navigate to their respective classes.
+struct CurrentOfficeHours: View {
     
     @Binding var showClassInfo: Bool
-    @Binding var upcomingClasses: [OfficeHoursViewModel]
+    @Binding var currentOfficeHours: [OfficeHoursViewModel]
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
     @EnvironmentObject var viewModel: AuthViewModel
     @Binding var index: Int
@@ -183,10 +161,10 @@ struct UpcomingClasses: View {
                         
                     }
                     
-                    Text("\(upcomingClasses[index].month) \(upcomingClasses[index].day), \(upcomingClasses[index].startHour) - \(upcomingClasses[index].endHour)")
+                    Text("\(currentOfficeHours[index].month) \(currentOfficeHours[index].day), \(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour)")
                         .foregroundStyle(.white)
                         .font(.subheadline)
-                    Text("\(upcomingClasses[index].buildingName), \(upcomingClasses[index].roomNumber)")
+                    Text("\(currentOfficeHours[index].buildingName), \(currentOfficeHours[index].roomNumber)")
                         .foregroundStyle(.white)
                         .font(.subheadline)
                 }
@@ -195,48 +173,4 @@ struct UpcomingClasses: View {
         })
         .padding(.bottom)
     }
-}
-
-//Current Office Hours buttons for users to navigate to their respctive classes
-struct CurrentOfficeHours: View {
-    @Binding var showClassInfo: Bool
-    @Binding var currentOfficeHours: [OfficeHoursViewModel]
-    @Binding var index: Int
-    var body: some View {
-        Button(action: {
-            showClassInfo = true
-        }, label: {
-            ZStack(alignment: .leading){
-                RoundedRectangle(cornerRadius: 20)
-                    .frame(height: 105)
-                    .foregroundColor(.white)
-                VStack {
-                    HStack {
-                        Text("\(currentOfficeHours[index].className)")
-                            .foregroundStyle(.black)
-                            .bold()
-                            .padding(.leading)
-                        Spacer()
-                        Text("Prof. \(currentOfficeHours[index].profName)")
-                            .foregroundStyle(.black)
-                            .padding(.trailing)
-                    }
-                    HStack {
-                        Text("Wednesday, March \(currentOfficeHours[index].day)")
-                            .padding(.leading)
-                            .foregroundStyle(.black)
-                        Spacer()
-                        Text("\(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour) PM")
-                            .padding(.trailing)
-                            .foregroundStyle(.black)
-                    }
-                }
-            }
-        })
-        .padding(.bottom)
-    }
-}
-
-#Preview {
-    StudentDashboard(email: .constant(""), joinCode: .constant(""))
 }

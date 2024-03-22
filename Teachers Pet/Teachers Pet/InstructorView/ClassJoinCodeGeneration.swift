@@ -37,9 +37,6 @@ struct ClassJoinCodeGeneration: View {
             .padding()
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
-//            .alert(alertMessage, isPresented: $showAlert) {
-//                Button("OK") { }
-//            }
             .navigationBarBackButtonHidden()
             .navigationDestination(isPresented: $navigateToDashboard) {
                 InstructorDashboard(email: $email, joinCode: $joinCode)
@@ -48,7 +45,7 @@ struct ClassJoinCodeGeneration: View {
                 let generatedJoinCode = generateJoinCode()
                 joinCode = generatedJoinCode
                 Task {
-                    try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode) //only first name for now fix this to have both
+                    try await viewModel.createUser(withEmail:email, password: password, fullname: Name, coursename: coursename, joincode: joinCode)
                 }
                 generateQRCode()
             }
@@ -137,7 +134,7 @@ struct GoToDashboardButton: View {
                 .frame(maxWidth: .infinity)
         }
         .buttonStyle(.borderedProminent)
-        .tint(.orange)
+        .tint(.green)
         .controlSize(.large)
     }
 }

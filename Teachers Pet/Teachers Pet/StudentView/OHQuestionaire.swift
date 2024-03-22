@@ -2,7 +2,7 @@
 //  OHQuestionaire.swift
 //  Teachers Pet
 //
-//  Created by Ashley Valdez on 2/29/24.
+//  Created by Roshini Pothapragada on 2/29/24.
 //
 
 #if canImport(ActivityKit)
@@ -17,6 +17,7 @@ struct OHQuestionaire: View {
     @State var navigateToStudentDashboard = false
     @State var studentAlreadyInLine = false
     @State var isLoading = false
+    @State var noOptionSelected = false
     
     @Binding var email: String
     @Binding var joinCode: String
@@ -43,9 +44,10 @@ struct OHQuestionaire: View {
                 
                 ForEach(0..<4, id: \.self) { index in
                     Button(action: {
-                        // Toggle selection
+                        //Toggle Selection
                         if self.selectedOption == index {
-                            self.selectedOption = nil // Deselect if already selected
+                            //Deselect if already selected.
+                            self.selectedOption = nil
                         } else {
                             self.selectedOption = index
                         }
@@ -68,8 +70,8 @@ struct OHQuestionaire: View {
                 Spacer()
                     .frame(height: 20)
                 
-                // Textfield for adding additional details.
-                TextField("Add additional details here", text: $otherOptionText)
+                //Textfield for adding additional details.
+                TextField("If other, please specify", text: $otherOptionText)
                     .frame(width: 325, height: 20)
                     .padding(.all)
                     .background(.white)
@@ -84,39 +86,43 @@ struct OHQuestionaire: View {
                         .padding()
                 } else {
                     Button(action: {
-                        // Handle the submission here, including the selected option or the text from the TextField
-                        submitSurvey()
-                        
-                        //Add the student to the line before calculating their place in line.
-                        let addStudentTask = Task {
-                            do {
-                                studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
-                            } catch {
-                                print("Couldn't add you to the line :(.")
-                            }
-                        }
-                        
-                        isLoading = true // Show Loading
-                        Task {
-                            //Wait for student to be added to the line before running this task.
-                            _ = await addStudentTask.result
-                            if studentAlreadyInLine {
-                                navigateToOfficeHoursLine = false
-                            } else {
+                        if selectedOption == nil{
+                            noOptionSelected = true
+                        } else {
+                            //Handle the submission here, including the selected option or the text from the TextField.
+                            submitSurvey()
+                            
+                            //Add the student to the line before calculating their place in line.
+                            let addStudentTask = Task {
                                 do {
-                                    try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
-                                    
-                                    #if os(iOS)
-                                    beginLiveActivity()
-                                    #endif
-                                    
-                                    navigateToOfficeHoursLine = true
+                                    studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
                                 } catch {
-                                    print("Couldn't calculate position")
+                                    print("Couldn't add student to the line.")
                                 }
                             }
-                            isLoading = false
-                        } //end of Task
+                            
+                            isLoading = true // Show Loading
+                            Task {
+                                //Wait for student to be added to the line before running this task.
+                                _ = await addStudentTask.result
+                                if studentAlreadyInLine {
+                                    navigateToOfficeHoursLine = false
+                                } else {
+                                    do {
+                                        try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                                        
+                                        #if os(iOS)
+                                        beginLiveActivity()
+                                        #endif
+                                        
+                                        navigateToOfficeHoursLine = true
+                                    } catch {
+                                        print("Couldn't calculate position.")
+                                    }
+                                }
+                                isLoading = false
+                            } //End of Task
+                        }
                         
                     }) {
                         Text("Join Queue")
@@ -126,7 +132,7 @@ struct OHQuestionaire: View {
                             .background(.green)
                             .cornerRadius(10)
                     }
-                }//end of else
+                }//End of else
                 
             }
             .onAppear {
@@ -164,6 +170,14 @@ struct OHQuestionaire: View {
                             navigateToStudentDashboard = true
                         }
                     }
+                )
+                
+            }
+            .alert(isPresented: $noOptionSelected) {
+                Alert(
+                    title: Text("No Option Selected"),
+                    message: Text("Please select an Option."),
+                    dismissButton: .cancel(Text("OK"))
                 )
                 
             }
