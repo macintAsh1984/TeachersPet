@@ -19,6 +19,7 @@ struct OHLineView: View {
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
     @State var studentinqueuestill = false
+    @State var navigateToDashboard = false
     
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -45,11 +46,12 @@ struct OHLineView: View {
             .onAppear {
                 Task {
                     try await viewModel.addListnerToLine(joinCode: joinCode)
-                    
                 }
             }
             #if os(iOS)
             .onChange(of: viewModel.positionInLine) { newPosition in
+                //leaveLineAlert = viewModel.totellstudentstheyhavebeenremoved
+                //print(viewModel.totellstudentstheyhavebeenremoved)
                 let state = UIApplication.shared.applicationState
                 switch state {
                 case .active, .inactive, .background:
@@ -78,9 +80,16 @@ struct OHLineView: View {
                     
                 )
             }
-            
-            
+            .onChange(of: returnToStudentDashboard){ newValue in
+                navigateToDashboard = newValue
+            }
+            .onChange(of: viewModel.studentHasBeenRemoved){ newValue in
+                navigateToDashboard = newValue
+            }
             .navigationDestination(isPresented: $returnToStudentDashboard) {
+                StudentDashboard(email: $email, joinCode: $joinCode)
+            }
+            .navigationDestination(isPresented: $navigateToDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
         }

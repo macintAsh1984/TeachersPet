@@ -22,6 +22,7 @@ class AuthViewModel: ObservableObject {
     @Published var courseName: String = ""
     @Published var joinCode: String = ""
     @Published var allStudentsinoh: [(uid: String, fullname: String)] = []
+    @Published var studentHasBeenRemoved = false
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -482,7 +483,6 @@ class AuthViewModel: ObservableObject {
                if studentLinePosition > currentLinePosition {
                    try await student.reference.updateData(["linePosition" : (studentLinePosition - 1)])
                    self.positionInLine = studentLinePosition - 1
-                   return
                }
            }
            
@@ -494,10 +494,12 @@ class AuthViewModel: ObservableObject {
     
     
     func addListnerToLine(joinCode: String) async throws {
+            
         guard let currentUser = self.userSession?.uid else {
             print("user does not exist")
             return
         }
+        
         do {
             // Retrieve the instructor document with the same join code.
             let professorQuerySnapshot = try await db.collection("users").whereField("joincode", isEqualTo: joinCode).getDocuments()
@@ -513,25 +515,38 @@ class AuthViewModel: ObservableObject {
             let professorID = professorDocument.documentID
             let officehoursCollection = db.collection("users").document(professorID).collection("Office Hours").order(by: "linePosition")
             
-            officehoursCollection.addSnapshotListener(includeMetadataChanges: true) { querySnapshot, error in
+            officehoursCollection.addSnapshotListener(includeMetadataChanges: true) { [weak self] querySnapshot, error in
                 //Check if there are documents (aka "students") in the Office Hours collection.
                 guard let documents = querySnapshot?.documents else {
                     print("No students in Office Hours.")
                     return
                 }
                 
-                if let querySnapshot = querySnapshot {
-                    
-                    querySnapshot.documentChanges.forEach { diff in
-                        if diff.type == .modified {
-                            var student = diff.document.data()
-                            self.positionInLine = student["linePosition"] as? Int ?? 0
+                // Check if the student is in office hours
+                let isInOfficeHours = documents.contains { document in
+                    let studentData = document.data()
+                    if let id = studentData["id"] as? String, id == currentUser {
+                        return true
+                    }
+                    return false
+                }
+                
+                // Update the published variable based on whether the student is in office hours
+                self?.studentHasBeenRemoved = !isInOfficeHours
+                
+                if isInOfficeHours {
+                    // If student is in office hours, update positionInLine
+                    for document in documents {
+                        let studentData = document.data()
+                        if let id = studentData["id"] as? String, id == currentUser {
+                            self?.positionInLine = studentData["linePosition"] as? Int ?? 0
+                            break
                         }
-                        
                     }
                 }
             }
-            
+        } catch {
+            print("Error: \(error)")
         }
     }
     
