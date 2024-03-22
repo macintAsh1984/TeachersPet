@@ -5,49 +5,50 @@
 //  Created by Sai Ganesh Chamarty on 2/28/24.
 //
 
+// MARK: - StudentDashboard
 import SwiftUI
 
 struct StudentDashboard: View {
+    
+    //User Account Information Binding/State Variables
+    @Binding var email: String
+    @Binding var joinCode: String
+    
+    // State variables for the dashboard.
     @State var accessCode = String()
     @State private var navigateToDashBoard = false
     @State var navigateToWelcomeScreen = false
     @State private var date = Date()
     @State var currentOfficeHours: [OfficeHoursViewModel] = []
-    @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
-    @EnvironmentObject var viewModel: AuthViewModel
     @State var showClassInfo = false
-    
-    @Binding var email: String
-    @Binding var joinCode: String
     @State var signOut = false
     @State var coursename = ""
     
-    //This object is temporary and will be removed after the implementation of class settings.
+    @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    // This object is temporary and will be removed after the implementation of class settings.
     let officeHour1 = OfficeHoursViewModel(className: "", month: "February", day: 26, startHour: 9, endHour: 10, buildingName: "Teaching and Learning Complex", roomNumber: 2216, profName: "")
     
+    // MARK: - Body
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             VStack {
                 HStack {
                     Text("Your Dashboard")
                         .font(.largeTitle)
                         .bold()
-                        .onAppear{
+                        .onAppear {
                             currentOfficeHours = [officeHour1]
                             Task {
                                 await viewModel.getCourseName()
                             }
                         }
                     Spacer()
-                    
                     AccountButton(signOut: $signOut)
                 }
-                
                 .padding(2)
-                
-                Spacer()
-                    .frame(height: 20)
-                
+                Spacer().frame(height: 20)
                 HStack {
                     Text("Current Office Hours")
                         .font(.custom("sideheading", size: 23))
@@ -55,12 +56,11 @@ struct StudentDashboard: View {
                 }
                 .padding(5)
                 .padding(.bottom)
-                //Current class office hours button(s)
                 
-                ForEach(currentOfficeHours.indices, id: \.self){ index in
-                    CurrentOfficeHours(showClassInfo: $showClassInfo, currentOfficeHours: $currentOfficeHours, index: Binding<Int>(get: { index},set: { newValue in}))
+                // Current class office hours button(s)
+                ForEach(currentOfficeHours.indices, id: \.self) { index in
+                    CurrentOfficeHours(showClassInfo: $showClassInfo, currentOfficeHours: $currentOfficeHours, index: Binding<Int>(get: { index }, set: { newValue in }))
                 }
-
                 Spacer()
             }
             .padding()
@@ -68,10 +68,10 @@ struct StudentDashboard: View {
             .preferredColorScheme(.light)
             .navigationBarBackButtonHidden()
             .background(appBackgroundColor)
-            .navigationDestination (isPresented: $showClassInfo) {
+            .navigationDestination(isPresented: $showClassInfo) {
                 OHQuestionaire(email: $email, joinCode: $joinCode)
             }
-            .navigationDestination (isPresented: $navigateToWelcomeScreen) {
+            .navigationDestination(isPresented: $navigateToWelcomeScreen) {
                 WelcomeScreen()
             }
             .alert(isPresented: $signOut) {
@@ -81,32 +81,32 @@ struct StudentDashboard: View {
                     primaryButton: .destructive(Text("Sign Out")) {
                         viewModel.signout()
                         navigateToWelcomeScreen = true
-                        
                     },
                     secondaryButton: .cancel()
-                    
                 )
             }
             Spacer()
-            
         }
         .background(appBackgroundColor)
-
     }
     
+    
+    // MARK: - Function SetCourseName
+    // Function to set the course name.
     func setCourseName() {
-        Task{
+        Task {
             coursename = viewModel.courseName
         }
     }
 }
 
-
-//Account button
+// MARK: - AccountButton
+// Account button
 struct AccountButton: View {
     @Binding var signOut: Bool
+    
     var body: some View {
-        Menu() {
+        Menu {
             Button(role: .destructive) {
                 signOut = true
                 print("Button tapped!")
@@ -116,31 +116,30 @@ struct AccountButton: View {
                     .foregroundColor(.orange)
                     .padding(5)
             }
-            
         } label: {
             Image(systemName: "person.crop.circle")
                 .font(.title)
                 .foregroundColor(.green)
                 .padding(5)
-        } //end of menu options
+        } // End of menu options
     }
 }
 
-//Upcoming classes for users to navigate to their respective classes.
+
+// MARK: - CurrentOfficeHours
+// Upcoming classes for users to navigate to their respective classes.
 struct CurrentOfficeHours: View {
-    
     @Binding var showClassInfo: Bool
     @Binding var currentOfficeHours: [OfficeHoursViewModel]
     @EnvironmentObject var officeHoursViewModel: OfficeHoursViewModel
     @EnvironmentObject var viewModel: AuthViewModel
     @Binding var index: Int
-
+    
     var body: some View {
         Button(action: {
             showClassInfo = true
         }, label: {
-            
-            ZStack(alignment: .leading){
+            ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 20)
                     .frame(height: 110)
                     .foregroundColor(.clear)
@@ -148,19 +147,15 @@ struct CurrentOfficeHours: View {
                         LinearGradient(gradient: Gradient(colors: [.black, .green]), startPoint: .leading, endPoint: .trailing)
                     )
                     .cornerRadius(20)
-
-                VStack (alignment: .leading){
+                VStack(alignment: .leading) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15)
                             .frame(width: 120, height: 40)
                             .foregroundStyle(.green)
-                        
                         Text("\(viewModel.courseName)")
                             .foregroundStyle(.white)
                             .bold()
-                        
                     }
-                    
                     Text("\(currentOfficeHours[index].month) \(currentOfficeHours[index].day), \(currentOfficeHours[index].startHour) - \(currentOfficeHours[index].endHour)")
                         .foregroundStyle(.white)
                         .font(.subheadline)

@@ -1,11 +1,13 @@
 // Created by Toniya on 2/29/24
 
+// MARK: - StudentJoinClass
 import SwiftUI
 #if canImport(CodeScanner)
 import CodeScanner
 #endif
 
 struct StudentJoinClass: View {
+    
     //User Account Information Binding/State Variables
     @Binding var email: String
     @Binding var name: String
@@ -19,12 +21,12 @@ struct StudentJoinClass: View {
     @State var showAlert = false
     @State var alertTitle = ""
     @State var alertMessage = ""
-    @State var joinCodeisvalid = false
     @State var navigatetoStudentSignIn = false
     
     
     @EnvironmentObject var viewModel: AuthViewModel
-    
+  
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
@@ -65,7 +67,7 @@ struct StudentJoinClass: View {
                     .disabled(isLoading)
                 }
                 Spacer()
-            } // end of VStack
+            } // End of VStack
             .padding()
             .background(appBackgroundColor)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -80,8 +82,6 @@ struct StudentJoinClass: View {
                     secondaryButton: .default(Text("OK"))
                 )
             }
-            
-            
             
             .navigationDestination(isPresented: $navigatetoStudentSignIn) {
                 SignIn(isStudent: .constant(true), isInstructor: .constant(false))
@@ -98,9 +98,10 @@ struct StudentJoinClass: View {
             #endif
             Spacer()
         }
-    }// end of view
+    }// End of view
     
     
+    // MARK: - Handle Scanning
     // Handle Scanning
     #if os(iOS)
     func handleScan(result: Result<ScanResult, ScanError>) {
@@ -116,6 +117,9 @@ struct StudentJoinClass: View {
     }
     #endif
     
+    
+    // MARK: - Function
+    // Function to check if join code is valid and create account.
     func checkIfJoinCodeIsValidAndCreateAccount() {
         isLoading = true
         Task {
@@ -142,6 +146,9 @@ struct StudentJoinClass: View {
     
 }
 
+
+// MARK: - JoinCodeTextField
+// Text field for manual entry of join code.
 struct JoinCodeTextField: View {
     @Binding var joinCode: String
     
@@ -157,6 +164,9 @@ struct JoinCodeTextField: View {
     }
 }
 
+
+// MARK: - ScanQRCodeButton
+// Button to initiate QR code scanning.
 struct ScanQRCodeButton: View {
     @Binding var showScanner: Bool
     

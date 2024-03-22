@@ -5,12 +5,16 @@
 //  Created by Roshini Pothapragada on 2/29/24.
 //
 
+// MARK: - OHQuestionaire
 #if canImport(ActivityKit)
 import ActivityKit
 #endif
 import SwiftUI
 
 struct OHQuestionaire: View {
+    
+    // MARK: - State Variables
+    // State variables for the questionnaire.
     @State private var selectedOption: Int? = nil
     @State private var otherOptionText: String = ""
     @State var navigateToOfficeHoursLine = false
@@ -19,14 +23,19 @@ struct OHQuestionaire: View {
     @State var isLoading = false
     @State var noOptionSelected = false
     
+    // MARK: - Binding Variables
+    // Binding variables
     @Binding var email: String
     @Binding var joinCode: String
+    
     @EnvironmentObject var viewModel: AuthViewModel
     
     #if os(iOS)
     @State var activity: Activity<OfficeHoursAttribute>? = nil
     #endif
     
+    // MARK: - Options
+    // Options for the questionnaire
     var options = [
         "Need help getting started",
         "Stuck on a certain part",
@@ -34,24 +43,28 @@ struct OHQuestionaire: View {
         "Just a chat with professor"
     ]
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
+                
+                // MARK: Title
                 Text("Office Hours Survey")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .padding()
                 
+                // MARK: Options
                 ForEach(0..<4, id: \.self) { index in
                     Button(action: {
-                        //Toggle Selection
+                        // Toggle Selection
                         if self.selectedOption == index {
-                            //Deselect if already selected.
+                            // Deselect if already selected
                             self.selectedOption = nil
                         } else {
                             self.selectedOption = index
                         }
-                    }){
+                    }) {
                         HStack {
                             Text(options[index])
                                 .fontWeight(.medium)
@@ -67,32 +80,34 @@ struct OHQuestionaire: View {
                     }
                     .padding(.horizontal)
                 }
-                Spacer()
-                    .frame(height: 20)
+                Spacer().frame(height: 20)
                 
-                //Textfield for adding additional details.
+                // MARK: Additional Details
+                // TextField for adding additional details
                 TextField("If other, please specify", text: $otherOptionText)
                     .frame(width: 325, height: 20)
                     .padding(.all)
                     .background(.white)
                     .cornerRadius(10.0)
-                Spacer()
-                    .frame(height: 20)
+                Spacer().frame(height: 20)
                 
-                // Loading...
+                // MARK: Loading Indicator / Join Queue Button
+                // Loading indicator or Join Queue button
                 if isLoading {
-                    ProgressView() // Show loading indicator
+                    ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .padding()
                 } else {
                     Button(action: {
-                        if selectedOption == nil{
+                        
+                        if selectedOption == nil {
                             noOptionSelected = true
-                        } else {
-                            //Handle the submission here, including the selected option or the text from the TextField.
-                            submitSurvey()
+                        }
+                        
+                        else {
+                            // Handle the submission
                             
-                            //Add the student to the line before calculating their place in line.
+                            submitSurvey()
                             let addStudentTask = Task {
                                 do {
                                     studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
@@ -101,9 +116,9 @@ struct OHQuestionaire: View {
                                 }
                             }
                             
-                            isLoading = true // Show Loading
+                            isLoading = true // Show loading indicator
                             Task {
-                                //Wait for student to be added to the line before running this task.
+                                
                                 _ = await addStudentTask.result
                                 if studentAlreadyInLine {
                                     navigateToOfficeHoursLine = false
@@ -121,9 +136,8 @@ struct OHQuestionaire: View {
                                     }
                                 }
                                 isLoading = false
-                            } //End of Task
+                            }
                         }
-                        
                     }) {
                         Text("Join Queue")
                             .foregroundColor(.white)
@@ -132,8 +146,7 @@ struct OHQuestionaire: View {
                             .background(.green)
                             .cornerRadius(10)
                     }
-                }//End of else
-                
+                }
             }
             .onAppear {
                 if let currentUser = viewModel.currentUser {
@@ -171,7 +184,6 @@ struct OHQuestionaire: View {
                         }
                     }
                 )
-                
             }
             .alert(isPresented: $noOptionSelected) {
                 Alert(
@@ -184,14 +196,19 @@ struct OHQuestionaire: View {
         }
     }
     
-#if os(iOS)
+    // MARK: - Begin Live Activity
+    #if os(iOS)
+    // Begin the live activity for the office hours
     func beginLiveActivity() {
         let attributes = OfficeHoursAttribute(activityTitle: "\(String(describing: viewModel.currentUser?.coursename)) Office Hours")
         let activityState = OfficeHoursAttribute.LiveActivityStatus(linePosition: viewModel.positionInLine)
         activity = try? Activity<OfficeHoursAttribute>.request(attributes: attributes, content: .init(state: activityState, staleDate: nil))
     }
-#endif
+    #endif
     
+    
+    // MARK: - Submit Survey
+    // Function to submit the survey data
     func submitSurvey() {
         // Perform actions to submit the survey data
         // You can access the selectedOption and otherOptionText here
@@ -202,4 +219,3 @@ struct OHQuestionaire: View {
         }
     }
 }
-

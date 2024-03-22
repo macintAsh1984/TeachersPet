@@ -5,30 +5,31 @@
 //  Created by Roshini Pothapragada on 2/29/24.
 //
 
+// MARK: - OHLineView
 #if canImport(ActivityKit)
 import ActivityKit
 #endif
 import SwiftUI
 
 struct OHLineView: View {
-    //User Account Info Bindings
+    // User Account Info Bindings
     @Binding var email: String
     @Binding var joinCode: String
     
-    //Alert & Navigation Toggle State Variables
+    // Alert & Navigation Toggle State Variables
     @State var leaveLineAlert = false
     @State var returnToStudentDashboard = false
-    @State var studentinqueuestill = false
+    @State var studentInQueueStill = false
     @State var navigateToDashboard = false
     
     @EnvironmentObject var viewModel: AuthViewModel
     
-    //Live Activity Binding
+    // Live Activity Binding
     #if os(iOS)
     @Binding var activity: Activity<OfficeHoursAttribute>?
     #endif
     
-    
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             VStack {
@@ -48,6 +49,7 @@ struct OHLineView: View {
                     try await viewModel.addListnerToLine(joinCode: joinCode)
                 }
             }
+            
             #if os(iOS)
             .onChange(of: viewModel.positionInLine) { newPosition in
                 let state = UIApplication.shared.applicationState
@@ -78,10 +80,10 @@ struct OHLineView: View {
                     
                 )
             }
-            .onChange(of: returnToStudentDashboard){ newValue in
+            .onChange(of: returnToStudentDashboard) { newValue in
                 navigateToDashboard = newValue
             }
-            .onChange(of: viewModel.studentHasBeenRemoved){ newValue in
+            .onChange(of: viewModel.studentHasBeenRemoved) { newValue in
                 navigateToDashboard = newValue
             }
             .navigationDestination(isPresented: $returnToStudentDashboard) {
@@ -93,7 +95,10 @@ struct OHLineView: View {
         }
     }
     
+    
+    // MARK: - Live Activity
     #if os(iOS)
+    // Update the live activity with new position
     func updateLiveActivity(newPosition: Int) {
         Task {
             let updatedState = OfficeHoursAttribute.ContentState(linePosition: newPosition)
@@ -101,17 +106,22 @@ struct OHLineView: View {
             await activity?.update(content)
         }
     }
+    
 
+    // End the live activity
     func endLiveActivity() {
         let state = OfficeHoursAttribute.ContentState(linePosition: viewModel.positionInLine)
         let content = ActivityContent(state: state, staleDate: nil)
         Task {
-            await activity?.end(content, dismissalPolicy:.immediate)
+            await activity?.end(content, dismissalPolicy: .immediate)
         }
     }
     #endif
 }
 
+
+// MARK: - DisplayLinePosition
+// Display the position of the user in the line
 struct DisplayLinePosition: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
@@ -138,6 +148,9 @@ struct DisplayLinePosition: View {
     }
 }
 
+
+// MARK: - LeaveOfficeHoursButton
+// Button to leave the office hours line
 struct LeaveOfficeHoursButton: View {
     @Binding var willLeave: Bool
     
