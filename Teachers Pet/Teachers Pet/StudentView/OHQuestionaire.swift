@@ -59,7 +59,7 @@ struct OHQuestionaire: View {
                             }
                         }
                         .padding()
-                        .background(self.selectedOption == index ? Color.blue : Color.orange)
+                        .background(self.selectedOption == index ? .blue : .green)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                     }
@@ -123,7 +123,7 @@ struct OHQuestionaire: View {
                             .foregroundColor(.white)
                             .fontWeight(.semibold)
                             .padding()
-                            .background(Color.orange)
+                            .background(.green)
                             .cornerRadius(10)
                     }
                 }//end of else
