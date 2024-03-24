@@ -41,7 +41,7 @@ struct WelcomeScreen: View {
 struct DisplayAppTitleAndIcon: View {
     var body: some View {
         Text("Welcome To Teacher's Pet")
-            .font(.largeTitle)
+            .font(.title)
             .fontWeight(.semibold)
             .multilineTextAlignment(.center)
         Image("Welcome Icon")
@@ -54,7 +54,7 @@ struct DisplayAppTitleAndIcon: View {
         Text("I am a...")
             .font(.headline)
         Spacer()
-            .frame(height: 20)
+            .frame(height: 30)
     }
 }
 

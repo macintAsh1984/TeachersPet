@@ -11,6 +11,10 @@ import ActivityKit
 #endif
 import SwiftUI
 
+enum ActiveAlert {
+    case noOptionSelected, studentInLine
+}
+
 struct OHQuestionaire: View {
     
     // MARK: - State Variables
@@ -21,10 +25,10 @@ struct OHQuestionaire: View {
     @State var navigateToStudentDashboard = false
     @State var studentAlreadyInLine = false
     @State var isLoading = false
-    @State var noOptionSelected = false
+    @State var showAlert = false
+    @State var activeAlert: ActiveAlert = .noOptionSelected
     
     // MARK: - Binding Variables
-    // Binding variables
     @Binding var email: String
     @Binding var joinCode: String
     
@@ -101,13 +105,12 @@ struct OHQuestionaire: View {
                     Button(action: {
                         
                         if selectedOption == nil {
-                            noOptionSelected = true
-                        }
-                        
-                        else {
+                            activeAlert = .noOptionSelected
+                            showAlert = true
+                        } else {
                             // Handle the submission
-                            
                             submitSurvey()
+                            
                             let addStudentTask = Task {
                                 do {
                                     studentAlreadyInLine = try await viewModel.addStudentToLine(joinCode: joinCode, email: email)
@@ -118,10 +121,12 @@ struct OHQuestionaire: View {
                             
                             isLoading = true // Show loading indicator
                             Task {
-                                
                                 _ = await addStudentTask.result
+                                
                                 if studentAlreadyInLine {
                                     navigateToOfficeHoursLine = false
+                                    activeAlert = .studentInLine
+                                    showAlert = true
                                 } else {
                                     do {
                                         try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
@@ -139,7 +144,7 @@ struct OHQuestionaire: View {
                             }
                         }
                     }) {
-                        Text("Join Queue")
+                        Text("Join Office Hours Line")
                             .foregroundColor(.white)
                             .fontWeight(.semibold)
                             .padding()
@@ -167,31 +172,29 @@ struct OHQuestionaire: View {
             .navigationDestination(isPresented: $navigateToStudentDashboard) {
                 StudentDashboard(email: $email, joinCode: $joinCode)
             }
-            .alert(isPresented: $studentAlreadyInLine) {
-                Alert(
-                    title: Text("Cannot Join Line"),
-                    message: Text("You are already in the Office Hours line for this class."),
-                    primaryButton: .default(Text("See Place In Line")) {
-                        Task {
-                            try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
-                            navigateToOfficeHoursLine = true
+            .alert(isPresented: $showAlert) {
+                switch activeAlert {
+                case .noOptionSelected:
+                    Alert(title: Text("No Option Selected"),message: Text("Please select an Option."), dismissButton: .cancel(Text("OK")))
+                case .studentInLine:
+                    Alert(
+                        title: Text("Cannot Join Line"),
+                        message: Text("You are already in the Office Hours line for this class."),
+                        primaryButton: .default(Text("See Place In Line")) {
+                            Task {
+                                try await viewModel.calculateLinePosition(joinCode: joinCode, email: email)
+                                navigateToOfficeHoursLine = true
+                            }
+                        },
+                        secondaryButton: .destructive(Text("Leave Line")) {
+                            Task {
+                                try await viewModel.removeStudentFromLine(joinCode: joinCode, email: email)
+                                navigateToStudentDashboard = true
+                            }
                         }
-                    },
-                    secondaryButton: .destructive(Text("Leave Line")) {
-                        Task {
-                            try await viewModel.removeStudentFromLine(joinCode: joinCode, email: email)
-                            navigateToStudentDashboard = true
-                        }
-                    }
-                )
-            }
-            .alert(isPresented: $noOptionSelected) {
-                Alert(
-                    title: Text("No Option Selected"),
-                    message: Text("Please select an Option."),
-                    dismissButton: .cancel(Text("OK"))
-                )
-                
+                    )
+                    
+                }
             }
         }
     }

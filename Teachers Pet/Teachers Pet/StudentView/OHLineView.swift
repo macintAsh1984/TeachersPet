@@ -40,7 +40,6 @@ struct OHLineView: View {
                 Spacer()
             }
             .padding()
-            .navigationBarBackButtonHidden()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .preferredColorScheme(.light)
             .background(appBackgroundColor)
